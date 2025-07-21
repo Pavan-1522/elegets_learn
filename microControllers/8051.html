@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8051 Microcontroller Guide - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+        }
+
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(108, 99, 255, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Arduino Hero Section */
+        .arduino-hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .arduino-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero-img {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .arduino-hero-img img {
+            height: 300px;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .section.dark-mode {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Arduino Boards Grid */
+        .boards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .board-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .board-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .board-card-img {
+            height: 200px;
+            background: #f5f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .board-card-img img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .board-card-content {
+            padding: 1.5rem;
+        }
+
+        .board-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .board-card-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .spec-chip {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Pinout Section */
+        .pinout-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .pinout-diagram {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .pin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .pin-table th, .pin-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .pin-table th {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .pin-table tr:hover {
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(108, 99, 255, 0.05);
+        }
+        footer{
+            background-color: #16213E;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        /* Tabs - Improved Styling */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #718096;
+            position: relative;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .tab-btn:hover {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+            padding: 1rem 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2D3748;
+            color: #F7FAFC;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .code-keyword {
+            color: #FF79C6;
+        }
+
+        .code-function {
+            color: #50FA7B;
+        }
+
+        .code-comment {
+            color: #6272A4;
+            font-style: italic;
+        }
+
+        .code-number {
+            color: #BD93F9;
+        }
+
+        /* 8051-specific additions */
+        .arch-icon {
+            color: #9C27B0;
+            margin-right: 8px;
+        }
+        
+        .timer-icon {
+            color: #3F51B5;
+            margin-right: 8px;
+        }
+        
+        .uart-icon {
+            color: #009688;
+            margin-right: 8px;
+        }
+        
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(108, 99, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .register-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        .register-table th, .register-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .register-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .register-table tr:nth-child(even) {
+            background-color: rgba(108, 99, 255, 0.05);
+        }
+        
+        .bit-addressable {
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        /* Responsive Styles - Enhanced */
+        @media (max-width: 992px) {
+            .arduino-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .pinout-section {
+                padding: 1.5rem;
+            }
+            
+            .comparison-table th, 
+            .comparison-table td,
+            .register-table th,
+            .register-table td {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .arduino-hero {
+                padding: 6rem 0 2rem;
+            }
+            
+            .arduino-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .arduino-hero p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .arduino-hero-img {
+                display: none;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .boards-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .board-card {
+                max-width: 100%;
+            }
+            
+            .pinout-diagram {
+                width: 100%;
+            }
+            
+            /* Improved tabs for mobile */
+            .tabs {
+                flex-direction: column;
+                border-bottom: none;
+            }
+            
+            .tab-btn {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+                border-radius: 6px;
+                text-align: left;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+            }
+            
+            .tab-btn.active {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: 6px 6px 0 0;
+            }
+            
+            .tab-btn.active::after {
+                display: none;
+            }
+            
+            .tab-content {
+                padding: 1rem;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-top: none;
+                border-radius: 0 0 6px 6px;
+                margin-top: -0.5rem;
+            }
+            
+            /* Table improvements for mobile */
+            .comparison-table,
+            .pin-table,
+            .register-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .code-block {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .arduino-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 2rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .board-card-content {
+                padding: 1rem;
+            }
+            
+            .board-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .spec-chip, .feature-badge {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.6rem;
+            }
+            
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .pinout-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (Same as previous pages) -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/learnings/microControllers.html" class="active">Microcontrollers</a></li>
+                    <li><a href="/maintainance.html">Projects</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/maintainance.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="arduino-hero">
+        <div class="container">
+            <h1>8051 Microcontroller</h1>
+            <p>The complete guide to Intel's 8051 architecture - the classic 8-bit MCU that shaped embedded systems</p>
+            <div class="arduino-hero-img">
+                <img src="https://www.theengineeringprojects.com/wp-content/uploads/2018/04/introduction-to-8051-microcontroller-1.jpg" alt="8051 Microcontroller">
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">What is 8051?</h2>
+            <p>The Intel 8051 is an 8-bit microcontroller developed in 1980 that became an industry standard. Its Harvard architecture and rich instruction set made it popular for embedded systems.</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="features">Key Features</button>
+                <button class="tab-btn" data-tab="advantages">Advantages</button>
+                <button class="tab-btn" data-tab="usage">Common Uses</button>
+            </div>
+            
+            <div class="tab-content active" id="features">
+                <ul>
+                    <li><strong>8-bit CPU:</strong> 8-bit data bus and ALU</li>
+                    <li><strong>Harvard Architecture:</strong> Separate program and data memory</li>
+                    <li><strong>On-chip RAM:</strong> 128 bytes (256 in some variants)</li>
+                    <li><strong>On-chip ROM:</strong> 4KB (up to 64KB in some variants)</li>
+                    <li><strong>Boolean Processor:</strong> Direct bit manipulation</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="advantages">
+                <ul>
+                    <li><strong>Simple Architecture:</strong> Easy to learn and program</li>
+                    <li><strong>Mature Ecosystem:</strong> Decades of development tools</li>
+                    <li><strong>Low Cost:</strong> Inexpensive compared to modern MCUs</li>
+                    <li><strong>Real-time Control:</strong> Excellent for time-critical applications</li>
+                    <li><strong>Educational Value:</strong> Perfect for learning MCU fundamentals</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="usage">
+                <ul>
+                    <li><strong>Industrial Control:</strong> PLCs, motor control</li>
+                    <li><strong>Automotive:</strong> Dashboard controls, sensors</li>
+                    <li><strong>Consumer Electronics:</strong> Remote controls, appliances</li>
+                    <li><strong>Medical Devices:</strong> Simple monitoring equipment</li>
+                    <li><strong>Embedded Systems:</strong> Legacy systems maintenance</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8051 Variants Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">8051 Family Variants</h2>
+            <p>The 8051 architecture has been implemented by many manufacturers with various enhancements:</p>
+            
+            <div class="boards-grid">
+                <!-- Original 8051 -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://circuitreset.com/wp-content/uploads/2022/06/IMG_4593-2048x1365.jpg" alt="Original 8051">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Intel 8051</h3>
+                        <p>The original microcontroller from Intel</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">12MHz</span>
+                            <span class="spec-chip">4KB ROM</span>
+                            <span class="spec-chip">128B RAM</span>
+                            <span class="spec-chip">32 I/O</span>
+                            <span class="feature-badge"><i class="fas fa-microchip arch-icon"></i> MCS-51</span>
+                            <span class="feature-badge"><i class="fas fa-clock timer-icon"></i> 2 Timers</span>
+                            <span class="feature-badge"><i class="fas fa-exchange-alt uart-icon"></i> UART</span>
+                        </div>
+                        <a href="#original8051" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- AT89S52 -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://assets.lcsc.com/images/lcsc/900x900/20230615_Microchip-Tech-AT89S52-24PU_C9441_blank.jpg" alt="AT89S52">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>AT89S52</h3>
+                        <p>Popular Atmel variant with ISP support</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">33MHz</span>
+                            <span class="spec-chip">8KB Flash</span>
+                            <span class="spec-chip">256B RAM</span>
+                            <span class="spec-chip">32 I/O</span>
+                            <span class="feature-badge"><i class="fas fa-bolt"></i> ISP</span>
+                        </div>
+                        <a href="#at89s52" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- DS89C450 -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://tse4.mm.bing.net/th/id/OIP.e5sH_nmF7AjD8e0oE6SsHAHaE8?pid=Api&P=0&h=220" alt="DS89C450">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>DS89C450</h3>
+                        <p>High-speed variant from Maxim</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">33MHz</span>
+                            <span class="spec-chip">64KB Flash</span>
+                            <span class="spec-chip">1KB RAM</span>
+                            <span class="spec-chip">32 I/O</span>
+                            <span class="feature-badge"><i class="fas fa-tachometer-alt"></i> 1MIPS</span>
+                        </div>
+                        <a href="#ds89c450" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- C8051F120 -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://5.imimg.com/data5/SELLER/Default/2022/5/ZJ/YR/DM/29067345/c8501f120-500x500.jpg" alt="C8051F120">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>C8051F120</h3>
+                        <p>Modern mixed-signal variant</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">100MHz</span>
+                            <span class="spec-chip">128KB Flash</span>
+                            <span class="spec-chip">8KB RAM</span>
+                            <span class="spec-chip">64 I/O</span>
+                            <span class="feature-badge"><i class="fas fa-wave-square"></i> ADC/DAC</span>
+                        </div>
+                        <a href="#c8051f120" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">8051 Architecture</h2>
+            
+            <div class="pinout-section">
+                <h3>Block Diagram</h3>
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjeYFHAT7G0WRiliTLDjACETsb3moOuR7R6BmvqZS5v1ovMEC6EfejRaG1Zj7Z-ZtJbBYvC9B8NEVBbTny86YW6GrBHBkEYn9bCxTIsqnpCJr-fzOf3q7lunJZkJR2UnB0cDg7rGS1NOhQcu9nillDFDBeikh3CEYFNsnnqObCwj9y6pHdUYadfQmQ8=s16000" alt="8051 Architecture" class="pinout-diagram">
+                
+                <h3>Key Components</h3>
+                <ul>
+                    <li><strong>CPU:</strong> 8-bit processor with 8-bit ALU</li>
+                    <li><strong>Program Memory:</strong> 4KB ROM (on-chip)</li>
+                    <li><strong>Data Memory:</strong> 128B RAM (on-chip)</li>
+                    <li><strong>I/O Ports:</strong> Four 8-bit parallel ports (P0-P3)</li>
+                    <li><strong>Timers/Counters:</strong> Two 16-bit timers</li>
+                    <li><strong>Serial Port:</strong> Full-duplex UART</li>
+                    <li><strong>Interrupt Control:</strong> 5 interrupt sources</li>
+                </ul>
+            </div>
+            
+            <h3>Memory Organization</h3>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Memory Type</th>
+                            <th>Size</th>
+                            <th>Address Range</th>
+                            <th>Access Method</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Program Memory (ROM)</td>
+                            <td>4KB (up to 64KB)</td>
+                            <td>0000H-0FFFH</td>
+                            <td>MOVC A,@A+DPTR</td>
+                        </tr>
+                        <tr>
+                            <td>Internal RAM</td>
+                            <td>128B (256B in some)</td>
+                            <td>00H-7FH (00H-FFH)</td>
+                            <td>Direct/Indirect</td>
+                        </tr>
+                        <tr>
+                            <td>Special Function Registers</td>
+                            <td>128B</td>
+                            <td>80H-FFH</td>
+                            <td>Direct</td>
+                        </tr>
+                        <tr>
+                            <td>External RAM</td>
+                            <td>Up to 64KB</td>
+                            <td>0000H-FFFFH</td>
+                            <td>MOVX</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>Special Function Registers (SFRs)</h3>
+            <table class="register-table">
+                <thead>
+                    <tr>
+                        <th>SFR</th>
+                        <th>Address</th>
+                        <th>Function</th>
+                        <th>Bit-Addressable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bit-addressable">
+                        <td>ACC</td>
+                        <td>E0H</td>
+                        <td>Accumulator</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr class="bit-addressable">
+                        <td>B</td>
+                        <td>F0H</td>
+                        <td>B Register</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr class="bit-addressable">
+                        <td>PSW</td>
+                        <td>D0H</td>
+                        <td>Program Status Word</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>SP</td>
+                        <td>81H</td>
+                        <td>Stack Pointer</td>
+                        <td>No</td>
+                    </tr>
+                    <tr class="bit-addressable">
+                        <td>P0</td>
+                        <td>80H</td>
+                        <td>Port 0</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>TCON</td>
+                        <td>88H</td>
+                        <td>Timer Control</td>
+                        <td>Partially</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Programming Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">8051 Programming</h2>
+            
+            <h3>Basic Program Structure</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">; Sample 8051 Assembly Program</span>
+<span class="code-keyword">ORG</span> <span class="code-number">0000H</span>       <span class="code-comment">; Start at address 0000H</span>
+<span class="code-function">LJMP</span> MAIN     <span class="code-comment">; Jump to main program</span>
+
+<span class="code-keyword">ORG</span> <span class="code-number">0030H</span>       <span class="code-comment">; Main program starts here</span>
+MAIN:
+    <span class="code-function">MOV</span> A, #55H   <span class="code-comment">; Load 55H into accumulator</span>
+    <span class="code-function">MOV</span> P1, A     <span class="code-comment">; Output to Port 1</span>
+    <span class="code-function">ACALL</span> DELAY   <span class="code-comment">; Call delay subroutine</span>
+    <span class="code-function">MOV</span> A, #0AAH
+    <span class="code-function">MOV</span> P1, A
+    <span class="code-function">ACALL</span> DELAY
+    <span class="code-function">SJMP</span> MAIN    <span class="code-comment">; Repeat forever</span>
+
+DELAY:
+    <span class="code-function">MOV</span> R0, #0FFH <span class="code-comment">; Delay subroutine</span>
+DELAY_LOOP:
+    <span class="code-function">DJNZ</span> R0, DELAY_LOOP
+    <span class="code-function">RET</span>
+    
+<span class="code-keyword">END</span></code></pre>
+            </div>
+            
+            <h3>C Programming Example (Keil)</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Blink LED on P1.0</span>
+<span class="code-keyword">#include</span> &lt;reg51.h&gt;
+<span class="code-keyword">#include</span> &lt;stdio.h&gt;
+
+<span class="code-keyword">void</span> <span class="code-function">delay</span>(<span class="code-keyword">unsigned int</span> time) {
+    <span class="code-keyword">unsigned int</span> i,j;
+    <span class="code-keyword">for</span>(i=0;i&lt;time;i++)
+        <span class="code-keyword">for</span>(j=0;j&lt;1275;j++);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">main</span>() {
+    <span class="code-keyword">while</span>(1) {
+        P1_0 = 1;    <span class="code-comment">// LED ON</span>
+        <span class="code-function">delay</span>(1000);
+        P1_0 = 0;    <span class="code-comment">// LED OFF</span>
+        <span class="code-function">delay</span>(1000);
+    }
+}</code></pre>
+            </div>
+            
+            <h3>Addressing Modes</h3>
+            <table class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mode</th>
+                            <th>Example</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Immediate</td>
+                            <td>MOV A, #25H</td>
+                            <td>Data is part of instruction</td>
+                        </tr>
+                        <tr>
+                            <td>Register</td>
+                            <td>MOV R0, A</td>
+                            <td>Data in register</td>
+                        </tr>
+                        <tr>
+                            <td>Direct</td>
+                            <td>MOV A, 40H</td>
+                            <td>Data at memory location</td>
+                        </tr>
+                        <tr>
+                            <td>Indirect</td>
+                            <td>MOV A, @R0</td>
+                            <td>Register holds address</td>
+                        </tr>
+                        <tr>
+                            <td>Indexed</td>
+                            <td>MOVC A, @A+DPTR</td>
+                            <td>Base + offset address</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </table>
+        </div>
+    </section>
+
+    <!-- Advanced Features -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Advanced 8051 Features</h2>
+            
+            <h3>Timer Programming</h3>
+            <p>8051 has two 16-bit timers (Timer 0 and Timer 1) that can be used as:</p>
+            <ul>
+                <li>Event counters</li>
+                <li>Interval timers</li>
+                <li>Baud rate generators</li>
+            </ul>
+            
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Timer 0 as interval timer (Mode 1)</span>
+<span class="code-keyword">#include</span> &lt;reg51.h&gt;
+
+<span class="code-keyword">void</span> <span class="code-function">timer0_isr</span>() <span class="code-keyword">interrupt</span> 1 {
+    TH0 = 0x3C;    <span class="code-comment">// Reload for 50ms @ 11.0592MHz</span>
+    TL0 = 0xB0;
+    P1_0 = ~P1_0;  <span class="code-comment">// Toggle pin</span>
+}
+
+<span class="code-keyword">void</span> <span class="code-function">main</span>() {
+    TMOD = 0x01;   <span class="code-comment">// Timer 0, Mode 1</span>
+    TH0 = 0x3C;    <span class="code-comment">// Initial values</span>
+    TL0 = 0xB0;
+    TR0 = 1;       <span class="code-comment">// Start timer</span>
+    ET0 = 1;       <span class="code-comment">// Enable timer interrupt</span>
+    EA = 1;        <span class="code-comment">// Global interrupt enable</span>
+    
+    <span class="code-keyword">while</span>(1);      <span class="code-comment">// Infinite loop</span>
+}</code></pre>
+            </div>
+            
+            <h3>Serial Communication</h3>
+            <p>8051 has a full-duplex UART for serial communication:</p>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Serial Echo Program</span>
+<span class="code-keyword">#include</span> &lt;reg51.h&gt;
+
+<span class="code-keyword">void</span> <span class="code-function">serial_isr</span>() <span class="code-keyword">interrupt</span> 4 {
+    <span class="code-keyword">if</span> (RI) {
+        RI = 0;            <span class="code-comment">// Clear receive flag</span>
+        SBUF = SBUF;       <span class="code-comment">// Echo received byte</span>
+        <span class="code-keyword">while</span>(!TI);      <span class="code-comment">// Wait for transmit</span>
+        TI = 0;            <span class="code-comment">// Clear transmit flag</span>
+    }
+}
+
+<span class="code-keyword">void</span> <span class="code-function">main</span>() {
+    TMOD = 0x20;   <span class="code-comment">// Timer 1, Mode 2 (auto-reload)</span>
+    TH1 = 0xFD;    <span class="code-comment">// 9600 baud @ 11.0592MHz</span>
+    SCON = 0x50;   <span class="code-comment">// Serial Mode 1, enable reception</span>
+    TR1 = 1;       <span class="code-comment">// Start timer</span>
+    ES = 1;        <span class="code-comment">// Enable serial interrupt</span>
+    EA = 1;        <span class="code-comment">// Global interrupt enable</span>
+    
+    <span class="code-keyword">while</span>(1);      <span class="code-comment">// Infinite loop</span>
+}</code></pre>
+            </div>
+            
+            <h3>Interrupt Structure</h3>
+            <p>8051 has 5 interrupt sources with fixed priorities:</p>
+            <table class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Interrupt</th>
+                            <th>Vector Address</th>
+                            <th>Flag</th>
+                            <th>Enable Bit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>External 0 (INT0)</td>
+                            <td>0003H</td>
+                            <td>IE0</td>
+                            <td>EX0</td>
+                        </tr>
+                        <tr>
+                            <td>Timer 0 (TF0)</td>
+                            <td>000BH</td>
+                            <td>TF0</td>
+                            <td>ET0</td>
+                        </tr>
+                        <tr>
+                            <td>External 1 (INT1)</td>
+                            <td>0013H</td>
+                            <td>IE1</td>
+                            <td>EX1</td>
+                        </tr>
+                        <tr>
+                            <td>Timer 1 (TF1)</td>
+                            <td>001BH</td>
+                            <td>TF1</td>
+                            <td>ET1</td>
+                        </tr>
+                        <tr>
+                            <td>Serial (RI/TI)</td>
+                            <td>0023H</td>
+                            <td>RI/TI</td>
+                            <td>ES</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer (Same as previous pages) -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors & Modules</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Tab Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active state on buttons
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if(content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+            
+            sections.forEach(section => {
+                const sectionPosition = section.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (sectionPosition < screenPosition) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'all 0.5s ease';
+            });
+            
+            // Trigger first check
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

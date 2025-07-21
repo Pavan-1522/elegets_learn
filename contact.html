@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Elegets Learn - Free Electronics Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-light: #a29bfe;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #1e1e2e;
+            --darker: #16213E;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+            --box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            --darker: #0f172a;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: var(--section-bg);
+            line-height: 1.6;
+        }
+
+        .hero-section {
+            background: var(--gradient);
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .hero-section .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero-section p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .about-content {
+            padding: 5rem 0;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+            height: 100%;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .feature-card {
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .team-section {
+            padding: 5rem 0;
+            background-color: var(--card-bg);
+        }
+
+        .team-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+            height: 100%;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .dark-mode .team-card {
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .team-img-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 1.5rem;
+            border: 5px solid var(--primary-light);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.2);
+        }
+
+        .team-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-info {
+            padding: 0;
+        }
+
+        .team-info h4 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .team-info h6 {
+            color: var(--primary-light);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .team-info p {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .team-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .team-social a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .download-section {
+            background: var(--darker);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .download-section .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-badge {
+            height: 50px;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .app-badge:hover {
+            transform: scale(1.05);
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -15px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .mission-vision {
+            background-color: var(--card-bg);
+            padding: 5rem 0;
+        }
+
+        .mv-card {
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            height: 100%;
+            background: var(--card-bg);
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .dark-mode .mv-card {
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .mv-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        footer {
+            background-color: var(--darker);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .mv-card h3 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .img-fluid {
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .hero-section h1 {
+                font-size: 2.8rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .team-img-container {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 4rem 0;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .feature-card, .mv-card, .team-card {
+                padding: 1.5rem;
+            }
+            
+            .team-img-container {
+                width: 100px;
+                height: 100px;
+                border-width: 3px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .team-info h4 {
+                font-size: 1.2rem;
+            }
+            
+            .team-info h6 {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets Learn</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/learnings/microControllers.html" class="active">Microcontrollers</a></li>
+                    <li><a href="/learnings/sensors.html">Sensors</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/maintainance.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-4">About Elegets Learn</h1>
+            <p class="lead">Making electronics learning accessible, fun, and practical for everyone</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-content">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="section-title">Our Story</h2>
+                    <p class="lead">Elegets Learn was born from a passion for electronics education and a vision to make learning accessible to everyone.</p>
+                    <p>Developed by <strong>Team Elegets Electronics</strong>, our platform combines comprehensive learning resources with practical projects to create an engaging educational experience.</p>
+                    <p>As part of the <strong>Elegets Electronics</strong> ecosystem (an e-commerce platform for electronic components and project kits), we're uniquely positioned to connect learning with real-world applications.</p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Electronics Learning" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="mission-vision">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Our Mission & Vision</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="mv-card">
+                        <div class="mv-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3>Mission</h3>
+                        <p>To democratize electronics education by providing high-quality, free learning resources that bridge the gap between theory and practical application, empowering learners at all levels to innovate and create.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="mv-card">
+                        <div class="mv-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3>Vision</h3>
+                        <p>To become the world's most comprehensive electronics learning platform, fostering a global community of makers, engineers, and innovators who leverage technology to solve real-world problems.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Why Choose Elegets Learn?</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Free Education</h3>
+                        <p>All our learning resources are completely free, removing financial barriers to electronics education.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <h3>Project-Based Learning</h3>
+                        <p>Learn by doing with our extensive collection of practical projects and tutorials.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h3>Seamless Integration</h3>
+                        <p>Direct access to components through Elegets Electronics marketplace when you're ready to build.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Community Support</h3>
+                        <p>Join a vibrant community of learners and experts for collaboration and troubleshooting.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-road"></i>
+                        </div>
+                        <h3>Structured Roadmaps</h3>
+                        <p>Follow our carefully designed learning paths from beginner to advanced topics.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Mobile Friendly</h3>
+                        <p>Learn on-the-go with our responsive platform and mobile app.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Meet Team Elegets</h2>
+            <div class="row">
+                <!-- Team Member 1 -->
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="team-card">
+                        <div class="team-img-container">
+                            <img src="/assets/pavan passport-min-min.jpg" alt="Madeti Pavan Kumar" class="team-img">
+                        </div>
+                        <div class="team-info">
+                            <h4>Madeti Pavan Kumar</h4>
+                            <h6>Founder & Lead Developer</h6>
+                            <p>Electronics engineer with 8+ years experience in embedded systems and IoT development.</p>
+                            <div class="team-social">
+                                <a href="https://www.linkedin.com/in/pavankumarmadeti/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="https://github.com/Pavan-1522"><i class="fab fa-github"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="team-card">
+                        <div class="team-img-container">
+                            <img src="/assets/vikas.png" alt="Karrothu Vikas" class="team-img">
+                        </div>
+                        <div class="team-info">
+                            <h4>Karrothu Vikas</h4>
+                            <h6>Hardware Specialist</h6>
+                            <p>PCB design expert and hardware prototyping guru with a passion for open-source hardware.</p>
+                            <div class="team-social">
+                                <a href="https://www.linkedin.com/in/vikash-karrothu-609616369/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="404.html"><i class="fab fa-github"></i></a>
+                                <a href="404.html"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="team-card">
+                        <div class="team-img-container">
+                            <img src="/assets/naveen.png" alt="Jami Naveen Satya" class="team-img">
+                        </div>
+                        <div class="team-info">
+                            <h4>Jami Naveen Satya</h4>
+                            <h6>Content Lead</h6>
+                            <p>Technical writer and educator specializing in making complex concepts accessible to beginners.</p>
+                            <div class="team-social">
+                                <a href="404.html" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="404.html"><i class="fab fa-github"></i></a>
+                                <a href="404.html"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 4 -->
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="team-card">
+                        <div class="team-img-container">
+                            <img src="/assets/WhatsApp Image 2025-02-04 at 16.21.15_752a5eea.jpg" alt="Shaik Abdul Rahiman" class="team-img">
+                        </div>
+                        <div class="team-info">
+                            <h4>Shaik Abdul Rahiman</h4>
+                            <h6>Software Architect</h6>
+                            <p>Full-stack developer focused on creating seamless learning experiences across platforms.</p>
+                            <div class="team-social">
+                                <a href="https://www.linkedin.com/in/shaik-abdul-rahiman-256409334/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="404.html"><i class="fab fa-github"></i></a>
+                                <a href="404.html"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 5 -->
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="team-card">
+                        <div class="team-img-container">
+                            <img src="/assets/tarun.jpg" alt="K. Tarun" class="team-img">
+                        </div>
+                        <div class="team-info">
+                            <h4>K. Tarun</h4>
+                            <h6>UX/UI Designer</h6>
+                            <p>Design specialist focused on creating intuitive interfaces for complex technical content.</p>
+                            <div class="team-social">
+                                <a href="https://www.linkedin.com/in/kancherla-tarun-113034344/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="404.html"><i class="fab fa-github"></i></a>
+                                <a href="404.html"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 6 -->
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="team-card">
+                        <div class="team-img-container">
+                            <img src="#" alt="Pragada Vasavi" class="team-img">
+                        </div>
+                        <div class="team-info">
+                            <h4>Pragada Vasavi</h4>
+                            <h6>Community Manager</h6>
+                            <p>Builds and nurtures our learning community, organizing events and support networks.</p>
+                            <div class="team-social">
+                                <a href="https://www.linkedin.com/in/vasavi-pragada-68aa2435b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="404.html"><i class="fab fa-github"></i></a>
+                                <a href="404.html"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 7 -->
+                <div class="col-md-4 col-sm-6 mb-4 mx-auto">
+                    <div class="team-card">
+                        <div class="team-img-container">
+                            <img src="#" alt="Mendi Likitha" class="team-img">
+                        </div>
+                        <div class="team-info">
+                            <h4>Mendi Likitha</h4>
+                            <h6>Product Manager</h6>
+                            <p>Coordinates between Elegets Learn and Elegets Electronics to align educational and product roadmaps.</p>
+                            <div class="team-social">
+                                <a href="404.html" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="404.html"><i class="fab fa-github"></i></a>
+                                <a href="404.html"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download-section">
+        <div class="container">
+            <h2 class="text-white mb-4">Get the Elegets Electronics App</h2>
+            <p class="lead mb-5">Shop components and project kits to complement your learning journey</p>
+            
+            <div class="d-flex flex-wrap justify-content-center">
+                <a href="#" class="d-inline-block">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" class="app-badge">
+                </a>
+            </div>
+            
+            <div class="mt-5">
+                <h4 class="mb-3">Connect With Us</h4>
+                <div class="d-flex justify-content-center">
+                    <a href="#" class="text-white mx-3 fs-3"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white mx-3 fs-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white mx-3 fs-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white mx-3 fs-3"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-white mx-3 fs-3"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors & Modules</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('change', function() {
+                document.body.classList.toggle('dark-mode');
+                // Save preference to localStorage
+                if (this.checked) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                themeToggle.checked = true;
+            }
+        }
+    </script>
+</body>
+</html>

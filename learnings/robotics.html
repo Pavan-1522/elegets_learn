@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+            --footer-bg: #2D3748;
+            --footer-text: #F7FAFC;
+        }
+
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+            --footer-bg: #1A1A2E;
+            --footer-text: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Fixed Navbar */
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: var(--primary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Construction Banner */
+        .construction-banner {
+            background-color: #FF6584;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.9rem;
+            position: sticky;
+            top: 80px;
+            z-index: 999;
+            animation: pulseBanner 2s infinite;
+        }
+
+        @keyframes pulseBanner {
+            0% { background-color: #FF6584; }
+            50% { background-color: #FF3366; }
+            100% { background-color: #FF6584; }
+        }
+
+        /* Animated Robotics Elements */
+        .robotics-element {
+            position: absolute;
+            opacity: 0.1;
+            color: var(--primary);
+            z-index: 0;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Hero Section with Animation */
+        .robotics-hero {
+            padding: 10rem 0 4rem;
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .robotics-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            z-index: 2;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .robotics-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 0.9; }
+        }
+
+        /* Content Sections with Animation */
+        .content-section {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--text-color);
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Info Cards with Hover Animation */
+        .info-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        .info-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: var(--gradient);
+            transition: all 0.3s;
+        }
+
+        .info-card:hover::before {
+            height: 100%;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .info-card p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+
+        .info-card ul, .info-card ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        .info-card li {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        /* Robotics Types Grid */
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .type-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            transform: scale(0.95);
+            opacity: 0;
+            text-align: center;
+        }
+
+        .type-card.visible {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .type-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .type-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .type-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .type-card p {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        /* Button with Pulse Animation */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            animation: pulse 1.5s infinite;
+        }
+
+        .btn i {
+            margin-right: 0.5rem;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(108, 99, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(108, 99, 255, 0);
+            }
+        }
+
+        /* Learning Path Section */
+        .learning-path-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .learning-path {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-left: 2rem;
+        }
+
+        .learning-path::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 7px;
+            height: 100%;
+            width: 2px;
+            background: var(--primary);
+        }
+
+        .path-step {
+            position: relative;
+            padding-bottom: 2rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+        }
+
+        .path-step.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .path-step::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            transform: scale(0);
+            transition: all 0.3s;
+        }
+
+        .path-step.visible::before {
+            transform: scale(1);
+        }
+
+        .path-step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+            color: var(--primary);
+        }
+
+        .path-step p {
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .path-step:hover h3 {
+            color: var(--accent);
+        }
+
+        /* Image Styling */
+        .info-card img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 1rem 0;
+            display: block;
+        }
+
+        .image-caption {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.7;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        /* Resource Box */
+        .resource-box {
+            margin-top: 2rem;
+            background: rgba(108, 99, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .resource-box h4 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .resource-box a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-box a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .resource-box i {
+            font-size: 0.8rem;
+            margin-left: 0.3rem;
+        }
+
+        /* Projects Gallery */
+        .projects-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            transform: scale(0.95);
+            opacity: 0;
+        }
+
+        .project-card.visible {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .project-content p {
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .project-difficulty {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: #E9D8FD;
+            color: #6B46C1;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .project-difficulty.beginner {
+            background: #C6F6D5;
+            color: #276749;
+        }
+
+        .project-difficulty.intermediate {
+            background: #FEFCBF;
+            color: #744210;
+        }
+
+        .project-difficulty.advanced {
+            background: #FED7D7;
+            color: #9B2C2C;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 3rem 0 0;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            color: var(--footer-text);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-col a:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        .footer-about p {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+        }
+
+        .footer-bottom p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom i {
+            color: var(--accent);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .robotics-hero {
+                padding: 8rem 0 2rem;
+            }
+            
+            .robotics-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .types-grid, .projects-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Robotics Elements -->
+    <i class="fas fa-robot robotics-element" style="top: 20%; left: 5%; font-size: 8rem; animation-delay: 0s;"></i>
+    <i class="fas fa-cogs robotics-element" style="top: 60%; right: 5%; font-size: 10rem; animation-delay: 2s;"></i>
+    <i class="fas fa-microchip robotics-element" style="bottom: 10%; left: 20%; font-size: 6rem; animation-delay: 4s;"></i>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="microControllers.html">Microcontrollers</a></li>
+                    <li><a href="sensors.html">Sensors</a></li>
+                    <li><a href="pcb.html">PCB Design</a></li>
+                    <li><a href="robotics.html" class="active">Robotics</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Construction Banner -->
+    <div class="construction-banner">
+        <marquee behavior="scroll" direction="left">
+            🚧 This website is still under construction. All features will be available soon. Thank you for your patience! - Team Elegets-Learn 🚧
+        </marquee>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="robotics-hero">
+        <div class="container">
+            <h1>Robotics Learning Hub</h1>
+            <p>Explore the fascinating world of robotics, from basic concepts to advanced autonomous systems</p>
+            <div class="cta-buttons" style="margin-top: 2rem;">
+                <a href="#learning-path" class="btn" style="margin-right: 1rem;"><i class="fas fa-route"></i> Learning Path</a>
+                <a href="#projects" class="btn btn-secondary"><i class="fas fa-robot"></i> Project Ideas</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- What is Robotics Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>What is Robotics?</h2>
+                <p>Understanding the interdisciplinary field that's changing our world</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>Robotics Defined</h3>
+                <p>Robotics is an interdisciplinary branch of engineering and science that includes mechanical engineering, electrical engineering, computer science, and others. Robotics deals with the design, construction, operation, and use of robots, as well as computer systems for their control, sensory feedback, and information processing.</p>
+                
+                <p>Key aspects of robotics include:</p>
+                <ul>
+                    <li><strong>Mechanical construction:</strong> The physical form and structure of the robot</li>
+                    <li><strong>Electrical components:</strong> Power and control systems</li>
+                    <li><strong>Programming:</strong> The intelligence that controls the robot's behavior</li>
+                    <li><strong>Sensors:</strong> How the robot perceives its environment</li>
+                    <li><strong>Actuators:</strong> How the robot interacts with its environment</li>
+                </ul>
+                
+                <img src="https://www.sciencebuddies.org/Images/robotics-components.jpg" alt="Robotics Components">
+                <p class="image-caption">Main components of a typical robotic system</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Types of Robotics Section -->
+    <section class="content-section" style="background-color: var(--card-bg);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Types of Robotics</h2>
+                <p>Different categories of robots and their applications</p>
+            </div>
+            
+            <div class="types-grid">
+                <!-- Industrial Robots -->
+                <div class="type-card">
+                    <i class="fas fa-industry"></i>
+                    <h3>Industrial Robots</h3>
+                    <p>Used in manufacturing environments for tasks like assembly, welding, and material handling.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+                
+                <!-- Service Robots -->
+                <div class="type-card">
+                    <i class="fas fa-concierge-bell"></i>
+                    <h3>Service Robots</h3>
+                    <p>Perform useful tasks for humans like cleaning, delivery, and assistance in homes and businesses.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+                
+                <!-- Medical Robots -->
+                <div class="type-card">
+                    <i class="fas fa-hospital"></i>
+                    <h3>Medical Robots</h3>
+                    <p>Assist in surgeries, rehabilitation, and patient care with high precision and safety.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+                
+                <!-- Autonomous Vehicles -->
+                <div class="type-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Autonomous Vehicles</h3>
+                    <p>Self-driving cars, drones, and other vehicles that navigate without human intervention.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+                
+                <!-- Humanoid Robots -->
+                <div class="type-card">
+                    <i class="fas fa-user-astronaut"></i>
+                    <h3>Humanoid Robots</h3>
+                    <p>Robots with human-like form and behavior, used for research and customer service.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+                
+                <!-- Educational Robots -->
+                <div class="type-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Educational Robots</h3>
+                    <p>Designed for teaching programming and robotics concepts to students of all ages.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Path Section -->
+    <section class="content-section" id="learning-path">
+        <div class="container">
+            <div class="section-title">
+                <h2>Robotics Learning Path</h2>
+                <p>Step-by-step guide to becoming a robotics engineer or enthusiast</p>
+            </div>
+            
+            <div class="learning-path-container">
+                <h3>Roadmap to Robotics Mastery</h3>
+                <p>Follow this structured learning path to build your robotics skills from the ground up:</p>
+                
+                <div class="learning-path">
+                    <!-- Step 1 -->
+                    <div class="path-step">
+                        <h3>1. Learn Basic Electronics</h3>
+                        <p>Understand components like resistors, capacitors, and how circuits work</p>
+                        <p><strong>Resources:</strong> Our Electronics Fundamentals course</p>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="path-step">
+                        <h3>2. Master Programming Basics</h3>
+                        <p>Start with Python or C++ for robotics programming</p>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="path-step">
+                        <h3>3. Understand Microcontrollers</h3>
+                        <p>Learn to program Arduino, Raspberry Pi, or ESP32 boards</p>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="path-step">
+                        <h3>4. Study Sensors and Actuators</h3>
+                        <p>Learn how robots sense and interact with their environment</p>
+                    </div>
+                    
+                    <!-- Step 5 -->
+                    <div class="path-step">
+                        <h3>5. Build Simple Robots</h3>
+                        <p>Start with line followers, obstacle avoiders, or robotic arms</p>
+                    </div>
+                    
+                    <!-- Step 6 -->
+                    <div class="path-step">
+                        <h3>6. Learn Robot Operating System (ROS)</h3>
+                        <p>The standard framework for advanced robotics programming</p>
+                    </div>
+                    
+                    <!-- Step 7 -->
+                    <div class="path-step">
+                        <h3>7. Explore AI and Machine Learning</h3>
+                        <p>Implement computer vision, NLP, and decision-making algorithms</p>
+                    </div>
+                    
+                    <!-- Step 8 -->
+                    <div class="path-step">
+                        <h3>8. Specialize in Your Interest Area</h3>
+                        <p>Focus on drones, humanoids, industrial robots, or other specialties</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="resource-box">
+                <h4>Recommended Learning Resources:</h4>
+                <ul>
+                    <li><a href="https://www.roboticsbook.org/" target="_blank">Modern Robotics Textbook <i class="fas fa-external-link-alt"></i></a></li>
+                    <li><a href="https://www.edx.org/course/robotics-micro-masters" target="_blank">Robotics MicroMasters Program <i class="fas fa-external-link-alt"></i></a></li>
+                    <li><a href="https://www.theconstructsim.com/" target="_blank">ROS Learning Platform <i class="fas fa-external-link-alt"></i></a></li>
+                    <li><a href="https://www.robotshop.com/community/" target="_blank">RobotShop Community <i class="fas fa-external-link-alt"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robotics Projects Section -->
+    <section class="content-section" style="background-color: var(--card-bg);" id="projects">
+        <div class="container">
+            <div class="section-title">
+                <h2>Robotics Project Ideas</h2>
+                <p>Hands-on projects to apply your robotics knowledge</p>
+            </div>
+            
+            <div class="projects-gallery">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://www.sciencebuddies.org/Images/line-follower-robot.jpg" alt="Line Follower Robot">
+                    </div>
+                    <div class="project-content">
+                        <span class="project-difficulty beginner">Beginner</span>
+                        <h3>Line Follower Robot</h3>
+                        <p>A simple robot that follows a black line on a white surface using infrared sensors.</p>
+                        <a href="#" class="btn">View Project</a>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://www.sciencebuddies.org/Images/obstacle-avoidance-robot.jpg" alt="Obstacle Avoidance Robot">
+                    </div>
+                    <div class="project-content">
+                        <span class="project-difficulty beginner">Beginner</span>
+                        <h3>Obstacle Avoidance Robot</h3>
+                        <p>A robot that navigates around obstacles using ultrasonic sensors.</p>
+                        <a href="#" class="btn">View Project</a>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://www.sciencebuddies.org/Images/robotic-arm.jpg" alt="Robotic Arm">
+                    </div>
+                    <div class="project-content">
+                        <span class="project-difficulty intermediate">Intermediate</span>
+                        <h3>3D Printed Robotic Arm</h3>
+                        <p>A programmable arm with multiple degrees of freedom for object manipulation.</p>
+                        <a href="#" class="btn">View Project</a>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://www.sciencebuddies.org/Images/self-balancing-robot.jpg" alt="Self-Balancing Robot">
+                    </div>
+                    <div class="project-content">
+                        <span class="project-difficulty intermediate">Intermediate</span>
+                        <h3>Self-Balancing Robot</h3>
+                        <p>A two-wheeled robot that balances itself using an IMU and PID control.</p>
+                        <a href="#" class="btn">View Project</a>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://www.sciencebuddies.org/Images/autonomous-drone.jpg" alt="Autonomous Drone">
+                    </div>
+                    <div class="project-content">
+                        <span class="project-difficulty advanced">Advanced</span>
+                        <h3>Autonomous Drone</h3>
+                        <p>A drone that can navigate autonomously using computer vision.</p>
+                        <a href="#" class="btn">View Project</a>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://www.sciencebuddies.org/Images/humanoid-robot.jpg" alt="Humanoid Robot">
+                    </div>
+                    <div class="project-content">
+                        <span class="project-difficulty advanced">Advanced</span>
+                        <h3>Humanoid Robot</h3>
+                        <p>A bipedal robot that can walk and perform basic human-like movements.</p>
+                        <a href="#" class="btn">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Getting Started with Robotics</h2>
+                <p>Essential tools and kits to begin your robotics journey</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>Robotics Starter Kits</h3>
+                <p>Here are some recommended kits for beginners:</p>
+                
+                <ul>
+                    <li><strong>Arduino Starter Kit:</strong> Perfect for learning electronics and basic robotics</li>
+                    <li><strong>LEGO Mindstorms:</strong> Great for younger learners and rapid prototyping</li>
+                    <li><strong>Raspberry Pi Robot Kit:</strong> Combines robotics with computer science</li>
+                    <li><strong>Makeblock mBot:</strong> Affordable and educational robot for schools</li>
+                    <li><strong>VEX Robotics Kit:</strong> Used in many school robotics competitions</li>
+                </ul>
+                
+                <div class="resource-box">
+                    <h4>Essential Tools for Robotics:</h4>
+                    <ul>
+                        <li><strong>Soldering Iron:</strong> For assembling electronic components</li>
+                        <li><strong>3D Printer:</strong> For creating custom robot parts</li>
+                        <li><strong>Multimeter:</strong> For testing and debugging circuits</li>
+                        <li><strong>Screwdrivers and Pliers:</strong> Basic mechanical tools</li>
+                        <li><strong>Breadboard and Jumper Wires:</strong> For prototyping circuits</li>
+                    </ul>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="#" class="btn" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                        <i class="fas fa-shopping-cart"></i> View Recommended Kits
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics and robotics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="/maintainance.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart"></i> for robotics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100, // Adjusted for fixed navbar
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update URL without page reload
+                    if (history.pushState) {
+                        history.pushState(null, null, targetId);
+                    } else {
+                        location.hash = targetId;
+                    }
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const infoCards = document.querySelectorAll('.info-card');
+            const typeCards = document.querySelectorAll('.type-card');
+            const pathSteps = document.querySelectorAll('.path-step');
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            infoCards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+            
+            typeCards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+            
+            pathSteps.forEach((step, index) => {
+                const stepPosition = step.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (stepPosition < screenPosition) {
+                    setTimeout(() => {
+                        step.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+            
+            projectCards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            // Trigger first check
+            animateOnScroll();
+            
+            // Check if we're coming from an anchor link
+            if (window.location.hash) {
+                setTimeout(() => {
+                    const target = document.querySelector(window.location.hash);
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 100, // Adjusted for fixed navbar
+                            behavior: 'instant'
+                        });
+                    }
+                }, 100);
+            }
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

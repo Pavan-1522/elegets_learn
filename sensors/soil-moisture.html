@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Moisture Sensors - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/temp.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+        }
+
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+        }
+
+        /* Sensor-specific additions */
+        .moisture-icon {
+            color: #4CAF50;
+            margin-right: 8px;
+        }
+        
+        .dry-icon {
+            color: #FF9800;
+            margin-right: 8px;
+        }
+        
+        .wet-icon {
+            color: #2196F3;
+            margin-right: 8px;
+        }
+        
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(108, 99, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sensor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        .sensor-table th, .sensor-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+            min-width: 120px;
+        }
+        
+        .sensor-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .sensor-table tr:nth-child(even) {
+            background-color: rgba(108, 99, 255, 0.05);
+        }
+        
+        .wiring-diagram {
+            max-width: 100%;
+            margin: 1rem auto;
+            display: block;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .sensor-type-chip {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background-color: #8BC34A;
+            color: white;
+        }
+
+        /* Tab Styling */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(108, 99, 255, 0.1);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            border: 1px solid rgba(108, 99, 255, 0.3);
+        }
+        
+        .tab-btn:hover {
+            background: rgba(108, 99, 255, 0.2);
+        }
+        
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: rgba(108, 99, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .arduino-hero-img img {
+                max-width: 100%;
+                height: auto;
+            }
+            
+            .boards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .board-card {
+                flex-direction: column;
+            }
+            
+            .board-card-img {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .tabs {
+                justify-content: center;
+            }
+            
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .sensor-table {
+                font-size: 0.85rem;
+            }
+            
+            .sensor-table th, 
+            .sensor-table td {
+                padding: 0.5rem;
+            }
+            
+            .code-block {
+                overflow-x: auto;
+            }
+            
+            pre {
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tab-btn {
+                flex: 1 0 calc(50% - 0.5rem);
+                text-align: center;
+            }
+            
+            .board-card-content h3 {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets Learn</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/learnings/microControllers.html" class="active">Microcontrollers</a></li>
+                    <li><a href="/learnings/sensors.html">Sensors</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/maintainance.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="arduino-hero">
+        <div class="container">
+            <h1>Soil Moisture Sensors</h1>
+            <p>Complete guide to measuring soil moisture with resistive sensors</p>
+            <div class="arduino-hero-img">
+                <img src="https://lastminuteengineers.com/wp-content/uploads/2020/03/Soil-Moisture-Sensor-Pinout.png" alt="Soil Moisture Sensor">
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Soil Moisture Sensor Overview</h2>
+            <p>Soil moisture sensors measure the water content in soil by detecting changes in electrical resistance between two conductive probes.</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="features">Key Features</button>
+                <button class="tab-btn" data-tab="advantages">Advantages</button>
+                <button class="tab-btn" data-tab="usage">Common Uses</button>
+            </div>
+            
+            <div class="tab-content active" id="features">
+                <ul>
+                    <li><i class="fas fa-check-circle moisture-icon"></i> <strong>Resistive Measurement:</strong> Measures soil conductivity which correlates with moisture</li>
+                    <li><i class="fas fa-signal moisture-icon"></i> <strong>Dual Output:</strong> Provides both analog and digital signals</li>
+                    <li><i class="fas fa-sliders-h moisture-icon"></i> <strong>Adjustable Sensitivity:</strong> Digital output threshold can be adjusted</li>
+                    <li><i class="fas fa-shield-alt moisture-icon"></i> <strong>Corrosion Resistant:</strong> Gold-plated probes for longer life</li>
+                    <li><i class="fas fa-bolt moisture-icon"></i> <strong>Wide Voltage:</strong> Operates on 3.3V-5V DC</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="advantages">
+                <ul>
+                    <li><i class="fas fa-thumbs-up moisture-icon"></i> <strong>Simple to Use:</strong> Easy to interface with microcontrollers</li>
+                    <li><i class="fas fa-dollar-sign moisture-icon"></i> <strong>Low Cost:</strong> Affordable solution for moisture sensing</li>
+                    <li><i class="fas fa-clock moisture-icon"></i> <strong>Immediate Results:</strong> Provides real-time moisture readings</li>
+                    <li><i class="fas fa-hard-hat moisture-icon"></i> <strong>Durable:</strong> Withstands typical soil conditions</li>
+                    <li><i class="fas fa-battery-quarter moisture-icon"></i> <strong>No Power Needed:</strong> Passive sensing technology</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="usage">
+                <ul>
+                    <li><i class="fas fa-tint moisture-icon"></i> <strong>Smart Irrigation:</strong> Automated watering systems</li>
+                    <li><i class="fas fa-tractor moisture-icon"></i> <strong>Agricultural Monitoring:</strong> Crop health management</li>
+                    <li><i class="fas fa-leaf moisture-icon"></i> <strong>Gardening Automation:</strong> Home plant care</li>
+                    <li><i class="fas fa-flask moisture-icon"></i> <strong>Research:</strong> Soil science experiments</li>
+                    <li><i class="fas fa-tree moisture-icon"></i> <strong>Landscaping:</strong> Golf course maintenance</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Details Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Technical Specifications</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://lastminuteengineers.com/wp-content/uploads/2020/03/Soil-Moisture-Sensor-Module.png" alt="Soil Moisture Sensor Module">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Standard Module Features</h3>
+                        <div class="table-responsive">
+                            <table class="sensor-table">
+                                <tr>
+                                    <td>Operating Voltage</td>
+                                    <td>3.3V-5V</td>
+                                </tr>
+                                <tr>
+                                    <td>Output Signal</td>
+                                    <td>Analog & Digital</td>
+                                </tr>
+                                <tr>
+                                    <td>Probe Length</td>
+                                    <td>5cm-10cm (typical)</td>
+                                </tr>
+                                <tr>
+                                    <td>Current Consumption</td>
+                                    <td>~35mA</td>
+                                </tr>
+                                <tr>
+                                    <td>Interface</td>
+                                    <td>PH2.0-3P connector</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <span class="sensor-type-chip">Capacitive</span>
+                        <span class="sensor-type-chip">Resistive</span>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h3>Measurement Characteristics</h3>
+                        <ul>
+                            <li><i class="fas fa-temperature-high dry-icon"></i> <strong>Dry Soil:</strong> High resistance (~1023 analog reading)</li>
+                            <li><i class="fas fa-tint wet-icon"></i> <strong>Wet Soil:</strong> Low resistance (~300 analog reading)</li>
+                            <li><i class="fas fa-stopwatch moisture-icon"></i> <strong>Response Time:</strong> Nearly instantaneous</li>
+                            <li><i class="fas fa-ruler-vertical moisture-icon"></i> <strong>Measurement Depth:</strong> Probe length dependent</li>
+                            <li><i class="fas fa-balance-scale moisture-icon"></i> <strong>Calibration Needed:</strong> Varies by soil type</li>
+                        </ul>
+                        <h4>Typical Analog Readings</h4>
+                        <ul>
+                            <li><strong>Very Dry:</strong> 800-1023</li>
+                            <li><strong>Dry:</strong> 600-800</li>
+                            <li><strong>Moist:</strong> 400-600</li>
+                            <li><strong>Wet:</strong> 300-400</li>
+                            <li><strong>Water:</strong> <300</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Resistance vs Moisture Level</h3>
+            <img src="https://www.researchgate.net/publication/334426642/figure/fig4/AS:779860420476932@1562869511826/Soil-moisture-sensor-response-curve.png" alt="Soil Moisture Response Curve" class="wiring-diagram">
+        </div>
+    </section>
+
+    <!-- Circuit Design Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Circuit Design</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://lastminuteengineers.com/wp-content/uploads/2020/03/Soil-Moisture-Sensor-Module-Circuit.png" alt="Soil Moisture Sensor Circuit">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Module Components</h3>
+                        <ul>
+                            <li><i class="fas fa-barcode moisture-icon"></i> <strong>Probes:</strong> Two conductive electrodes</li>
+                            <li><i class="fas fa-microchip moisture-icon"></i> <strong>LM393 Comparator:</strong> For digital output</li>
+                            <li><i class="fas fa-sliders-h moisture-icon"></i> <strong>Potentiometer:</strong> Adjusts digital threshold</li>
+                            <li><i class="fas fa-wave-square moisture-icon"></i> <strong>Signal Conditioning:</strong> Prepares analog output</li>
+                            <li><i class="fas fa-lightbulb moisture-icon"></i> <strong>Power LED:</strong> Indicates module is powered</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h3>Wiring Guide</h3>
+                        <ol>
+                            <li><i class="fas fa-bolt moisture-icon"></i> <strong>VCC:</strong> Connect to 3.3V or 5V</li>
+                            <li><i class="fas fa-ground moisture-icon"></i> <strong>GND:</strong> Connect to ground</li>
+                            <li><i class="fas fa-wave-square moisture-icon"></i> <strong>AO:</strong> Connect to analog input for moisture readings</li>
+                            <li><i class="fas fa-digital-tachograph moisture-icon"></i> <strong>DO:</strong> Connect to digital input for threshold detection</li>
+                        </ol>
+                        <h4>Important Notes</h4>
+                        <ul>
+                            <li><i class="fas fa-ban moisture-icon"></i> Don't power continuously to prevent corrosion</li>
+                            <li><i class="fas fa-arrows-alt-v moisture-icon"></i> Insert probes vertically for consistent readings</li>
+                            <li><i class="fas fa-broom moisture-icon"></i> Keep probes clean and free of debris</li>
+                            <li><i class="fas fa-hourglass-half moisture-icon"></i> Allow stabilization time after insertion</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Typical Wiring Diagram</h3>
+            <img src="https://circuitdigest.com/sites/default/files/projectimage_mic/Interfacing-Soil-Moisture-Sensor-with-Arduino.png" alt="Soil Moisture Wiring Diagram" class="wiring-diagram">
+        </div>
+    </section>
+
+    <!-- Code Examples Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Code Examples</h2>
+            
+            <h3>Basic Arduino Example</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Basic Soil Moisture Sensor Example</span>
+<span class="code-keyword">#define</span> SOIL_MOISTURE_PIN A0
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">int</span> moistureValue = analogRead(SOIL_MOISTURE_PIN);
+    <span class="code-keyword">int</span> moisturePercent = <span class="code-function">map</span>(moistureValue, 1023, 300, 0, 100);
+    
+    Serial.print(<span class="code-string">"Raw Value: "</span>);
+    Serial.print(moistureValue);
+    Serial.print(<span class="code-string">" | Moisture: "</span>);
+    Serial.print(moisturePercent);
+    Serial.println(<span class="code-string">"%"</span>);
+    
+    delay(1000);
+}</code></pre>
+            </div>
+            
+            <h3>Advanced Example with Calibration</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Soil Moisture with Calibration</span>
+<span class="code-keyword">#define</span> SOIL_PIN A0
+
+<span class="code-keyword">int</span> dryValue = 1023; <span class="code-comment">// Value in dry soil</span>
+<span class="code-keyword">int</span> wetValue = 300;  <span class="code-comment">// Value in wet soil</span>
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+    calibrateSensor();
+}
+
+<span class="code-keyword">void</span> <span class="code-function">calibrateSensor</span>() {
+    Serial.println(<span class="code-string">"Dry calibration - place sensor in dry soil and enter value:"</span>);
+    <span class="code-keyword">while</span>(!Serial.available());
+    dryValue = Serial.parseInt();
+    
+    Serial.println(<span class="code-string">"Wet calibration - place sensor in wet soil and enter value:"</span>);
+    <span class="code-keyword">while</span>(!Serial.available());
+    wetValue = Serial.parseInt();
+    
+    Serial.print(<span class="code-string">"Calibration complete. Dry: "</span>);
+    Serial.print(dryValue);
+    Serial.print(<span class="code-string">" Wet: "</span>);
+    Serial.println(wetValue);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">int</span> sensorValue = analogRead(SOIL_PIN);
+    <span class="code-keyword">int</span> moisturePercent = <span class="code-function">map</span>(sensorValue, dryValue, wetValue, 0, 100);
+    
+    moisturePercent = <span class="code-function">constrain</span>(moisturePercent, 0, 100);
+    
+    Serial.print(<span class="code-string">"Soil Moisture: "</span>);
+    Serial.print(moisturePercent);
+    Serial.println(<span class="code-string">"%"</span>);
+    
+    delay(2000);
+}</code></pre>
+            </div>
+            
+            <h3>Automatic Irrigation Example</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Automatic Plant Watering System</span>
+<span class="code-keyword">#define</span> SOIL_PIN A0
+<span class="code-keyword">#define</span> RELAY_PIN 3
+<span class="code-keyword">#define</span> THRESHOLD 30 <span class="code-comment">// Water when moisture < 30%</span>
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    pinMode(RELAY_PIN, OUTPUT);
+    digitalWrite(RELAY_PIN, HIGH); <span class="code-comment">// Start with pump off</span>
+    Serial.begin(9600);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">int</span> moisture = readMoisture();
+    
+    <span class="code-keyword">if</span>(moisture < THRESHOLD) {
+        waterPlant();
+    }
+    
+    delay(3600000); <span class="code-comment">// Check every hour</span>
+}
+
+<span class="code-keyword">int</span> <span class="code-function">readMoisture</span>() {
+    <span class="code-keyword">int</span> sensorValue = analogRead(SOIL_PIN);
+    <span class="code-keyword">return</span> <span class="code-function">map</span>(sensorValue, 1023, 300, 0, 100);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">waterPlant</span>() {
+    Serial.println(<span class="code-string">"Watering plant..."</span>);
+    digitalWrite(RELAY_PIN, LOW); <span class="code-comment">// Turn pump on</span>
+    delay(5000); <span class="code-comment">// Water for 5 seconds</span>
+    digitalWrite(RELAY_PIN, HIGH); <span class="code-comment">// Turn pump off</span>
+    Serial.println(<span class="code-string">"Watering complete"</span>);
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Ideas Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Project Ideas</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Smart Plant Monitor</h4>
+                        <p>Monitor soil moisture and alert when watering is needed.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Soil Sensor</span>
+                            <span class="spec-chip">OLED</span>
+                            <span class="spec-chip">Buzzer</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Automated Irrigation</h4>
+                        <p>Water plants automatically when soil gets dry.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Soil Sensor</span>
+                            <span class="spec-chip">Water Pump</span>
+                            <span class="spec-chip">Relay</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Wireless Garden Monitor</h4>
+                        <p>Track soil moisture remotely with WiFi/Bluetooth.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Soil Sensor</span>
+                            <span class="spec-chip">ESP8266</span>
+                            <span class="spec-chip">Mobile App</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Agricultural Data Logger</h4>
+                        <p>Record soil moisture over time for analysis.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Soil Sensor</span>
+                            <span class="spec-chip">SD Card</span>
+                            <span class="spec-chip">RTC</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Multi-Plant System</h4>
+                        <p>Monitor several plants with one controller.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Multiple Sensors</span>
+                            <span class="spec-chip">Multiplexer</span>
+                            <span class="spec-chip">LCD</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Greenhouse Controller</h4>
+                        <p>Automate moisture, temp, and humidity.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Soil Sensor</span>
+                            <span class="spec-chip">DHT22</span>
+                            <span class="spec-chip">Relays</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Advanced Project: Smart Farm Monitoring System</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Components needed:</span>
+- Multiple soil moisture sensors
+- ESP32 with LoRa
+- Solar power system
+- Water valve control
+- Weather station sensors
+- Cloud database
+
+<span class="code-comment">// Features:</span>
+1. Distributed soil moisture monitoring
+2. Weather-based irrigation
+3. Remote monitoring via web/mobile
+4. Water usage optimization
+5. Predictive watering
+6. Alert system
+
+<span class="code-comment">// Implementation Tips:</span>
+- Use sleep modes for battery operation
+- Implement mesh networking for large areas
+- Add rain detection to skip watering
+- Create moisture maps of fields
+- Integrate weather forecasts
+- Add manual override capability</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Practices Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Best Practices & Tips</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Installation</h4>
+                        <ul>
+                            <li><i class="fas fa-arrow-down moisture-icon"></i> Insert probes vertically for consistent readings</li>
+                            <li><i class="fas fa-seedling moisture-icon"></i> Place near plant roots where moisture matters</li>
+                            <li><i class="fas fa-handshake moisture-icon"></i> Ensure good soil contact around probes</li>
+                            <li><i class="fas fa-expand moisture-icon"></i> Space multiple sensors appropriately</li>
+                            <li><i class="fas fa-umbrella moisture-icon"></i> Protect electronics from water</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Calibration</h4>
+                        <ul>
+                            <li><i class="fas fa-ruler moisture-icon"></i> Calibrate for each soil type</li>
+                            <li><i class="fas fa-sliders-h moisture-icon"></i> Measure dry and wet extremes</li>
+                            <li><i class="fas fa-flask moisture-icon"></i> Account for fertilizer conductivity</li>
+                            <li><i class="fas fa-calendar-alt moisture-icon"></i> Re-calibrate seasonally</li>
+                            <li><i class="fas fa-book moisture-icon"></i> Document calibration values</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Maintenance</h4>
+                        <ul>
+                            <li><i class="fas fa-broom moisture-icon"></i> Clean probes regularly</li>
+                            <li><i class="fas fa-search moisture-icon"></i> Check for corrosion</li>
+                            <li><i class="fas fa-power-off moisture-icon"></i> Don't leave powered continuously</li>
+                            <li><i class="fas fa-box moisture-icon"></i> Store properly when not in use</li>
+                            <li><i class="fas fa-sync-alt moisture-icon"></i> Replace if readings become unstable</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Common Mistakes to Avoid</h3>
+            <div class="table-responsive">
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>Mistake</th>
+                            <th>Consequence</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>No calibration</td>
+                            <td>Inaccurate readings</td>
+                            <td>Always calibrate for your specific soil</td>
+                        </tr>
+                        <tr>
+                            <td>Continuous power</td>
+                            <td>Probe corrosion</td>
+                            <td>Power only when taking readings</td>
+                        </tr>
+                        <tr>
+                            <td>Poor probe placement</td>
+                            <td>Irrelevant measurements</td>
+                            <td>Place near root zone</td>
+                        </tr>
+                        <tr>
+                            <td>Ignoring soil type</td>
+                            <td>Wrong moisture assessment</td>
+                            <td>Adjust thresholds for soil characteristics</td>
+                        </tr>
+                        <tr>
+                            <td>No maintenance</td>
+                            <td>Degraded performance</td>
+                            <td>Regular cleaning and inspection</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors & Modules</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Tab Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active state on buttons
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if(content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+            
+            sections.forEach(section => {
+                const sectionPosition = section.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (sectionPosition < screenPosition) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'all 0.5s ease';
+            });
+            
+            // Trigger first check
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

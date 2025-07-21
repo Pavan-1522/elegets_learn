@@ -1,0 +1,384 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        footer{
+            background-color: #16213E;
+        }
+
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(108, 99, 255, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Arduino Hero Section */
+        .arduino-hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .arduino-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero-img {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .arduino-hero-img img {
+            height: 300px;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .section.dark-mode {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Arduino Boards Grid */
+        .boards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .board-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .board-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .board-card-img {
+            height: 200px;
+            background: #f5f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .board-card-img img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .board-card-content {
+            padding: 1.5rem;
+        }
+
+        .board-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .board-card-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .spec-chip {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Pinout Section */
+        .pinout-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .pinout-diagram {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .pin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .pin-table th, .pin-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .pin-table th {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .pin-table tr:hover {
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #718096;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2D3748;
+            color: #F7FAFC;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .code-keyword {
+            color: #FF79C6;
+        }
+
+        .code-function {
+            color: #50FA7B;
+        }
+
+        .code-comment {
+            color: #6272A4;
+            font-style: italic;
+        }
+
+        .code-number {
+            color: #BD93F9;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .arduino-hero {
+                padding: 6rem 0 2rem;
+            }
+            
+            .arduino-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .arduino-hero-img {
+                display: none;
+            }
+            
+            .boards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pinout-diagram {
+                width: 100%;
+            }
+        }
+
+        /* Dark Mode Toggle Styles */
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            margin-left: 1.5rem;
+        }
+
+        .theme-toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .theme-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .theme-slider {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        input:checked + .theme-slider:before {
+            transform: translateX(24px);
+            background-color: var(--accent);
+        }

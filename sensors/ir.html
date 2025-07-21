@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IR Sensors - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+            --tab-inactive: #E2E8F0;
+            --tab-inactive-text: #718096;
+        }
+
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+            --tab-inactive: #2D3748;
+            --tab-inactive-text: #A0AEC0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(108, 99, 255, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Hero Section */
+        .arduino-hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .arduino-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero-img {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.2;
+            z-index: 1;
+        }
+        footer {
+            background: var(--dark);
+            color: var(--light);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .arduino-hero-img img {
+            height: 300px;
+            max-width: 100%;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .section.dark-mode {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Boards Grid */
+        .boards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .board-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .board-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .board-card-img {
+            height: 200px;
+            background: #f5f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .board-card-img img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .board-card-content {
+            padding: 1.5rem;
+        }
+
+        .board-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .board-card-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .spec-chip {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Wiring Diagram */
+        .wiring-diagram {
+            max-width: 100%;
+            margin: 1rem auto;
+            display: block;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Sensor Tables */
+        .sensor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .sensor-table th, .sensor-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .sensor-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .sensor-table tr:nth-child(even) {
+            background-color: rgba(108, 99, 255, 0.05);
+        }
+
+        /* Enhanced Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            background: var(--card-bg);
+            padding: 0.5rem;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--tab-inactive);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--tab-inactive-text);
+            position: relative;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            margin: 0;
+            flex: 1 1 auto;
+            min-width: 120px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .tab-btn:hover {
+            background: rgba(108, 99, 255, 0.2);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 4px rgba(108, 99, 255, 0.2);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-top: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2D3748;
+            color: #F7FAFC;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .code-keyword {
+            color: #FF79C6;
+        }
+
+        .code-function {
+            color: #50FA7B;
+        }
+
+        .code-comment {
+            color: #6272A4;
+            font-style: italic;
+        }
+
+        .code-number {
+            color: #BD93F9;
+        }
+
+        .code-string {
+            color: #F1FA8C;
+        }
+
+        /* Sensor-specific additions */
+        .ir-icon {
+            color: #FF5722;
+            margin-right: 8px;
+        }
+        
+        .reflectance-icon {
+            color: #4CAF50;
+            margin-right: 8px;
+        }
+        
+        .proximity-icon {
+            color: #2196F3;
+            margin-right: 8px;
+        }
+        
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(108, 99, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sensor-type-chip {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background-color: #FF9800;
+            color: white;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .arduino-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .tab-btn {
+                min-width: 100px;
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .arduino-hero {
+                padding: 6rem 0 2rem;
+            }
+            
+            .arduino-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .arduino-hero p {
+                font-size: 1rem;
+            }
+            
+            .arduino-hero-img {
+                display: none;
+            }
+            
+            .boards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .tab-btn {
+                flex: 1 1 100%;
+                border-radius: 6px;
+                margin-bottom: 0.5rem;
+            }
+            
+            .tab-content {
+                border-radius: 0 0 6px 6px;
+            }
+            
+            /* Make tables scrollable on mobile */
+            .sensor-table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .arduino-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .board-card-content {
+                padding: 1rem;
+            }
+            
+            .board-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .spec-chip, .feature-badge {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.6rem;
+            }
+            
+            .code-block {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets Learn</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/learnings/microControllers.html" class="active">Microcontrollers</a></li>
+                    <li><a href="/learnings/sensors.html">Sensors</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/maintainance.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="arduino-hero">
+        <div class="container">
+            <h1>IR Sensors</h1>
+            <p>Complete guide to infrared sensors for proximity, reflectance, and object detection</p>
+            <div class="arduino-hero-img">
+                <img src="https://components101.com/sites/default/files/component_pin/IR-Sensor-Pinout.png" alt="IR Sensor Module">
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">IR Sensor Overview</h2>
+            <p>IR sensors detect infrared light, typically used for proximity sensing, object detection, and reflectance measurement in the 850nm-950nm wavelength range.</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="features">Key Features</button>
+                <button class="tab-btn" data-tab="advantages">Advantages</button>
+                <button class="tab-btn" data-tab="usage">Common Uses</button>
+            </div>
+            
+            <div class="tab-content active" id="features">
+                <ul>
+                    <li><strong>Non-contact Detection:</strong> Detects objects without physical contact</li>
+                    <li><strong>Fast Response:</strong> Typically responds in microseconds</li>
+                    <li><strong>Adjustable Sensitivity:</strong> Most modules have potentiometer for threshold adjustment</li>
+                    <li><strong>Digital/Analog Output:</strong> Provides both digital (on/off) and analog (intensity) outputs</li>
+                    <li><strong>Wavelength:</strong> Typically 850nm-950nm infrared light</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="advantages">
+                <ul>
+                    <li><strong>Low Cost:</strong> Inexpensive sensing solution</li>
+                    <li><strong>Simple Interface:</strong> Easy to connect to microcontrollers</li>
+                    <li><strong>Works in Darkness:</strong> Doesn't require visible light</li>
+                    <li><strong>Reliable:</strong> Not affected by most ambient light</li>
+                    <li><strong>Versatile:</strong> Many applications from line following to object detection</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="usage">
+                <ul>
+                    <li><strong>Obstacle Detection:</strong> Robotics and automation</li>
+                    <li><strong>Line Following:</strong> Robot navigation</li>
+                    <li><strong>Proximity Sensing:</strong> Object presence detection</li>
+                    <li><strong>Reflectance Measurement:</strong> Surface characterization</li>
+                    <li><strong>Object Counting:</strong> Industrial applications</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sensor Types Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">IR Sensor Types</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://components101.com/sites/default/files/component_pin/IR-Sensor-Pinout.png" alt="Standard IR Sensor Module">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Standard IR Sensor Module</h3>
+                        <ul>
+                            <li>IR LED transmitter and photodiode receiver</li>
+                            <li>3-pin interface (VCC, GND, OUT)</li>
+                            <li>Adjustable detection distance (2cm-30cm)</li>
+                            <li>Digital (HIGH/LOW) output</li>
+                            <li>Onboard potentiometer for sensitivity</li>
+                        </ul>
+                        <span class="sensor-type-chip">Common</span>
+                        <span class="sensor-type-chip">Low Cost</span>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.electroschematics.com/wp-content/uploads/2013/07/ir-reflective-sensor.jpg" alt="Reflective IR Sensor">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Reflective IR Sensor</h3>
+                        <ul>
+                            <li>Detects reflected IR light</li>
+                            <li>Used for line following and surface detection</li>
+                            <li>Analog output for reflectance measurement</li>
+                            <li>Shorter range (typically <5cm)</li>
+                            <li>More sensitive to surface properties</li>
+                        </ul>
+                        <span class="sensor-type-chip">Reflective</span>
+                        <span class="sensor-type-chip">Analog</span>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.pololu.com/blog/17/photo2.jpg" alt="IR Break Beam Sensor">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>IR Break Beam Sensor</h3>
+                        <ul>
+                            <li>Separate transmitter and receiver units</li>
+                            <li>Detects objects breaking the beam</li>
+                            <li>Longer range (up to several meters)</li>
+                            <li>Higher reliability for object counting</li>
+                            <li>More expensive than reflective sensors</li>
+                        </ul>
+                        <span class="sensor-type-chip">Through-beam</span>
+                        <span class="sensor-type-chip">Precise</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Comparison of IR Sensor Types</h3>
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Standard Module</th>
+                        <th>Reflective</th>
+                        <th>Break Beam</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Detection Method</td>
+                        <td>Reflective (object reflects IR back)</td>
+                        <td>Reflective (surface reflectance)</td>
+                        <td>Beam interruption</td>
+                    </tr>
+                    <tr>
+                        <td>Typical Range</td>
+                        <td>2cm-30cm</td>
+                        <td>0.5cm-5cm</td>
+                        <td>5cm-5m</td>
+                    </tr>
+                    <tr>
+                        <td>Output Type</td>
+                        <td>Digital</td>
+                        <td>Analog/Digital</td>
+                        <td>Digital</td>
+                    </tr>
+                    <tr>
+                        <td>Accuracy</td>
+                        <td>Medium</td>
+                        <td>High (for surface detection)</td>
+                        <td>Very High</td>
+                    </tr>
+                    <tr>
+                        <td>Price Range</td>
+                        <td>$0.50-$2</td>
+                        <td>$1-$5</td>
+                        <td>$5-$20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- How They Work Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">How IR Sensors Work</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.researchgate.net/publication/334426642/figure/fig1/AS:779860420476928@1562869511822/Working-principle-of-IR-sensor.png" alt="IR Sensor Working Principle">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Working Principle</h3>
+                        <ol>
+                            <li><strong>IR Emission:</strong> IR LED emits infrared light (typically 850nm-950nm)</li>
+                            <li><strong>Reflection/Interruption:</strong> Light either reflects off object or is interrupted</li>
+                            <li><strong>Detection:</strong> Photodiode or phototransistor detects IR light</li>
+                            <li><strong>Signal Processing:</strong> Onboard circuit processes the signal</li>
+                            <li><strong>Output:</strong> Provides digital or analog output based on detection</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h3>Key Components</h3>
+                        <ul>
+                            <li><strong>IR LED:</strong> Emits infrared light (invisible to human eye)</li>
+                            <li><strong>Photodiode/Phototransistor:</strong> Detects reflected IR light</li>
+                            <li><strong>Comparator Circuit:</strong> Converts analog signal to digital output</li>
+                            <li><strong>Potentiometer:</strong> Adjusts detection threshold</li>
+                            <li><strong>Output Indicator LED:</strong> Visual detection indicator</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Typical Response Characteristics</h3>
+            <img src="https://www.researchgate.net/profile/Siti-Salmah/publication/332864118/figure/fig2/AS:763022429573121@1559027037760/Graph-of-IR-sensor-response-to-distance.ppm" alt="IR Sensor Response Curve" class="wiring-diagram">
+            
+            <div class="board-card">
+                <div class="board-card-content">
+                    <h3>Detection Optimization</h3>
+                    <ul>
+                        <li><strong>Positioning:</strong> Mount sensor perpendicular to target surface</li>
+                        <li><strong>Sensitivity Adjustment:</strong> Set threshold for reliable detection</li>
+                        <li><strong>Surface Considerations:</strong> Different materials reflect IR differently</li>
+                        <li><strong>Environmental Factors:</strong> Account for ambient IR sources</li>
+                        <li><strong>Multiple Sensors:</strong> Combine for better coverage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pinout and Wiring Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Pinout and Wiring</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://components101.com/sites/default/files/component_pin/IR-Sensor-Pinout.png" alt="IR Sensor Pinout">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Standard 3-Pin Module</h3>
+                        <ol>
+                            <li><strong>VCC (3.3V-5V):</strong> Power supply</li>
+                            <li><strong>GND:</strong> Ground connection</li>
+                            <li><strong>OUT:</strong> Digital output (LOW when object detected)</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.electroniclinic.com/wp-content/uploads/2020/04/IR-sensor-module-circuit-diagram.jpg" alt="IR Sensor Circuit">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Module Components</h3>
+                        <ul>
+                            <li><strong>IR LED:</strong> Infrared light emitter</li>
+                            <li><strong>Photodiode:</strong> IR light detector</li>
+                            <li><strong>LM393 Comparator:</strong> For digital output</li>
+                            <li><strong>Potentiometer:</strong> Adjusts detection threshold</li>
+                            <li><strong>Status LED:</strong> Visual detection indicator</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Typical Wiring Diagram</h3>
+            <img src="https://circuitdigest.com/sites/default/files/projectimage_mic/Interfacing-IR-Sensor-with-Arduino.png" alt="IR Sensor Wiring Diagram" class="wiring-diagram">
+            
+            <h3>Important Wiring Notes</h3>
+            <ul>
+                <li><strong>Power Requirements:</strong> Typically 3.3V-5V, low current (~20mA)</li>
+                <li><strong>Digital Output:</strong> Active LOW (goes LOW when object detected)</li>
+                <li><strong>Pull-Up Resistor:</strong> May need external 10KΩ pull-up for digital output</li>
+                <li><strong>Sensor Placement:</strong> Avoid direct sunlight or strong IR sources</li>
+                <li><strong>Calibration:</strong> Adjust potentiometer for desired detection distance</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Library Usage Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">IR Sensor Code Examples</h2>
+            
+            <h3>Basic Arduino Example</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Basic IR Sensor Example</span>
+<span class="code-keyword">#define</span> IR_SENSOR_PIN 2
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+    pinMode(IR_SENSOR_PIN, INPUT);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">int</span> sensorState = digitalRead(IR_SENSOR_PIN);
+    
+    <span class="code-keyword">if</span>(sensorState == LOW) {
+        Serial.println(<span class="code-string">"Object detected!"</span>);
+    } <span class="code-keyword">else</span> {
+        Serial.println(<span class="code-string">"No object detected"</span>);
+    }
+    delay(100);
+}</code></pre>
+            </div>
+            
+            <h3>Analog IR Sensor Example</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Analog IR Sensor Example</span>
+<span class="code-keyword">#define</span> IR_ANALOG_PIN A0
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">int</span> sensorValue = analogRead(IR_ANALOG_PIN);
+    Serial.print(<span class="code-string">"IR Reflectance: "</span>);
+    Serial.println(sensorValue);
+    
+    <span class="code-comment">// Adjust threshold based on your sensor and surface</span>
+    <span class="code-keyword">if</span>(sensorValue > 500) {
+        Serial.println(<span class="code-string">"Light surface detected"</span>);
+    } <span class="code-keyword">else</span> {
+        Serial.println(<span class="code-string">"Dark surface detected"</span>);
+    }
+    delay(200);
+}</code></pre>
+            </div>
+            
+            <h3>Object Counter Example</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// IR Sensor Object Counter</span>
+<span class="code-keyword">#define</span> IR_PIN 2
+
+<span class="code-keyword">int</span> objectCount = 0;
+<span class="code-keyword">bool</span> lastState = HIGH;
+<span class="code-keyword">unsigned long</span> lastDebounceTime = 0;
+<span class="code-keyword">unsigned long</span> debounceDelay = 50;
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+    pinMode(IR_PIN, INPUT);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">int</span> reading = digitalRead(IR_PIN);
+    
+    <span class="code-comment">// Debounce the input</span>
+    <span class="code-keyword">if</span>(reading != lastState) {
+        lastDebounceTime = millis();
+    }
+    
+    <span class="code-keyword">if</span>((millis() - lastDebounceTime) > debounceDelay) {
+        <span class="code-keyword">if</span>(reading == LOW && lastState == HIGH) {
+            objectCount++;
+            Serial.print(<span class="code-string">"Object count: "</span>);
+            Serial.println(objectCount);
+        }
+    }
+    
+    lastState = reading;
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Ideas Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Project Ideas</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Line Following Robot</h4>
+                        <p>Use multiple IR sensors to follow a black line on white surface.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">IR Sensors</span>
+                            <span class="spec-chip">Motors</span>
+                            <span class="spec-chip">Arduino</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Object Counter</h4>
+                        <p>Count objects passing on a conveyor belt using IR break beam.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">IR Break Beam</span>
+                            <span class="spec-chip">LCD Display</span>
+                            <span class="spec-chip">Counter</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Proximity Alarm</h4>
+                        <p>Alert when objects get too close to sensitive equipment.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">IR Sensor</span>
+                            <span class="spec-chip">Buzzer</span>
+                            <span class="spec-chip">LED</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Smart Trash Can</h4>
+                        <p>Automatically open lid when hand is detected.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">IR Sensor</span>
+                            <span class="spec-chip">Servo</span>
+                            <span class="spec-chip">Battery</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Surface Reflectance Meter</h4>
+                        <p>Measure and compare different material surfaces.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Analog IR</span>
+                            <span class="spec-chip">OLED</span>
+                            <span class="spec-chip">Data Log</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>IR Remote Decoder</h4>
+                        <p>Use IR receiver to decode TV remote signals.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">IR Receiver</span>
+                            <span class="spec-chip">Arduino</span>
+                            <span class="spec-chip">Serial Monitor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Advanced Project: Gesture Control System</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Components needed:</span>
+- 5x IR sensors (array)
+- Arduino/ESP32
+- Servo motors
+- OLED display
+- Power supply
+
+<span class="code-comment">// Features:</span>
+1. Detect hand gestures (left, right, up, down)
+2. Control devices based on gestures
+3. Visual feedback on OLED
+4. Calibration mode
+5. Multiple control modes
+
+<span class="code-comment">// Implementation Tips:</span>
+- Arrange IR sensors in cross pattern
+- Implement gesture recognition algorithm
+- Add debounce for reliable detection
+- Create calibration routine
+- Add visual feedback for user
+- Consider wireless control option</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Practices Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Best Practices & Tips</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Calibration</h4>
+                        <ul>
+                            <li>Adjust potentiometer for desired detection range</li>
+                            <li>Test with actual target objects</li>
+                            <li>Account for surface reflectivity</li>
+                            <li>Document settings for reproducibility</li>
+                            <li>Re-calibrate if environment changes</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Installation</h4>
+                        <ul>
+                            <li>Mount at proper height/distance</li>
+                            <li>Ensure clear path for IR beam</li>
+                            <li>Protect from dust and moisture</li>
+                            <li>Avoid direct sunlight interference</li>
+                            <li>Consider multiple sensors for reliability</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Signal Processing</h4>
+                        <ul>
+                            <li>Use debouncing for digital signals</li>
+                            <li>Implement moving average for analog</li>
+                            <li>Set appropriate detection thresholds</li>
+                            <li>Add hysteresis to prevent flickering</li>
+                            <li>Log data for performance analysis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Common Mistakes to Avoid</h3>
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>Mistake</th>
+                        <th>Consequence</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Improper calibration</td>
+                        <td>False detections or missed objects</td>
+                        <td>Calibrate in actual operating environment</td>
+                    </tr>
+                    <tr>
+                        <td>Ignoring ambient light</td>
+                        <td>Unreliable operation</td>
+                        <td>Shield sensor or account in software</td>
+                    </tr>
+                    <tr>
+                        <td>No signal processing</td>
+                        <td>Noisy, unstable readings</td>
+                        <td>Implement filtering and debouncing</td>
+                    </tr>
+                    <tr>
+                        <td>Wrong sensor type</td>
+                        <td>Poor performance</td>
+                        <td>Choose sensor appropriate for application</td>
+                    </tr>
+                    <tr>
+                        <td>No maintenance</td>
+                        <td>Degraded performance over time</td>
+                        <td>Regularly clean and check calibration</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors & Modules</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Tab Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active state on buttons
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if(content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+            
+            sections.forEach(section => {
+                const sectionPosition = section.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (sectionPosition < screenPosition) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'all 0.5s ease';
+            });
+            
+            // Trigger first check
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

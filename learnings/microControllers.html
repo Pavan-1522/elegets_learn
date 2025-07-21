@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microcontrollers Hub - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+        }
+
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles (same as main site) */
+        header {
+            background: rgba(108, 99, 255, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Microcontrollers Hub Specific Styles */
+        .microcontroller-hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+        }
+
+        .microcontroller-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .microcontroller-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .platform-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 3rem 0;
+        }
+
+        .platform-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .platform-card-img {
+            height: 200px;
+            background: #f5f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .platform-card-img img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+
+        .platform-card:hover .platform-card-img img {
+            transform: scale(1.05);
+        }
+
+        .platform-card-content {
+            padding: 1.5rem;
+        }
+
+        .platform-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .platform-card p {
+            color: #718096;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .board-count {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer Styles (same as main site) */
+        footer {
+            background-color: #16213E;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .microcontroller-hero {
+                padding: 6rem 0 2rem;
+            }
+            
+            .microcontroller-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .platform-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dark Mode Toggle Styles */
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            margin-left: 1.5rem;
+        }
+
+        .theme-toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .theme-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .theme-slider {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        input:checked + .theme-slider:before {
+            transform: translateX(24px);
+            background-color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/learnings/microControllers.html" class="active">Microcontrollers</a></li>
+                    <li><a href="/maintainance.html">Projects</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/maintainance.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="microcontroller-hero">
+        <div class="container">
+            <h1>Microcontrollers Hub</h1>
+            <p>Explore our comprehensive guides for all popular microcontroller platforms</p>
+            <div class="platform-filter">
+                <button class="filter-btn active" data-filter="all">All Platforms</button>
+                <button class="filter-btn" data-filter="arduino">Arduino</button>
+                <button class="filter-btn" data-filter="esp">ESP Series</button>
+                <button class="filter-btn" data-filter="other">Others</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platforms Grid -->
+    <div class="container">
+        <div class="platform-grid">
+            <!-- Arduino Family -->
+            <div class="platform-card" data-category="arduino">
+                <div class="platform-card-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Arduino_Uno_-_R3.jpg" alt="Arduino Family">
+                </div>
+                <span class="board-count">6 boards</span>
+                <div class="platform-card-content">
+                    <h3>Arduino Family</h3>
+                    <p>Beginner-friendly development boards with simple IDE and vast community support</p>
+                    <a href="/microControllers/arduino.html" class="btn">Explore Boards</a>
+                </div>
+            </div>
+
+            <!-- ESP Series -->
+            <div class="platform-card" data-category="esp">
+                <div class="platform-card-img">
+                    <img src="http://th.led-diode.com/Content/uploads/2022459623/202211231748118e1625a21b23493cb47e495cabfbfa32.jpg" alt="ESP Series">
+                </div>
+                <span class="board-count">3 boards</span>
+                <div class="platform-card-content">
+                    <h3>ESP Series</h3>
+                    <p>Powerful WiFi-enabled microcontrollers for IoT applications</p>
+                    <a href="/microControllers/esp.html" class="btn">Explore Boards</a>
+                </div>
+            </div>
+
+            <!-- 8051 -->
+            <div class="platform-card" data-category="other">
+                <div class="platform-card-img">
+                    <img src="https://www.campuscomponent.com/Getting%20started%20with%208051%20microcontroller%201.png" alt="8051 Microcontroller">
+                </div>
+                <span class="board-count">1 board</span>
+                <div class="platform-card-content">
+                    <h3>8051 Microcontroller</h3>
+                    <p>Classic 8-bit microcontroller widely used in embedded systems</p>
+                    <a href="/microControllers/8051.html" class="btn">Learn More</a>
+                </div>
+            </div>
+
+            <!-- STM32 -->
+            <div class="platform-card" data-category="other">
+                <div class="platform-card-img">
+                    <img src="https://in.element14.com/productimages/large/en_GB/GE64LQFP_STM32-40.jpg" alt="STM32">
+                </div>
+                <span class="board-count">4 boards</span>
+                <div class="platform-card-content">
+                    <h3>STM32 Family</h3>
+                    <p>ARM Cortex-M based microcontrollers for professional applications</p>
+                    <a href="/microControllers/stm32.html" class="btn">Explore Boards</a>
+                </div>
+            </div>
+
+            <!-- Raspberry Pi Pico -->
+            <div class="platform-card" data-category="other">
+                <div class="platform-card-img">
+                    <img src="http://www.kevsrobots.com/assets/img/blog/raspberrypi5/raspberrypi5.jpg" alt="Raspberry Pi Pico">
+                </div>
+                <span class="board-count">2 boards</span>
+                <div class="platform-card-content">
+                    <h3>RPi Pico</h3>
+                    <p>Raspberry Pi's microcontroller board with dual-core ARM processor</p>
+                    <a href="/microControllers/rpi.html" class="btn">Learn More</a>
+                </div>
+            </div>
+
+            <!-- PIC Microcontrollers -->
+            <div class="platform-card" data-category="other">
+                <div class="platform-card-img">
+                    <img src="https://www.microchip.com/content/dam/mchp/documents/OTH/ProductDocuments/MediaGallery/16F17146-20PIN.png" alt="PIC Microcontrollers">
+                </div>
+                <span class="board-count">5 boards</span>
+                <div class="platform-card-content">
+                    <h3>PIC Family</h3>
+                    <p>Microchip's popular 8-bit, 16-bit and 32-bit microcontrollers</p>
+                    <a href="pic.html" class="btn">Explore Boards</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+        <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors & Modules</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/navbar.js"></script>
+    <script src="js/theme-toggle.js"></script>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Platform Filter Functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const platformCards = document.querySelectorAll('.platform-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active state on buttons
+                filterBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                
+                // Filter cards
+                platformCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.platform-card');
+            
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.platform-card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+            });
+            
+            // Trigger first check
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

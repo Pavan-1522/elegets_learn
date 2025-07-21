@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Guide - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+        }
+
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(108, 99, 255, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Arduino Hero Section */
+        .arduino-hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .arduino-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero-img {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .arduino-hero-img img {
+            height: 300px;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .section.dark-mode {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Arduino Boards Grid */
+        .boards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .board-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .board-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .board-card-img {
+            height: 200px;
+            background: #f5f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .board-card-img img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .board-card-content {
+            padding: 1.5rem;
+        }
+
+        .board-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .board-card-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .spec-chip {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Pinout Section */
+        .pinout-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .pinout-diagram {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .pin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .pin-table th, .pin-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            min-width: 120px;
+        }
+
+        .pin-table th {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .pin-table tr:hover {
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+            display: block;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            min-width: 100px;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(108, 99, 255, 0.05);
+        }
+        footer{
+            background-color: #16213E;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 5px;
+        }
+
+        .tabs::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .tabs::-webkit-scrollbar-thumb {
+            background: rgba(108, 99, 255, 0.3);
+            border-radius: 5px;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #718096;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2D3748;
+            color: #F7FAFC;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .code-keyword {
+            color: #FF79C6;
+        }
+
+        .code-function {
+            color: #50FA7B;
+        }
+
+        .code-comment {
+            color: #6272A4;
+            font-style: italic;
+        }
+
+        .code-number {
+            color: #BD93F9;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .arduino-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .board-card-img {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .arduino-hero {
+                padding: 6rem 0 2rem;
+            }
+            
+            .arduino-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .arduino-hero p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .arduino-hero-img {
+                display: none;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .boards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .board-card-img {
+                height: 160px;
+            }
+            
+            .board-card-content {
+                padding: 1.2rem;
+            }
+            
+            .pinout-section {
+                padding: 1.5rem;
+            }
+            
+            .code-block {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .arduino-hero {
+                padding: 5rem 0 1.5rem;
+            }
+            
+            .arduino-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 2rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .boards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .board-card-img {
+                height: 140px;
+            }
+            
+            .pinout-section {
+                padding: 1rem;
+            }
+            
+            .pin-table th, 
+            .pin-table td,
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .arduino-hero h1 {
+                font-size: 1.6rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .board-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .spec-chip {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.6rem;
+            }
+            
+            .pin-table th, 
+            .pin-table td,
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.5rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Dark Mode Toggle Styles */
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            margin-left: 1.5rem;
+        }
+
+        .theme-toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .theme-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .theme-slider {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        input:checked + .theme-slider:before {
+            transform: translateX(24px);
+            background-color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/learnings/microControllers.html" class="active">Microcontrollers</a></li>
+                    <li><a href="/learnings/sensors.html">Sensors</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="arduino-hero">
+        <div class="container">
+            <h1>Arduino Microcontrollers</h1>
+            <p>The complete guide to Arduino boards - from beginner projects to advanced applications</p>
+            <div class="arduino-hero-img">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Arduino_Uno_-_R3.jpg" alt="Arduino Uno">
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">What is Arduino?</h2>
+            <p>Arduino is an open-source electronics platform based on easy-to-use hardware and software. Arduino boards are able to read inputs - light on a sensor, a finger on a button, or a Twitter message - and turn it into an output - activating a motor, turning on an LED, publishing something online.</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="features">Key Features</button>
+                <button class="tab-btn" data-tab="advantages">Advantages</button>
+                <button class="tab-btn" data-tab="usage">Common Uses</button>
+            </div>
+            
+            <div class="tab-content active" id="features">
+                <ul>
+                    <li><strong>Simple IDE:</strong> Easy-to-use programming environment based on Processing</li>
+                    <li><strong>Cross-platform:</strong> Runs on Windows, Mac OS X, and Linux</li>
+                    <li><strong>Open Source:</strong> Both hardware and software are open source</li>
+                    <li><strong>Large Community:</strong> Massive support from makers worldwide</li>
+                    <li><strong>Plug-and-play:</strong> No need for external programmers (in most cases)</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="advantages">
+                <ul>
+                    <li><strong>Beginner Friendly:</strong> Perfect for those new to electronics and programming</li>
+                    <li><strong>Versatile:</strong> Can be used for simple to complex projects</li>
+                    <li><strong>Affordable:</strong> Much cheaper than many other microcontroller platforms</li>
+                    <li><strong>Expandable:</strong> Huge ecosystem of shields and add-ons</li>
+                    <li><strong>Educational:</strong> Used in schools and universities worldwide</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="usage">
+                <ul>
+                    <li><strong>Prototyping:</strong> Quickly test ideas before final implementation</li>
+                    <li><strong>Home Automation:</strong> Control lights, appliances, and security systems</li>
+                    <li><strong>Robotics:</strong> Power brains of robots and automated systems</li>
+                    <li><strong>IoT Projects:</strong> Connect devices to the internet (with WiFi/Bluetooth boards)</li>
+                    <li><strong>Art Installations:</strong> Create interactive art and exhibits</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arduino Boards Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Arduino Board Types</h2>
+            <p>Arduino offers a wide range of boards with different specifications for various applications. Here are the most popular Arduino boards:</p>
+            
+            <div class="boards-grid">
+                <!-- Arduino Uno -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Arduino_Uno_-_R3.jpg" alt="Arduino Uno">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Arduino Uno R3</h3>
+                        <p>The standard board for beginners with all the basic features</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">ATmega328P</span>
+                            <span class="spec-chip">16MHz</span>
+                            <span class="spec-chip">32KB Flash</span>
+                            <span class="spec-chip">14 Digital I/O</span>
+                            <span class="spec-chip">6 Analog</span>
+                        </div>
+                        <a href="#uno" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Arduino Mega -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://cdn-reichelt.de/bilder/web/xxl_ws/A300/ARDUINO_MEGA.png" alt="Arduino Mega">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Arduino Mega 2560</h3>
+                        <p>More I/O pins and memory for complex projects</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">ATmega2560</span>
+                            <span class="spec-chip">16MHz</span>
+                            <span class="spec-chip">256KB Flash</span>
+                            <span class="spec-chip">54 Digital I/O</span>
+                            <span class="spec-chip">16 Analog</span>
+                        </div>
+                        <a href="#mega" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Arduino Nano -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.flyrobo.in/image/cache/catalog/product/arduino-nano-r3-board-with-ch340-chip-soldered-1024x1024.jpg" alt="Arduino Nano">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Arduino Nano</h3>
+                        <p>Compact version of the Uno for space-constrained projects</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">ATmega328P</span>
+                            <span class="spec-chip">16MHz</span>
+                            <span class="spec-chip">32KB Flash</span>
+                            <span class="spec-chip">22 Digital I/O</span>
+                            <span class="spec-chip">8 Analog</span>
+                        </div>
+                        <a href="#nano" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Arduino Due -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.flyrobo.in/image/cache/catalog/product/arduino-nano-r3-board-with-ch340-chip-soldered-1024x1024.jpg" alt="Arduino Due">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Arduino Due</h3>
+                        <p>32-bit ARM core for advanced applications</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">ATSAM3X8E</span>
+                            <span class="spec-chip">84MHz</span>
+                            <span class="spec-chip">512KB Flash</span>
+                            <span class="spec-chip">54 Digital I/O</span>
+                            <span class="spec-chip">12 Analog</span>
+                        </div>
+                        <a href="#due" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Arduino Leonardo -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://cdn-reichelt.de/bilder/web/xxl_ws/A300/ARDUINO_LEONARDO_02.png" alt="Arduino Leonardo">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Arduino Leonardo</h3>
+                        <p>Built-in USB communication for HID devices</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">ATmega32U4</span>
+                            <span class="spec-chip">16MHz</span>
+                            <span class="spec-chip">32KB Flash</span>
+                            <span class="spec-chip">20 Digital I/O</span>
+                            <span class="spec-chip">12 Analog</span>
+                        </div>
+                        <a href="#leonardo" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Arduino MKR Series -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://content.arduino.cc/assets/Pinout-MKR1000_latest.png" alt="Arduino MKR">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>MKR Series</h3>
+                        <p>IoT-focused boards with various connectivity options</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">SAMD21</span>
+                            <span class="spec-chip">48MHz</span>
+                            <span class="spec-chip">256KB Flash</span>
+                            <span class="spec-chip">8 Digital I/O</span>
+                            <span class="spec-chip">7 Analog</span>
+                        </div>
+                        <a href="#mkr" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Board Comparison Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Arduino Board Comparison</h2>
+            <p>Compare the specifications of different Arduino boards to choose the right one for your project:</p>
+            
+            <div class="table-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Board</th>
+                            <th>Microcontroller</th>
+                            <th>Clock Speed</th>
+                            <th>Flash Memory</th>
+                            <th>Digital I/O</th>
+                            <th>Analog Inputs</th>
+                            <th>PWM</th>
+                            <th>USB</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Uno R3</td>
+                            <td>ATmega328P</td>
+                            <td>16 MHz</td>
+                            <td>32 KB</td>
+                            <td>14</td>
+                            <td>6</td>
+                            <td>6</td>
+                            <td>Standard</td>
+                        </tr>
+                        <tr>
+                            <td>Mega 2560</td>
+                            <td>ATmega2560</td>
+                            <td>16 MHz</td>
+                            <td>256 KB</td>
+                            <td>54</td>
+                            <td>16</td>
+                            <td>15</td>
+                            <td>Standard</td>
+                        </tr>
+                        <tr>
+                            <td>Nano</td>
+                            <td>ATmega328P</td>
+                            <td>16 MHz</td>
+                            <td>32 KB</td>
+                            <td>22</td>
+                            <td>8</td>
+                            <td>6</td>
+                            <td>Mini</td>
+                        </tr>
+                        <tr>
+                            <td>Due</td>
+                            <td>ATSAM3X8E</td>
+                            <td>84 MHz</td>
+                            <td>512 KB</td>
+                            <td>54</td>
+                            <td>12</td>
+                            <td>12</td>
+                            <td>Micro</td>
+                        </tr>
+                        <tr>
+                            <td>Leonardo</td>
+                            <td>ATmega32U4</td>
+                            <td>16 MHz</td>
+                            <td>32 KB</td>
+                            <td>20</td>
+                            <td>12</td>
+                            <td>7</td>
+                            <td>Micro (HID)</td>
+                        </tr>
+                        <tr>
+                            <td>MKR1000</td>
+                            <td>SAMD21</td>
+                            <td>48 MHz</td>
+                            <td>256 KB</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td>12</td>
+                            <td>Micro (WiFi)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arduino Uno Section -->
+    <section class="section" id="uno">
+        <div class="container">
+            <h2 class="section-title">Arduino Uno R3</h2>
+            <p>The Arduino Uno is the most popular board in the Arduino family and a great choice for beginners. Here's everything you need to know about it:</p>
+            
+            <div class="pinout-section">
+                <h3>Uno R3 Pinout Diagram</h3>
+                <img src="https://elosciloscopio.com/wp-content/uploads/2021/03/Tutorial-de-Arduino-Uno-Pinout.png" alt="Arduino Uno Pinout" class="pinout-diagram">
+                
+                <h3>Pin Functions</h3>
+                <div class="table-container">
+                    <table class="pin-table">
+                        <thead>
+                            <tr>
+                                <th>Pin</th>
+                                <th>Function</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0 (RX), 1 (TX)</td>
+                                <td>Serial Communication</td>
+                                <td>Used for programming and serial communication</td>
+                            </tr>
+                            <tr>
+                                <td>2, 3</td>
+                                <td>External Interrupts</td>
+                                <td>Can trigger interrupts on change, rising, or falling</td>
+                            </tr>
+                            <tr>
+                                <td>3, 5, 6, 9, 10, 11</td>
+                                <td>PWM Output</td>
+                                <td>Analog output using pulse-width modulation</td>
+                            </tr>
+                            <tr>
+                                <td>10 (SS), 11 (MOSI), 12 (MISO), 13 (SCK)</td>
+                                <td>SPI Communication</td>
+                                <td>Used for SPI communication with peripherals</td>
+                            </tr>
+                            <tr>
+                                <td>A4 (SDA), A5 (SCL)</td>
+                                <td>I2C Communication</td>
+                                <td>Used for I2C communication with sensors</td>
+                            </tr>
+                            <tr>
+                                <td>A0-A5</td>
+                                <td>Analog Input</td>
+                                <td>10-bit ADC inputs (0-5V)</td>
+                            </tr>
+                            <tr>
+                                <td>5V, 3.3V</td>
+                                <td>Power Output</td>
+                                <td>Provide regulated power to components</td>
+                            </tr>
+                            <tr>
+                                <td>GND</td>
+                                <td>Ground</td>
+                                <td>Common ground for circuits</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <h3>Programming the Arduino Uno</h3>
+            <p>The Arduino Uno is programmed using the Arduino IDE, which is based on C/C++. Here's a simple example sketch:</p>
+            
+            <div class="code-block">
+                <pre><code><span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    <span class="code-comment">// Initialize digital pin LED_BUILTIN as an output</span>
+    <span class="code-function">pinMode</span>(LED_BUILTIN, OUTPUT);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-comment">// Turn the LED on (HIGH is the voltage level)</span>
+    <span class="code-function">digitalWrite</span>(LED_BUILTIN, HIGH);
+    <span class="code-comment">// Wait for a second</span>
+    <span class="code-function">delay</span>(<span class="code-number">1000</span>);
+    <span class="code-comment">// Turn the LED off by making the voltage LOW</span>
+    <span class="code-function">digitalWrite</span>(LED_BUILTIN, LOW);
+    <span class="code-comment">// Wait for a second</span>
+    <span class="code-function">delay</span>(<span class="code-number">1000</span>);
+}</code></pre>
+            </div>
+            
+            <h3>Power Options</h3>
+            <p>The Arduino Uno can be powered in several ways:</p>
+            <ul>
+                <li><strong>USB Connection (5V):</strong> When connected to a computer via USB</li>
+                <li><strong>Barrel Jack (7-12V):</strong> Using an AC-to-DC adapter or battery pack</li>
+                <li><strong>Vin Pin (7-12V):</strong> Direct power input to the voltage regulator</li>
+                <li><strong>5V Pin (5V):</strong> Regulated 5V input (bypasses regulator)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Advanced Arduino Concepts -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Advanced Arduino Concepts</h2>
+            <p>Once you've mastered the basics, these advanced concepts will help you take your Arduino projects to the next level:</p>
+            
+            <h3>Interrupts</h3>
+            <p>Interrupts allow the Arduino to respond immediately to important events while performing other tasks:</p>
+            <div class="code-block">
+                <pre><code><span class="code-keyword">volatile</span> <span class="code-keyword">int</span> state = LOW;
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    <span class="code-function">pinMode</span>(<span class="code-number">13</span>, OUTPUT);
+    <span class="code-function">attachInterrupt</span>(<span class="code-number">0</span>, blink, CHANGE);  <span class="code-comment">// Interrupt on pin 2 (interrupt 0)</span>
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-comment">// Main program continues to run</span>
+}
+
+<span class="code-keyword">void</span> <span class="code-function">blink</span>() {
+    state = !state;
+    <span class="code-function">digitalWrite</span>(<span class="code-number">13</span>, state);
+}</code></pre>
+            </div>
+            
+            <h3>Low Power Modes</h3>
+            <p>Reduce power consumption for battery-powered projects:</p>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Put Arduino to sleep and wake on interrupt</span>
+<span class="code-keyword">#include</span> &lt;avr/sleep.h&gt;
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    <span class="code-function">pinMode</span>(<span class="code-number">2</span>, INPUT_PULLUP);
+    <span class="code-function">attachInterrupt</span>(<span class="code-number">0</span>, wakeUp, LOW);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-function">set_sleep_mode</span>(SLEEP_MODE_PWR_DOWN);
+    <span class="code-function">sleep_enable</span>();
+    <span class="code-function">sleep_mode</span>();  <span class="code-comment">// Arduino sleeps here</span>
+    <span class="code-comment">// Execution resumes here after wake-up</span>
+    <span class="code-function">sleep_disable</span>();
+    <span class="code-comment">// Do something after waking</span>
+}
+
+<span class="code-keyword">void</span> <span class="code-function">wakeUp</span>() {
+    <span class="code-comment">// Just a handler for the interrupt</span>
+}</code></pre>
+            </div>
+            
+            <h3>Memory Management</h3>
+            <p>Optimize memory usage for complex projects:</p>
+            <ul>
+                <li><strong>PROGMEM:</strong> Store data in flash memory instead of RAM</li>
+                <li><strong>F() Macro:</strong> Keep strings in flash memory</li>
+                <li><strong>Memory Fragmentation:</strong> Avoid dynamic memory allocation in long-running programs</li>
+            </ul>
+            
+            <h3>Using External Libraries</h3>
+            <p>Extend Arduino functionality with libraries:</p>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Example using the Adafruit NeoPixel library</span>
+<span class="code-keyword">#include</span> &lt;Adafruit_NeoPixel.h&gt;
+
+<span class="code-comment">// Parameter 1 = number of pixels in strip</span>
+<span class="code-comment">// Parameter 2 = Arduino pin number</span>
+<span class="code-comment">// Parameter 3 = pixel type flags</span>
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(<span class="code-number">60</span>, <span class="code-number">6</span>, NEO_GRB + NEO_KHZ800);
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    strip.<span class="code-function">begin</span>();
+    strip.<span class="code-function">show</span>();  <span class="code-comment">// Initialize all pixels to 'off'</span>
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-comment">// Some example procedures showing how to control the strip</span>
+    <span class="code-function">colorWipe</span>(strip.<span class="code-function">Color</span>(<span class="code-number">255</span>, <span class="code-number">0</span>, <span class="code-number">0</span>), <span class="code-number">50</span>);  <span class="code-comment">// Red</span>
+    <span class="code-function">colorWipe</span>(strip.<span class="code-function">Color</span>(<span class="code-number">0</span>, <span class="code-number">255</span>, <span class="code-number">0</span>), <span class="code-number">50</span>);  <span class="code-comment">// Green</span>
+    <span class="code-function">colorWipe</span>(strip.<span class="code-function">Color</span>(<span class="code-number">0</span>, <span class="code-number">0</span>, <span class="code-number">255</span>), <span class="code-number">50</span>);  <span class="code-comment">// Blue</span>
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors & Modules</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Tab Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active state on buttons
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if(content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+            
+            sections.forEach(section => {
+                const sectionPosition = section.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (sectionPosition < screenPosition) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'all 0.5s ease';
+            });
+            
+            // Trigger first check
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

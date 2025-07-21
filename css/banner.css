@@ -1,0 +1,11 @@
+.construction-banner {
+            background-color: #FF6584;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.9rem;
+            position: sticky;
+            top: 80px;
+            z-index: 999;
+            animation: pulseBanner 2s infinite;
+        }

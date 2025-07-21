@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIR Motion Sensors - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/temp.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+        }
+
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+        }
+
+        /* Sensor-specific additions */
+        .pir-icon {
+            color: #FF5722;
+            margin-right: 8px;
+        }
+        
+        .motion-icon {
+            color: #4CAF50;
+            margin-right: 8px;
+        }
+        
+        .detection-icon {
+            color: #2196F3;
+            margin-right: 8px;
+        }
+        
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(108, 99, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sensor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        .sensor-table th, .sensor-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+            min-width: 120px;
+        }
+        
+        .sensor-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .sensor-table tr:nth-child(even) {
+            background-color: rgba(108, 99, 255, 0.05);
+        }
+        
+        .wiring-diagram {
+            max-width: 100%;
+            margin: 1rem auto;
+            display: block;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .sensor-type-chip {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background-color: #FF9800;
+            color: white;
+        }
+
+        /* Tab Styling */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(108, 99, 255, 0.1);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(108, 99, 255, 0.2);
+        }
+        
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(108, 99, 255, 0.3);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.5s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .tab-content ul {
+            padding-left: 1.5rem;
+        }
+        
+        .tab-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .arduino-hero-img img {
+                max-width: 80%;
+                height: auto;
+            }
+            
+            .boards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .board-card {
+                flex-direction: column;
+            }
+            
+            .board-card-img {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+                flex: 1 0 calc(33% - 0.5rem);
+                text-align: center;
+            }
+            
+            .sensor-table {
+                font-size: 0.85rem;
+            }
+            
+            .sensor-table th, 
+            .sensor-table td {
+                padding: 0.5rem;
+            }
+            
+            .code-block pre {
+                font-size: 0.8rem;
+                overflow-x: auto;
+                padding: 0.8rem;
+            }
+            
+            .tab-content {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tabs {
+                gap: 0.3rem;
+            }
+            
+            .tab-btn {
+                flex: 1 0 calc(50% - 0.3rem);
+                padding: 0.5rem;
+                font-size: 0.8rem;
+            }
+            
+            .board-card-content h3 {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .tab-content li {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets Learn</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/learnings/microControllers.html" class="active">Microcontrollers</a></li>
+                    <li><a href="/learnings/sensors.html">Sensors</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/maintainance.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="arduino-hero">
+        <div class="container">
+            <h1>PIR Motion Sensors</h1>
+            <p>Complete guide to passive infrared motion detection sensors</p>
+            <div class="arduino-hero-img">
+                <img src="https://lastminuteengineers.com/wp-content/uploads/2018/12/PIR-Sensor-Pinout.png" alt="PIR Motion Sensor">
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">PIR Sensor Overview</h2>
+            <p>PIR (Passive Infrared) sensors detect motion by measuring infrared light radiating from objects in their field of view, typically used to detect human movement.</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="features">Key Features</button>
+                <button class="tab-btn" data-tab="advantages">Advantages</button>
+                <button class="tab-btn" data-tab="usage">Common Uses</button>
+            </div>
+            
+            <div class="tab-content active" id="features">
+                <ul>
+                    <li><i class="fas fa-eye pir-icon"></i><strong>Passive Detection:</strong> Doesn't emit energy, only receives IR radiation</li>
+                    <li><i class="fas fa-user pir-icon"></i><strong>Human Detection:</strong> Specifically tuned for human body heat signatures</li>
+                    <li><i class="fas fa-sliders-h pir-icon"></i><strong>Adjustable Settings:</strong> Sensitivity and time delay can be adjusted</li>
+                    <li><i class="fas fa-signal pir-icon"></i><strong>Digital Output:</strong> Simple HIGH/LOW signal when motion detected</li>
+                    <li><i class="fas fa-angle-double-right pir-icon"></i><strong>Wide Angle:</strong> Typically 110° detection cone</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="advantages">
+                <ul>
+                    <li><i class="fas fa-battery-quarter pir-icon"></i><strong>Low Power:</strong> Consumes very little energy</li>
+                    <li><i class="fas fa-check-circle pir-icon"></i><strong>Reliable:</strong> Few false positives when properly adjusted</li>
+                    <li><i class="fas fa-moon pir-icon"></i><strong>Works in Darkness:</strong> Doesn't require visible light</li>
+                    <li><i class="fas fa-plug pir-icon"></i><strong>Simple Interface:</strong> Easy to connect to microcontrollers</li>
+                    <li><i class="fas fa-tag pir-icon"></i><strong>Inexpensive:</strong> Cost-effective motion detection</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="usage">
+                <ul>
+                    <li><i class="fas fa-shield-alt pir-icon"></i><strong>Security Systems:</strong> Intruder detection</li>
+                    <li><i class="fas fa-lightbulb pir-icon"></i><strong>Automatic Lighting:</strong> Motion-activated lights</li>
+                    <li><i class="fas fa-leaf pir-icon"></i><strong>Energy Saving:</strong> HVAC and appliance control</li>
+                    <li><i class="fas fa-home pir-icon"></i><strong>Smart Home:</strong> Presence detection</li>
+                    <li><i class="fas fa-paw pir-icon"></i><strong>Wildlife Monitoring:</strong> Animal movement tracking</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Details Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Technical Specifications</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://lastminuteengineers.com/wp-content/uploads/2018/12/PIR-Sensor-Module.png" alt="PIR Sensor Module">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Standard HC-SR501 Module</h3>
+                        <table class="sensor-table">
+                            <tr>
+                                <td>Operating Voltage</td>
+                                <td>5V-20V DC</td>
+                            </tr>
+                            <tr>
+                                <td>Output Signal</td>
+                                <td>Digital (3.3V TTL)</td>
+                            </tr>
+                            <tr>
+                                <td>Detection Range</td>
+                                <td>Up to 7 meters</td>
+                            </tr>
+                            <tr>
+                                <td>Detection Angle</td>
+                                <td>110°</td>
+                            </tr>
+                            <tr>
+                                <td>Time Delay Adjust</td>
+                                <td>5s-300s</td>
+                            </tr>
+                            <tr>
+                                <td>Sensitivity Adjust</td>
+                                <td>3m-7m</td>
+                            </tr>
+                        </table>
+                        <span class="sensor-type-chip">HC-SR501</span>
+                        <span class="sensor-type-chip">Standard</span>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h3>Detection Characteristics</h3>
+                        <ul>
+                            <li><i class="fas fa-wave-square pir-icon"></i><strong>Wavelength:</strong> 8-14μm (human body IR emission)</li>
+                            <li><i class="fas fa-retweet pir-icon"></i><strong>Trigger Mode:</li>
+                                <ul>
+                                    <li><strong>Non-Repeatable:</strong> Output LOW until motion stops then HIGH</li>
+                                    <li><strong>Repeatable:</strong> Output HIGH while motion continues</li>
+                                </ul>
+                            <li><i class="fas fa-hourglass-start pir-icon"></i><strong>Warm-up Time:</strong> 30-60 seconds after power on</li>
+                            <li><i class="fas fa-redo pir-icon"></i><strong>Reset Time:</strong> ~3 seconds between detections</li>
+                            <li><i class="fas fa-temperature-low pir-icon"></i><strong>Temperature Range:</strong> -15°C to +70°C</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Detection Pattern</h3>
+            <img src="https://www.researchgate.net/publication/334426642/figure/fig5/AS:779860420476934@1562869511828/PIR-sensor-detection-pattern.png" alt="PIR Detection Pattern" class="wiring-diagram">
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">How PIR Sensors Work</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.researchgate.net/publication/334426642/figure/fig1/AS:779860420476928@1562869511822/PIR-sensor-working-principle.png" alt="PIR Working Principle">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Working Principle</h3>
+                        <ol>
+                            <li><i class="fas fa-fire pir-icon"></i><strong>Pyroelectric Sensor:</strong> Detects changes in IR radiation</li>
+                            <li><i class="fas fa-glasses pir-icon"></i><strong>Fresnel Lens:</strong> Focuses IR radiation and creates detection zones</li>
+                            <li><i class="fas fa-balance-scale pir-icon"></i><strong>Differential Detection:</strong> Two sensors compare IR levels</li>
+                            <li><i class="fas fa-filter pir-icon"></i><strong>Signal Processing:</strong> Filters out background changes</li>
+                            <li><i class="fas fa-bell pir-icon"></i><strong>Output Trigger:</strong> Digital signal when motion detected</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h3>Key Components</h3>
+                        <ul>
+                            <li><i class="fas fa-microchip pir-icon"></i><strong>Pyroelectric Element:</strong> Generates charge when exposed to IR</li>
+                            <li><i class="fas fa-circle-notch pir-icon"></i><strong>Fresnel Lens Array:</strong> Expands detection area</li>
+                            <li><i class="fas fa-robot pir-icon"></i><strong>BISS0001 Chip:</strong> Signal processing IC</li>
+                            <li><i class="fas fa-knob pir-icon"></i><strong>Potentiometers:</strong> Adjust time delay and sensitivity</li>
+                            <li><i class="fas fa-lightbulb pir-icon"></i><strong>Output Indicator LED:</strong> Visual detection indicator</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="board-card">
+                <div class="board-card-content">
+                    <h3>Detection Optimization</h3>
+                    <ul>
+                        <li><i class="fas fa-ruler-vertical pir-icon"></i><strong>Mounting Height:</strong> 2-3 meters for best human detection</li>
+                        <li><i class="fas fa-angle-right pir-icon"></i><strong>Angle:</strong> Point toward area of interest</li>
+                        <li><i class="fas fa-sun pir-icon"></i><strong>Environment:</strong> Avoid direct sunlight and heat sources</li>
+                        <li><i class="fas fa-map-marker-alt pir-icon"></i><strong>Placement:</strong> Corner mounting provides best coverage</li>
+                        <li><i class="fas fa-walking pir-icon"></i><strong>Testing:</strong> Walk test to verify coverage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pinout and Wiring Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Pinout and Wiring</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://lastminuteengineers.com/wp-content/uploads/2018/12/PIR-Sensor-Pinout.png" alt="PIR Sensor Pinout">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Standard 3-Pin Module</h3>
+                        <ol>
+                            <li><i class="fas fa-bolt pir-icon"></i><strong>VCC (5V):</strong> Power supply (5V-12V recommended)</li>
+                            <li><i class="fas fa-signal pir-icon"></i><strong>OUT:</strong> Digital output (HIGH when motion detected)</li>
+                            <li><i class="fas fa-ground pir-icon"></i><strong>GND:</strong> Ground connection</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.electroniclinic.com/wp-content/uploads/2020/04/PIR-sensor-module-circuit-diagram.jpg" alt="PIR Sensor Circuit">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Module Components</h3>
+                        <ul>
+                            <li><i class="fas fa-sensor pir-icon"></i><strong>PIR Sensor:</strong> Pyroelectric detection element</li>
+                            <li><i class="fas fa-glasses pir-icon"></i><strong>Fresnel Lens:</strong> Focuses IR radiation</li>
+                            <li><i class="fas fa-microchip pir-icon"></i><strong>BISS0001:</strong> Signal processing IC</li>
+                            <li><i class="fas fa-clock pir-icon"></i><strong>Time Delay Adjust:</strong> Sets output duration</li>
+                            <li><i class="fas fa-sliders-h pir-icon"></i><strong>Sensitivity Adjust:</strong> Sets detection range</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Typical Wiring Diagram</h3>
+            <img src="https://circuitdigest.com/sites/default/files/projectimage_mic/Interfacing-PIR-Sensor-with-Arduino.png" alt="PIR Wiring Diagram" class="wiring-diagram">
+            
+            <h3>Important Wiring Notes</h3>
+            <ul>
+                <li><i class="fas fa-bolt pir-icon"></i><strong>Power Requirements:</strong> 5V-12V (3.3V may work but less reliable)</li>
+                <li><i class="fas fa-exchange-alt pir-icon"></i><strong>Output Signal:</strong> 3.3V TTL compatible with 5V Arduino</li>
+                <li><i class="fas fa-hourglass-start pir-icon"></i><strong>Warm-up Time:</strong> Needs 30-60 seconds to stabilize after power on</li>
+                <li><i class="fas fa-battery-half pir-icon"></i><strong>Current Draw:</li>
+                    <ul>
+                        <li>Quiescent: ~50μA</li>
+                        <li>Active: ~1mA</li>
+                    </ul>
+                <li><i class="fas fa-resistor pir-icon"></i><strong>Pull-Down Resistor:</strong> May need 10KΩ resistor on output</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Code Examples Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Code Examples</h2>
+            
+            <h3>Basic Arduino Example</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Basic PIR Motion Sensor Example</span>
+<span class="code-keyword">#define</span> PIR_PIN 2
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+    pinMode(PIR_PIN, INPUT);
+    Serial.println(<span class="code-string">"PIR Sensor Warming Up (30-60 seconds)"</span>);
+    delay(50000); <span class="code-comment">// Warm-up delay</span>
+    Serial.println(<span class="code-string">"PIR Sensor Ready"</span>);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">if</span>(digitalRead(PIR_PIN) == HIGH) {
+        Serial.println(<span class="code-string">"Motion detected!"</span>);
+        delay(1000); <span class="code-comment">// Avoid multiple detections</span>
+    }
+}</code></pre>
+            </div>
+            
+            <h3>Advanced Example with LED and Buzzer</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// PIR with visual/audio feedback</span>
+<span class="code-keyword">#define</span> PIR_PIN 2
+<span class="code-keyword">#define</span> LED_PIN 3
+<span class="code-keyword">#define</span> BUZZER_PIN 4
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    pinMode(PIR_PIN, INPUT);
+    pinMode(LED_PIN, OUTPUT);
+    pinMode(BUZZER_PIN, OUTPUT);
+    Serial.begin(9600);
+    delay(60000); <span class="code-comment">// 60 second warm-up</span>
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">if</span>(digitalRead(PIR_PIN) == HIGH) {
+        triggerAlarm();
+    }
+}
+
+<span class="code-keyword">void</span> <span class="code-function">triggerAlarm</span>() {
+    Serial.println(<span class="code-string">"ALERT: Motion detected!"</span>);
+    
+    <span class="code-comment">// Flash LED and sound buzzer</span>
+    <span class="code-keyword">for</span>(<span class="code-keyword">int</span> i = 0; i < 5; i++) {
+        digitalWrite(LED_PIN, HIGH);
+        tone(BUZZER_PIN, 1000);
+        delay(200);
+        digitalWrite(LED_PIN, LOW);
+        noTone(BUZZER_PIN);
+        delay(200);
+    }
+    
+    delay(5000); <span class="code-comment">// 5 second cooldown</span>
+}</code></pre>
+            </div>
+            
+            <h3>ESP8266 WiFi Motion Alert</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// PIR with WiFi notification</span>
+<span class="code-keyword">#include</span> &lt;ESP8266WiFi.h&gt;
+<span class="code-keyword">#include</span> &lt;WiFiClient.h&gt;
+
+<span class="code-keyword">#define</span> PIR_PIN D2
+<span class="code-keyword">const char</span>* ssid = <span class="code-string">"YOUR_SSID"</span>;
+<span class="code-keyword">const char</span>* password = <span class="code-string">"YOUR_PASSWORD"</span>;
+
+WiFiServer server(80);
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(115200);
+    pinMode(PIR_PIN, INPUT);
+    
+    WiFi.begin(ssid, password);
+    <span class="code-keyword">while</span>(WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(<span class="code-string">"."</span>);
+    }
+    
+    Serial.println(<span class="code-string">""</span>);
+    Serial.println(<span class="code-string">"WiFi connected"</span>);
+    Serial.println(<span class="code-string">"IP address: "</span>);
+    Serial.println(WiFi.localIP());
+    
+    server.begin();
+    delay(60000); <span class="code-comment">// PIR warm-up</span>
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">if</span>(digitalRead(PIR_PIN) == HIGH) {
+        sendNotification();
+        delay(10000); <span class="code-comment">// 10 second delay between detections</span>
+    }
+}
+
+<span class="code-keyword">void</span> <span class="code-function">sendNotification</span>() {
+    WiFiClient client;
+    <span class="code-keyword">if</span>(client.connect(<span class="code-string">"maker.ifttt.com"</span>, 80)) {
+        String url = <span class="code-string">"/trigger/motion_detected/with/key/YOUR_KEY"</span>;
+        client.print(<span class="code-string">"GET "</span> + url + <span class="code-string">" HTTP/1.1\r\n"</span> +
+                     <span class="code-string">"Host: maker.ifttt.com\r\n"</span> +
+                     <span class="code-string">"Connection: close\r\n\r\n"</span>);
+        Serial.println(<span class="code-string">"Notification sent"</span>);
+    }
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Ideas Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Project Ideas</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Security Light</h4>
+                        <p>Automatic light that turns on when motion is detected.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">PIR</span>
+                            <span class="spec-chip">LED Strip</span>
+                            <span class="spec-chip">Relay</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Intruder Alarm</h4>
+                        <p>Sound alarm and send notification when motion detected.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">PIR</span>
+                            <span class="spec-chip">Buzzer</span>
+                            <span class="spec-chip">ESP8266</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Pet Monitor</h4>
+                        <p>Track when your pet enters/leaves certain areas.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">PIR</span>
+                            <span class="spec-chip">LCD</span>
+                            <span class="spec-chip">SD Card</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Energy Saver</h4>
+                        <p>Turn off devices when no motion is detected.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">PIR</span>
+                            <span class="spec-chip">Smart Plug</span>
+                            <span class="spec-chip">Arduino</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Visitor Counter</h4>
+                        <p>Count people entering/exiting a space.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Dual PIR</span>
+                            <span class="spec-chip">OLED</span>
+                            <span class="spec-chip">Counter</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Wildlife Camera</h4>
+                        <p>Trigger camera when animal motion is detected.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">PIR</span>
+                            <span class="spec-chip">Camera</span>
+                            <span class="spec-chip">Battery</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Advanced Project: Smart Security System</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Components needed:</span>
+- Multiple PIR sensors
+- ESP32-CAM
+- Magnetic door/window sensors
+- Siren
+- Keypad
+- OLED display
+- Cloud service
+
+<span class="code-comment">// Features:</span>
+1. Multi-zone motion detection
+2. Live video capture on alarm
+3. Mobile notifications
+4. Armed/disarmed states
+5. Entry delay
+6. Battery backup
+
+<span class="code-comment">// Implementation Tips:</span>
+- Use deep sleep for battery operation
+- Implement zone-specific responses
+- Add two-stage arming (stay/away)
+- Create custom alert patterns
+- Add remote configuration
+- Implement event logging</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Practices Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Best Practices & Tips</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Installation</h4>
+                        <ul>
+                            <li><i class="fas fa-ruler-vertical pir-icon"></i>Mount 2-3 meters high for best coverage</li>
+                            <li><i class="fas fa-arrow-right pir-icon"></i>Point toward entry points or area of interest</li>
+                            <li><i class="fas fa-sun pir-icon"></i>Avoid pointing at heat sources or windows</li>
+                            <li><i class="fas fa-angle-down pir-icon"></i>Angle downward slightly (15-30 degrees)</li>
+                            <li><i class="fas fa-walking pir-icon"></i>Test coverage with walk tests</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Configuration</h4>
+                        <ul>
+                            <li><i class="fas fa-hourglass-start pir-icon"></i>Always allow 30-60 second warm-up period</li>
+                            <li><i class="fas fa-clock pir-icon"></i>Set time delay appropriate for application</li>
+                            <li><i class="fas fa-sliders-h pir-icon"></i>Adjust sensitivity to avoid false triggers</li>
+                            <li><i class="fas fa-user pir-icon"></i>Test with actual movement patterns</li>
+                            <li><i class="fas fa-map-marked-alt pir-icon"></i>Mark detection zones for reference</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Maintenance</h4>
+                        <ul>
+                            <li><i class="fas fa-broom pir-icon"></i>Clean lens regularly</li>
+                            <li><i class="fas fa-bug pir-icon"></i>Check for insect nests</li>
+                            <li><i class="fas fa-ruler pir-icon"></i>Verify detection range periodically</li>
+                            <li><i class="fas fa-tools pir-icon"></i>Re-calibrate if environment changes</li>
+                            <li><i class="fas fa-plug pir-icon"></i>Check power connections</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Common Mistakes to Avoid</h3>
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>Mistake</th>
+                        <th>Consequence</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><i class="fas fa-hourglass-start"></i> No warm-up time</td>
+                        <td>False alarms</td>
+                        <td>Always allow 30-60s stabilization</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-fire"></i> Pointing at heat sources</td>
+                        <td>False triggers</td>
+                        <td>Avoid vents, heaters, windows</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-ruler-combined"></i> Improper mounting height</td>
+                        <td>Reduced detection</td>
+                        <td>Mount 2-3m high</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-stopwatch"></i> Too short time delay</td>
+                        <td>Constant triggering</td>
+                        <td>Set appropriate delay (30s+)</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-broom"></i> Dirty lens</td>
+                        <td>Reduced sensitivity</td>
+                        <td>Clean regularly</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors & Modules</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Tab Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active state on buttons
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if(content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+            
+            sections.forEach(section => {
+                const sectionPosition = section.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (sectionPosition < screenPosition) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'all 0.5s ease';
+            });
+            
+            // Trigger first check
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQ Series Gas Sensors - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+        }
+
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        footer{
+            background-color: #16213E;
+        }
+
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(108, 99, 255, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Arduino Hero Section */
+        .arduino-hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .arduino-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero-img {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .arduino-hero-img img {
+            height: 300px;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .section.dark-mode {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Arduino Boards Grid */
+        .boards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .board-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .board-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .board-card-img {
+            height: 200px;
+            background: #f5f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .board-card-img img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .board-card-content {
+            padding: 1.5rem;
+        }
+
+        .board-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .board-card-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .spec-chip {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Pinout Section */
+        .pinout-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .pinout-diagram {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .pin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .pin-table th, .pin-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .pin-table th {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .pin-table tr:hover {
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #718096;
+            position: relative;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            margin-right: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2D3748;
+            color: #F7FAFC;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .code-keyword {
+            color: #FF79C6;
+        }
+
+        .code-function {
+            color: #50FA7B;
+        }
+
+        .code-comment {
+            color: #6272A4;
+            font-style: italic;
+        }
+
+        .code-number {
+            color: #BD93F9;
+        }
+
+        /* Sensor-specific additions */
+        .gas-icon {
+            color: #FF5722;
+            margin-right: 8px;
+        }
+        
+        .danger-icon {
+            color: #F44336;
+            margin-right: 8px;
+        }
+        
+        .voltage-icon {
+            color: #FFC107;
+            margin-right: 8px;
+        }
+        
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(108, 99, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sensor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        .sensor-table th, .sensor-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+            min-width: 120px;
+        }
+        
+        .sensor-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .sensor-table tr:nth-child(even) {
+            background-color: rgba(108, 99, 255, 0.05);
+        }
+        
+        .wiring-diagram {
+            max-width: 100%;
+            margin: 1rem auto;
+            display: block;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .gas-type-chip {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .arduino-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .sensor-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .arduino-hero {
+                padding: 6rem 0 2rem;
+            }
+            
+            .arduino-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .arduino-hero p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .arduino-hero-img {
+                display: none;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .boards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pinout-section {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
+            
+            .board-card-img {
+                height: 180px;
+            }
+            
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .code-block {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .wiring-diagram {
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .arduino-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 2rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .board-card-content {
+                padding: 1rem;
+            }
+            
+            .board-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .tab-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .pinout-section {
+                padding: 1rem;
+            }
+            
+            .sensor-table th, 
+            .sensor-table td {
+                padding: 0.5rem;
+                font-size: 0.8rem;
+            }
+            
+            .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Dark Mode Toggle Styles */
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            margin-left: 1.5rem;
+        }
+
+        .theme-toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .theme-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .theme-slider {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        input:checked + .theme-slider:before {
+            transform: translateX(24px);
+            background-color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/learnings/microControllers.html" class="active">Microcontrollers</a></li>
+                    <li><a href="/maintainance.html">Projects</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/maintainance.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="arduino-hero">
+        <div class="container">
+            <h1>MQ Series Gas Sensors</h1>
+            <p>Complete guide to gas detection with MQ series sensors</p>
+            <div class="arduino-hero-img">
+                <img src="https://www.electroniclinic.com/wp-content/uploads/2020/05/MQ-gas-sensor-module-pinout.jpg" alt="MQ Series Gas Sensors">
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">MQ Series Overview</h2>
+            <p>MQ sensors are semiconductor gas sensors that detect various gases by changes in resistance of the sensing material when exposed to target gases.</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="features">Key Features</button>
+                <button class="tab-btn" data-tab="advantages">Advantages</button>
+                <button class="tab-btn" data-tab="usage">Common Uses</button>
+            </div>
+            
+            <div class="tab-content active" id="features">
+                <ul>
+                    <li><strong>Wide Detection Range:</strong> Different sensors for different gases</li>
+                    <li><strong>High Sensitivity:</strong> Can detect ppm level concentrations</li>
+                    <li><strong>Fast Response:</strong> Typically 10-30 seconds to stabilize</li>
+                    <li><strong>Analog Output:</strong> Simple voltage reading interface</li>
+                    <li><strong>Heater Element:</strong> Requires pre-heating for accurate readings</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="advantages">
+                <ul>
+                    <li><strong>Cost Effective:</strong> Affordable gas detection solution</li>
+                    <li><strong>Easy to Use:</strong> Simple analog voltage output</li>
+                    <li><strong>Wide Availability:</strong> Commonly available worldwide</li>
+                    <li><strong>Good for Prototyping:</strong> Quick integration into projects</li>
+                    <li><strong>Arduino Compatible:</strong> Works with any microcontroller</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="usage">
+                <ul>
+                    <li><strong>Air Quality Monitoring:</strong> Indoor and outdoor pollution detection</li>
+                    <li><strong>Industrial Safety:</strong> Gas leak detection in factories</li>
+                    <li><strong>Home Automation:</strong> Smart air quality systems</li>
+                    <li><strong>Automotive:</strong> Cabin air quality monitoring</li>
+                    <li><strong>Agricultural:</strong> Greenhouse gas monitoring</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sensor Comparison Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">MQ Sensor Comparison</h2>
+            
+            <div style="overflow-x: auto;">
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>Sensor</th>
+                            <th>Detects</th>
+                            <th>Detection Range</th>
+                            <th>Heater Voltage</th>
+                            <th>Load Resistance</th>
+                            <th>Preheat Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MQ-2</td>
+                            <td>LPG, Propane, Hydrogen, Smoke</td>
+                            <td>300-10000ppm</td>
+                            <td>5V±0.1V</td>
+                            <td>20KΩ</td>
+                            <td>24+ hours</td>
+                        </tr>
+                        <tr>
+                            <td>MQ-3</td>
+                            <td>Alcohol, Ethanol, Benzine</td>
+                            <td>25-500ppm</td>
+                            <td>5V±0.1V</td>
+                            <td>200KΩ</td>
+                            <td>24+ hours</td>
+                        </tr>
+                        <tr>
+                            <td>MQ-4</td>
+                            <td>Methane, Natural Gas</td>
+                            <td>200-10000ppm</td>
+                            <td>5V±0.1V</td>
+                            <td>20KΩ</td>
+                            <td>24+ hours</td>
+                        </tr>
+                        <tr>
+                            <td>MQ-5</td>
+                            <td>Natural Gas, LPG, Coal Gas</td>
+                            <td>200-10000ppm</td>
+                            <td>5V±0.1V</td>
+                            <td>20KΩ (adjustable)</td>
+                            <td>48+ hours</td>
+                        </tr>
+                        <tr>
+                            <td>MQ-6</td>
+                            <td>LPG, Butane, Propane</td>
+                            <td>200-10000ppm</td>
+                            <td>5V±0.1V</td>
+                            <td>10KΩ</td>
+                            <td>24+ hours</td>
+                        </tr>
+                        <tr>
+                            <td>MQ-7</td>
+                            <td>Carbon Monoxide</td>
+                            <td>20-2000ppm</td>
+                            <td>5V±0.1V</td>
+                            <td>10KΩ</td>
+                            <td>48+ hours</td>
+                        </tr>
+                        <tr>
+                            <td>MQ-8</td>
+                            <td>Hydrogen Gas</td>
+                            <td>100-10000ppm</td>
+                            <td>5V±0.1V</td>
+                            <td>10KΩ</td>
+                            <td>48+ hours</td>
+                        </tr>
+                        <tr>
+                            <td>MQ-9</td>
+                            <td>CO, Combustible Gases</td>
+                            <td>10-1000ppm CO<br>100-10000ppm Comb.</td>
+                            <td>5V±0.1V</td>
+                            <td>10KΩ</td>
+                            <td>48+ hours</td>
+                        </tr>
+                        <tr>
+                            <td>MQ-135</td>
+                            <td>Air Quality (NH3, NOx, CO2)</td>
+                            <td>10-300ppm NH3<br>10-1000ppm CO2</td>
+                            <td>5V±0.1V</td>
+                            <td>20KΩ</td>
+                            <td>24+ hours</td>
+                        </tr>
+                        <tr>
+                            <td>MQ-136</td>
+                            <td>Hydrogen Sulfide</td>
+                            <td>1-200ppm</td>
+                            <td>5V±0.1V</td>
+                            <td>20KΩ</td>
+                            <td>48+ hours</td>
+                        </tr>
+                        <tr>
+                            <td>MQ-137</td>
+                            <td>Ammonia</td>
+                            <td>5-500ppm</td>
+                            <td>5V±0.1V</td>
+                            <td>20KΩ</td>
+                            <td>48+ hours</td>
+                        </tr>
+                        <tr>
+                            <td>MQ-138</td>
+                            <td>Benzene, Toluene, Alcohol</td>
+                            <td>1-200ppm</td>
+                            <td>5V±0.1V</td>
+                            <td>20KΩ</td>
+                            <td>48+ hours</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>Key Considerations When Choosing</h3>
+            <div class="pinout-section">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>For Home/Office Use:</h4>
+                        <ul>
+                            <li>MQ-2: General combustible gas/smoke detection</li>
+                            <li>MQ-135: General air quality monitoring</li>
+                            <li>MQ-7: Carbon monoxide detection</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>For Industrial Use:</h4>
+                        <ul>
+                            <li>MQ-4/MQ-5: Natural gas leak detection</li>
+                            <li>MQ-136: Hydrogen sulfide in oil/gas industry</li>
+                            <li>MQ-137: Ammonia in refrigeration systems</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>For Automotive Use:</h4>
+                        <ul>
+                            <li>MQ-3: Alcohol breathalyzer applications</li>
+                            <li>MQ-9: Exhaust/cabin air monitoring</li>
+                            <li>MQ-135: In-cabin air quality</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How They Work Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">How MQ Sensors Work</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.researchgate.net/publication/334426642/figure/fig1/AS:779860420476928@1562869511822/Working-principle-of-MQ-gas-sensor.png" alt="MQ Sensor Working Principle">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Working Principle</h3>
+                        <ol>
+                            <li><strong>Heater Element:</strong> Keeps sensor at optimal operating temperature (typically 5V)</li>
+                            <li><strong>Gas Sensing Layer:</strong> Tin dioxide (SnO2) that changes resistance when exposed to target gases</li>
+                            <li><strong>Electrochemical Reaction:</strong> Gas molecules interact with sensing material, altering conductivity</li>
+                            <li><strong>Output Voltage:</strong> Change in resistance creates measurable voltage across load resistor</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h3>Important Characteristics</h3>
+                        <ul>
+                            <li><strong>Preheat Required:</strong> New sensors need 24-48 hours of continuous power for stabilization</li>
+                            <li><strong>Temperature/Humidity Sensitive:</strong> Readings affected by environmental conditions</li>
+                            <li><strong>Non-linear Response:</strong> Output doesn't scale linearly with gas concentration</li>
+                            <li><strong>Cross-sensitivity:</strong> May respond to gases other than primary target</li>
+                            <li><strong>Warm-up Time:</strong> Needs 2-3 minutes after power on for stable readings</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Typical Response Curve</h3>
+            <img src="https://www.researchgate.net/profile/Siti-Salmah/publication/332864118/figure/fig1/AS:763022429573120@1559027037758/Graph-of-MQ-2-gas-sensor-response-to-LPG-concentration.ppm" alt="MQ Sensor Response Curve" class="wiring-diagram">
+            
+            <div class="board-card">
+                <div class="board-card-content">
+                    <h3>Calibration Considerations</h3>
+                    <ul>
+                        <li><strong>Baseline Reading:</strong> Record sensor output in clean air as reference</li>
+                        <li><strong>Known Concentration Test:</strong> Expose to known gas concentration to establish curve</li>
+                        <li><strong>Environmental Compensation:</strong> Account for temperature/humidity effects</li>
+                        <li><strong>Regular Recalibration:</strong> Recommended every 6-12 months</li>
+                        <li><strong>Sensor Aging:</strong> Sensitivity decreases over time (typical lifespan 2-5 years)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pinout and Wiring Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Pinout and Wiring</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.electroniclinic.com/wp-content/uploads/2020/05/MQ-gas-sensor-module-pinout.jpg" alt="MQ Sensor Pinout">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Standard 4-Pin Module</h3>
+                        <ol>
+                            <li><strong>VCC (5V):</strong> Power supply for heater and circuit</li>
+                            <li><strong>GND:</strong> Ground connection</li>
+                            <li><strong>DO (Digital Out):</strong> TTL output (high/low based on threshold)</li>
+                            <li><strong>AO (Analog Out):</strong> Analog voltage proportional to gas concentration</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.electroniclinic.com/wp-content/uploads/2020/05/MQ-gas-sensor-module-circuit-diagram.jpg" alt="MQ Sensor Circuit">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Module Components</h3>
+                        <ul>
+                            <li><strong>Sensor Element:</strong> Actual gas sensing component</li>
+                            <li><strong>LM393 Comparator:</strong> For digital output</li>
+                            <li><strong>Potentiometer:</strong> Adjusts digital output threshold</li>
+                            <li><strong>Load Resistor:</strong> Typically 10KΩ-200KΩ depending on sensor</li>
+                            <li><strong>Heater Circuit:</strong> Maintains sensor temperature</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Typical Wiring Diagram</h3>
+            <img src="https://circuitdigest.com/sites/default/files/projectimage_mic/Interfacing-MQ2-Gas-Sensor-with-Arduino.png" alt="MQ Wiring Diagram" class="wiring-diagram">
+            
+            <h3>Important Wiring Notes</h3>
+            <ul>
+                <li><strong>Power Requirements:</strong> Most MQ sensors require 5V and draw 150-200mA for heater</li>
+                <li><strong>Analog Reference:</strong> Use stable 5V reference for accurate readings</li>
+                <li><strong>Digital Output:</strong> Can be used for simple threshold detection</li>
+                <li><strong>Separate Power:</strong> Consider separate power supply for multiple sensors</li>
+                <li><strong>Warm-up Time:</strong> Always allow 2-3 minutes after power on for stable readings</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Library Usage Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">MQ Sensor Libraries</h2>
+            
+            <h3>Popular Libraries</h3>
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>MQUnifiedsensor</h4>
+                        <p>Unified library for all MQ sensors with calibration functions</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Arduino</span>
+                            <span class="spec-chip">All MQ Sensors</span>
+                            <span class="spec-chip">Calibration</span>
+                        </div>
+                        <a href="https://github.com/miguel5612/MQSensorsLib" class="btn" target="_blank">GitHub</a>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>MQ2 Library</h4>
+                        <p>Dedicated library for MQ-2 sensor</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Arduino</span>
+                            <span class="spec-chip">MQ-2</span>
+                            <span class="spec-chip">Simple API</span>
+                        </div>
+                        <a href="https://github.com/GeorgK/MQ135" class="btn" target="_blank">GitHub</a>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>MQ135 Library</h4>
+                        <p>Specialized library for air quality sensing</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Arduino</span>
+                            <span class="spec-chip">MQ-135</span>
+                            <span class="spec-chip">CO2 Estimation</span>
+                        </div>
+                        <a href="https://github.com/GeorgK/MQ135" class="btn" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>MQUnifiedsensor Library Functions</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Library initialization</span>
+<span class="code-keyword">#include</span> &lt;MQUnifiedsensor.h&gt;
+
+<span class="code-comment">// Setup for MQ-135</span>
+MQUnifiedsensor MQ135(<span class="code-string">"Arduino UNO"</span>, 5.0, 10, A0, <span class="code-string">"MQ-135"</span>);
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+    MQ135.init(); 
+    MQ135.setRegressionMethod(1); <span class="code-comment">//_PPM =  a*ratio^b</span>
+    MQ135.setA(110.47); MQ135.setB(-2.862); <span class="code-comment">// CO2 curve</span>
+    MQ135.setR0(11.82); <span class="code-comment">// Found during calibration</span>
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    MQ135.update();
+    float CO2 = MQ135.readSensor();
+    Serial.print(<span class="code-string">"CO2: "</span>); Serial.print(CO2); Serial.println(<span class="code-string">" ppm"</span>);
+    delay(500);
+}</code></pre>
+            </div>
+            
+            <h3>Calibration Procedure</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// R0 Calibration for MQ Sensors</span>
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+    MQ135.init(); 
+    Serial.println(<span class="code-string">"Calibrating please wait."</span>);
+    <span class="code-keyword">float</span> calcR0 = 0;
+    <span class="code-keyword">for</span>(<span class="code-keyword">int</span> i = 1; i&lt;=10; i++) {
+        MQ135.update();
+        calcR0 += MQ135.calibrate(3.6); <span class="code-comment">// 3.6 for clean air</span>
+        Serial.print(<span class="code-string">"."</span>);
+    }
+    MQ135.setR0(calcR0/10);
+    Serial.println(<span class="code-string">"Calibration done!"</span>);
+    Serial.print(<span class="code-string">"R0 = "</span>); Serial.println(MQ135.getR0());
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Examples Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Code Examples</h2>
+            
+            <h3>Basic Arduino Example (MQ-2)</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Basic MQ-2 Gas Sensor Example</span>
+<span class="code-keyword">#define</span> MQ2_PIN A0
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+    pinMode(MQ2_PIN, INPUT);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">int</span> sensorValue = analogRead(MQ2_PIN);
+    <span class="code-keyword">float</span> voltage = sensorValue * (5.0 / 1023.0);
+    
+    Serial.print(<span class="code-string">"Raw ADC: "</span>); Serial.print(sensorValue);
+    Serial.print(<span class="code-string">" | Voltage: "</span>); Serial.print(voltage);
+    Serial.println(<span class="code-string">"V"</span>);
+    
+    <span class="code-keyword">if</span>(sensorValue > 300) { <span class="code-comment">// Threshold value</span>
+        Serial.println(<span class="code-string">"Gas detected!"</span>);
+    }
+    delay(1000);
+}</code></pre>
+            </div>
+            
+            <h3>ESP32 Example with WiFi</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// ESP32 MQ-135 Web Server</span>
+<span class="code-keyword">#include</span> &lt;WiFi.h&gt;
+<span class="code-keyword">#include</span> &lt;MQUnifiedsensor.h&gt;
+
+<span class="code-keyword">#define</span> BOARD <span class="code-string">"ESP32"</span>
+<span class="code-keyword">#define</span> PIN_MQ135 34
+
+<span class="code-keyword">const char</span>* ssid = <span class="code-string">"YOUR_SSID"</span>;
+<span class="code-keyword">const char</span>* password = <span class="code-string">"YOUR_PASSWORD"</span>;
+
+MQUnifiedsensor MQ135(BOARD, 3.3, 12, PIN_MQ135, <span class="code-string">"MQ-135"</span>);
+WiFiServer server(80);
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(115200);
+    MQ135.init();
+    MQ135.setRegressionMethod(1);
+    MQ135.setA(110.47); MQ135.setB(-2.862); <span class="code-comment">// CO2 curve</span>
+    MQ135.setR0(9.03); <span class="code-comment">// Calibrated value</span>
+    
+    WiFi.begin(ssid, password);
+    <span class="code-keyword">while</span> (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(<span class="code-string">"."</span>);
+    }
+    
+    server.begin();
+    Serial.println(<span class="code-string">"Server started at "</span> + WiFi.localIP());
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    MQ135.update();
+    <span class="code-keyword">float</span> co2 = MQ135.readSensor();
+    
+    WiFiClient client = server.available();
+    <span class="code-keyword">if</span> (client) {
+        String html = <span class="code-string">"&lt;html&gt;&lt;body&gt;"</span>;
+        html += <span class="code-string">"&lt;h1&gt;Air Quality Monitor&lt;/h1&gt;"</span>;
+        html += <span class="code-string">"&lt;p&gt;CO2: "</span> + String(co2) + <span class="code-string">" ppm&lt;/p&gt;"</span>;
+        html += <span class="code-string">"&lt;/body&gt;&lt;/html&gt;"</span>;
+        
+        client.println(<span class="code-string">"HTTP/1.1 200 OK"</span>);
+        client.println(<span class="code-string">"Content-Type: text/html"</span>);
+        client.println();
+        client.println(html);
+        client.stop();
+    }
+    delay(2000);
+}</code></pre>
+            </div>
+            
+            <h3>Advanced Example with Temperature Compensation</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// MQ-135 with DHT22 for temp/humidity compensation</span>
+<span class="code-keyword">#include</span> &lt;MQUnifiedsensor.h&gt;
+<span class="code-keyword">#include</span> &lt;DHT.h&gt;
+
+<span class="code-keyword">#define</span> DHTPIN 2
+<span class="code-keyword">#define</span> DHTTYPE DHT22
+<span class="code-keyword">#define</span> MQ135_PIN A0
+
+DHT dht(DHTPIN, DHTTYPE);
+MQUnifiedsensor MQ135(<span class="code-string">"Arduino UNO"</span>, 5.0, 10, MQ135_PIN, <span class="code-string">"MQ-135"</span>);
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+    dht.begin();
+    MQ135.init();
+    MQ135.setRegressionMethod(1);
+    MQ135.setA(110.47); MQ135.setB(-2.862);
+    MQ135.setR0(11.82);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">float</span> h = dht.readHumidity();
+    <span class="code-keyword">float</span> t = dht.readTemperature();
+    
+    <span class="code-keyword">if</span> (isnan(h) || isnan(t)) {
+        Serial.println(<span class="code-string">"Failed DHT read!"</span>);
+        <span class="code-keyword">return</span>;
+    }
+    
+    MQ135.update();
+    MQ135.setTempHumidCorrection(t, h); <span class="code-comment">// Apply compensation</span>
+    <span class="code-keyword">float</span> co2 = MQ135.readSensor();
+    
+    Serial.print(<span class="code-string">"Temp: "</span>); Serial.print(t); Serial.print(<span class="code-string">"°C | "</span>);
+    Serial.print(<span class="code-string">"Humidity: "</span>); Serial.print(h); Serial.print(<span class="code-string">"% | "</span>);
+    Serial.print(<span class="code-string">"CO2: "</span>); Serial.print(co2); Serial.println(<span class="code-string">" ppm"</span>);
+    
+    delay(2000);
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Ideas Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Project Ideas</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Smart Air Quality Monitor</h4>
+                        <p>Combine MQ-135 with ESP8266 to create a WiFi-enabled air quality monitor that sends data to the cloud.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">MQ-135</span>
+                            <span class="spec-chip">ESP8266</span>
+                            <span class="spec-chip">Blynk/IoT</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Industrial Gas Leak Detector</h4>
+                        <p>Use MQ-4/MQ-6 with alarm buzzer and GSM module to send SMS alerts when gas leaks are detected.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">MQ-4/MQ-6</span>
+                            <span class="spec-chip">SIM800L</span>
+                            <span class="spec-chip">Alarm</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Alcohol Breathalyzer</h4>
+                        <p>Create a portable breathalyzer using MQ-3 sensor with OLED display and battery power.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">MQ-3</span>
+                            <span class="spec-chip">OLED</span>
+                            <span class="spec-chip">LiPo</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Smart Kitchen Safety System</h4>
+                        <p>Combine MQ-2 (gas/smoke) and MQ-7 (CO) with automatic exhaust fan control.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">MQ-2</span>
+                            <span class="spec-chip">MQ-7</span>
+                            <span class="spec-chip">Relay</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Greenhouse Monitoring System</h4>
+                        <p>Monitor CO2 (MQ-135), humidity (DHT22), and temperature for optimal plant growth.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">MQ-135</span>
+                            <span class="spec-chip">DHT22</span>
+                            <span class="spec-chip">LoRa</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Car Cabin Air Quality</h4>
+                        <p>Use MQ-9 and MQ-135 to monitor in-car air quality with automatic window control.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">MQ-9</span>
+                            <span class="spec-chip">MQ-135</span>
+                            <span class="spec-chip">Servo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Advanced Project: Multi-Gas Detector with Data Logging</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Components needed:</span>
+- MQ-2 (LPG/Smoke)
+- MQ-7 (CO)
+- MQ-135 (Air Quality)
+- ESP32
+- SD Card Module
+- OLED Display
+- Buzzer
+- 18650 Battery
+
+<span class="code-comment">// Features:</span>
+1. Real-time monitoring of multiple gases
+2. Data logging to SD card
+3. Threshold-based audible alarms
+4. Battery level monitoring
+5. WiFi data upload option
+6. OLED display for local readings
+
+<span class="code-comment">// Implementation Tips:</span>
+- Use FreeRTOS on ESP32 to handle:
+  - Sensor readings
+  - Data logging
+  - Display updates
+  - WiFi communication
+- Implement deep sleep between readings for battery life
+- Create CSV files on SD card with timestamped data
+- Add calibration mode with button input</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Practices Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Best Practices & Tips</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Calibration</h4>
+                        <ul>
+                            <li>Always perform initial 24-48 hour preheat</li>
+                            <li>Calibrate in clean air environment</li>
+                            <li>Use known gas concentrations when possible</li>
+                            <li>Store calibration values in EEPROM</li>
+                            <li>Recalibrate periodically (every 6 months)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Installation</h4>
+                        <ul>
+                            <li>Mount vertically for optimal airflow</li>
+                            <li>Keep away from direct wind/ventilation</li>
+                            <li>Avoid placement near heat sources</li>
+                            <li>Protect from dust and moisture</li>
+                            <li>Allow proper warm-up time (2-3 min)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Signal Processing</h4>
+                        <ul>
+                            <li>Use moving average for stable readings</li>
+                            <li>Implement temperature/humidity compensation</li>
+                            <li>Set appropriate thresholds for alarms</li>
+                            <li>Add debounce logic for digital output</li>
+                            <li>Log raw data for later analysis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Common Mistakes to Avoid</h3>
+            <div style="overflow-x: auto;">
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>Mistake</th>
+                            <th>Consequence</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Skipping preheat</td>
+                            <td>Inaccurate readings</td>
+                            <td>Always preheat for 24-48 hours initially</td>
+                        </tr>
+                        <tr>
+                            <td>No warm-up time</td>
+                            <td>Fluctuating values</td>
+                            <td>Wait 2-3 minutes after power on</td>
+                        </tr>
+                        <tr>
+                            <td>Ignoring environmental factors</td>
+                            <td>False readings</td>
+                            <td>Compensate for temp/humidity</td>
+                        </tr>
+                        <tr>
+                            <td>Poor ventilation</td>
+                            <td>Slow response time</td>
+                            <td>Ensure proper airflow to sensor</td>
+                        </tr>
+                        <tr>
+                            <td>Using unstable power</td>
+                            <td>Inconsistent operation</td>
+                            <td>Use regulated power supply</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors & Modules</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Tab Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active state on buttons
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if(content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+            
+            sections.forEach(section => {
+                const sectionPosition = section.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (sectionPosition < screenPosition) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'all 0.5s ease';
+            });
+            
+            // Trigger first check
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

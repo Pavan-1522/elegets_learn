@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHT11 & DHT22 Sensors - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+    :root {
+        --primary: #6C63FF;
+        --secondary: #4D44DB;
+        --accent: #FF6584;
+        --dark: #2D3748;
+        --light: #F7FAFC;
+        --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+        --card-bg: white;
+        --text-color: #2D3748;
+        --section-bg: #F5F7FF;
+        --tab-inactive: #E2E8F0;
+        --tab-inactive-text: #718096;
+    }
+
+    .dark-mode {
+        --card-bg: #16213E;
+        --text-color: #F7FAFC;
+        --section-bg: #1A1A2E;
+        --tab-inactive: #2D3748;
+        --tab-inactive-text: #A0AEC0;
+    }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background-color: var(--section-bg);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Header Styles */
+    header {
+        background: rgba(108, 99, 255, 0.9);
+        padding: 1rem 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+
+    /* Arduino Hero Section */
+    .arduino-hero {
+        padding: 8rem 0 4rem;
+        text-align: center;
+        background: var(--gradient);
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .arduino-hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-family: 'Orbitron', sans-serif;
+        position: relative;
+        z-index: 2;
+    }
+
+    .arduino-hero p {
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        font-size: 1.2rem;
+        opacity: 0.9;
+        position: relative;
+        z-index: 2;
+    }
+
+    .arduino-hero-img {
+        position: absolute;
+        right: 10%;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.2;
+        z-index: 1;
+    }
+
+    .arduino-hero-img img {
+        height: 300px;
+    }
+
+    /* Content Sections */
+    .section {
+        padding: 4rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .section.dark-mode {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: var(--primary);
+        font-family: 'Orbitron', sans-serif;
+        position: relative;
+        display: inline-block;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: var(--accent);
+        border-radius: 2px;
+    }
+
+    /* Arduino Boards Grid */
+    .boards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+    }
+
+    .board-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .board-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .board-card-img {
+        height: 200px;
+        background: #f5f7ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .board-card-img img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .board-card-content {
+        padding: 1.5rem;
+    }
+
+    .board-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+    }
+
+    .board-card-specs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 1rem 0;
+    }
+
+    .spec-chip {
+        background: rgba(108, 99, 255, 0.1);
+        color: var(--primary);
+        padding: 0.3rem 0.8rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.8rem 1.5rem;
+        background: var(--gradient);
+        color: white;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        margin-top: 1rem;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Pinout Section */
+    .pinout-section {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin: 3rem 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .pinout-diagram {
+        width: 100%;
+        max-width: 800px;
+        margin: 2rem auto;
+        display: block;
+    }
+
+    .pin-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        overflow-x: auto;
+        display: block;
+    }
+
+    .pin-table th, .pin-table td {
+        padding: 0.8rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .pin-table th {
+        background: rgba(108, 99, 255, 0.1);
+        color: var(--primary);
+    }
+
+    .pin-table tr:hover {
+        background: rgba(108, 99, 255, 0.05);
+    }
+
+    /* Comparison Table */
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        overflow-x: auto;
+        display: block;
+    }
+
+    .comparison-table th, .comparison-table td {
+        padding: 1rem;
+        text-align: left;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+        background: var(--primary);
+        color: white;
+    }
+
+    .comparison-table tr:nth-child(even) {
+        background: rgba(108, 99, 255, 0.05);
+    }
+
+    /* Enhanced Tabs */
+    .tabs {
+        display: flex;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .tab-btn {
+        padding: 0.8rem 1.5rem;
+        background: var(--tab-inactive);
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--tab-inactive-text);
+        position: relative;
+        border-radius: 8px 8px 0 0;
+        transition: all 0.3s ease;
+        margin: 0;
+        flex: 1 1 auto;
+        min-width: 120px;
+        text-align: center;
+    }
+
+    .tab-btn:hover {
+        background: rgba(108, 99, 255, 0.2);
+        color: var(--primary);
+    }
+
+    .tab-btn.active {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 4px 6px rgba(108, 99, 255, 0.2);
+    }
+
+    .tab-btn.active::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: var(--accent);
+    }
+
+    .tab-content {
+        display: none;
+        animation: fadeIn 0.5s ease;
+        padding: 1.5rem;
+        background: var(--card-bg);
+        border-radius: 0 8px 8px 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Code Block */
+    .code-block {
+        background: #2D3748;
+        color: #F7FAFC;
+        padding: 1.5rem;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        overflow-x: auto;
+        margin: 2rem 0;
+    }
+
+    .code-keyword {
+        color: #FF79C6;
+    }
+
+    .code-function {
+        color: #50FA7B;
+    }
+
+    .code-comment {
+        color: #6272A4;
+        font-style: italic;
+    }
+
+    .code-number {
+        color: #BD93F9;
+    }
+
+    /* STM32-specific additions */
+    .core-icon {
+        color: #2196F3;
+        margin-right: 8px;
+    }
+    
+    .peripheral-icon {
+        color: #4CAF50;
+        margin-right: 8px;
+    }
+    
+    .feature-badge {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(108, 99, 255, 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .series-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        overflow-x: auto;
+        display: block;
+    }
+    
+    .series-table th, .series-table td {
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+        text-align: left;
+    }
+    
+    .series-table th {
+        background-color: var(--primary);
+        color: white;
+    }
+    
+    .series-table tr:nth-child(even) {
+        background-color: rgba(108, 99, 255, 0.05);
+    }
+    
+    .high-performance {
+        background-color: rgba(255, 152, 0, 0.1);
+    }
+    
+    .ultra-low-power {
+        background-color: rgba(76, 175, 80, 0.1);
+    }
+    
+    .wireless {
+        background-color: rgba(156, 39, 176, 0.1);
+    }
+    footer {
+        background-color: var(--dark);
+        color: white;
+        padding: 2rem 0;
+        text-align: center;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 1024px) {
+        .arduino-hero h1 {
+            font-size: 2.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+        }
+        
+        .tab-btn {
+            min-width: 100px;
+            padding: 0.8rem 1rem;
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .arduino-hero {
+            padding: 6rem 0 2rem;
+        }
+        
+        .arduino-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .arduino-hero p {
+            font-size: 1rem;
+        }
+        
+        .arduino-hero-img {
+            display: none;
+        }
+        
+        .boards-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .section {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            font-size: 1.6rem;
+        }
+        
+        .tab-btn {
+            flex: 1 1 100%;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tab-content {
+            border-radius: 8px;
+        }
+        
+        /* Make tables scrollable on mobile */
+        .pin-table, .comparison-table, .series-table {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .pinout-section {
+            padding: 1.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .arduino-hero h1 {
+            font-size: 1.8rem;
+        }
+        
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .board-card-content {
+            padding: 1rem;
+        }
+        
+        .board-card h3 {
+            font-size: 1.1rem;
+        }
+        
+        .spec-chip, .feature-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+        }
+        
+        .code-block {
+            padding: 1rem;
+            font-size: 0.85rem;
+        }
+    }
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/learnings/microControllers.html" class="active">Microcontrollers</a></li>
+                    <li><a href="/maintainance.html">Projects</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/maintainance.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="arduino-hero">
+        <div class="container">
+            <h1>DHT11 & DHT22 Sensors</h1>
+            <p>Complete guide to temperature and humidity sensing with DHT series sensors</p>
+            <div class="arduino-hero-img">
+                <img src="https://cdn-shop.adafruit.com/970x728/385-02.jpg" alt="DHT11 and DHT22 Sensors">
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">DHT Series Overview</h2>
+            <p>DHT sensors are basic, low-cost digital temperature and humidity sensors that use a capacitive humidity sensor and a thermistor to measure surrounding conditions.</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="features">Key Features</button>
+                <button class="tab-btn" data-tab="advantages">Advantages</button>
+                <button class="tab-btn" data-tab="usage">Common Uses</button>
+            </div>
+            
+            <div class="tab-content active" id="features">
+                <ul>
+                    <li><strong>Digital Output:</strong> Single-wire serial interface</li>
+                    <li><strong>Low Power:</strong> 3-5V DC power supply</li>
+                    <li><strong>Integrated Sensing:</strong> Measures both temperature and humidity</li>
+                    <li><strong>Pre-calibrated:</strong> Factory calibrated for ease of use</li>
+                    <li><strong>Long-term Stability:</strong> Reliable over extended periods</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="advantages">
+                <ul>
+                    <li><strong>Cost Effective:</strong> Very affordable compared to alternatives</li>
+                    <li><strong>Easy to Use:</strong> Simple digital interface</li>
+                    <li><strong>Good for Prototyping:</strong> Quick integration into projects</li>
+                    <li><strong>Wide Availability:</strong> Commonly stocked by electronics suppliers</li>
+                    <li><strong>Arduino Compatible:</strong> Well-supported by libraries</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="usage">
+                <ul>
+                    <li><strong>Weather Stations:</strong> Home environmental monitoring</li>
+                    <li><strong>HVAC Systems:</strong> Climate control feedback</li>
+                    <li><strong>Agricultural Monitoring:</strong> Greenhouse conditions</li>
+                    <li><strong>Home Automation:</strong> Smart thermostats</li>
+                    <li><strong>Industrial Applications:</strong> Equipment monitoring</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sensor Comparison Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">DHT11 vs DHT22 Comparison</h2>
+            
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>DHT11</th>
+                        <th>DHT22 (AM2302)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="dht11-row">
+                        <td>Temperature Range</td>
+                        <td>0°C to 50°C</td>
+                        <td>-40°C to 80°C</td>
+                    </tr>
+                    <tr class="dht22-row">
+                        <td>Temperature Accuracy</td>
+                        <td>±2°C</td>
+                        <td>±0.5°C</td>
+                    </tr>
+                    <tr class="dht11-row">
+                        <td>Humidity Range</td>
+                        <td>20% to 80% RH</td>
+                        <td>0% to 100% RH</td>
+                    </tr>
+                    <tr class="dht22-row">
+                        <td>Humidity Accuracy</td>
+                        <td>±5% RH</td>
+                        <td>±2% RH</td>
+                    </tr>
+                    <tr class="dht11-row">
+                        <td>Sampling Rate</td>
+                        <td>1Hz (1 reading per second)</td>
+                        <td>0.5Hz (1 reading every 2 seconds)</td>
+                    </tr>
+                    <tr class="dht22-row">
+                        <td>Power Supply</td>
+                        <td>3-5.5V DC</td>
+                        <td>3-6V DC</td>
+                    </tr>
+                    <tr class="dht11-row">
+                        <td>Current Consumption</td>
+                        <td>0.5mA (measuring), 60μA (standby)</td>
+                        <td>1.5mA (measuring), 40μA (standby)</td>
+                    </tr>
+                    <tr class="dht22-row">
+                        <td>Price</td>
+                        <td>$1-$3</td>
+                        <td>$4-$10</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>When to Choose Which Sensor</h3>
+            <div class="pinout-section">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Choose DHT11 When:</h4>
+                        <ul>
+                            <li>Basic temperature/humidity monitoring is sufficient</li>
+                            <li>Project budget is very tight</li>
+                            <li>Measuring within normal room conditions (not extreme environments)</li>
+                            <li>Higher sampling rate is needed</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Choose DHT22 When:</h4>
+                        <ul>
+                            <li>Higher accuracy is required</li>
+                            <li>Measuring in extreme temperatures (below 0°C or above 50°C)</li>
+                            <li>Measuring very low or very high humidity levels</li>
+                            <li>Project can accommodate the higher cost</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pinout and Wiring Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Pinout and Wiring</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://images.theengineeringprojects.com/image/768/2017/08/DHT11-Interfacing-with-Arduino_2.jpg" alt="DHT11 Pinout">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>DHT11 Pinout</h3>
+                        <ol>
+                            <li><strong>VCC (3-5V):</strong> Power supply</li>
+                            <li><strong>DATA:</strong> Serial data output</li>
+                            <li><strong>NC:</strong> Not connected</li>
+                            <li><strong>GND:</strong> Ground</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://deepbluembedded.com/wp-content/uploads/2023/06/DHT22-Pinout.jpg" alt="DHT22 Pinout">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>DHT22 Pinout</h3>
+                        <ol>
+                            <li><strong>VCC (3-6V):</strong> Power supply</li>
+                            <li><strong>DATA:</strong> Serial data output</li>
+                            <li><strong>NC:</strong> Not connected</li>
+                            <li><strong>GND:</strong> Ground</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Typical Wiring Diagram</h3>
+            <img src="https://circuits-diy.com/wp-content/uploads/2022/02/Wiring-DHT11-Module-with-Arduino.jpg" alt="DHT Wiring Diagram" class="wiring-diagram">
+            
+            <h3>Important Wiring Notes</h3>
+            <ul>
+                <li><strong>Pull-up Resistor:</strong> 4.7KΩ-10KΩ between DATA and VCC (some modules include this)</li>
+                <li><strong>Power Supply:</strong> Use stable power source - voltage fluctuations can cause errors</li>
+                <li><strong>Cable Length:</strong> Keep cables short (<20cm) or use shielded cable for longer runs</li>
+                <li><strong>Placement:</strong> Avoid placing near heat sources or in direct sunlight</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Library Usage Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">DHT Sensor Libraries</h2>
+            
+            <h3>Popular Libraries</h3>
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>DHT Sensor Library</h4>
+                        <p>Standard library for Arduino by Adafruit</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Arduino</span>
+                            <span class="spec-chip">Simple API</span>
+                            <span class="spec-chip">Supports DHT11/22</span>
+                        </div>
+                        <a href="https://github.com/adafruit/DHT-sensor-library" class="btn" target="_blank">GitHub</a>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Adafruit_CircuitPython_DHT</h4>
+                        <p>CircuitPython library for DHT sensors</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">CircuitPython</span>
+                            <span class="spec-chip">Raspberry Pi</span>
+                            <span class="spec-chip">Python API</span>
+                        </div>
+                        <a href="https://github.com/adafruit/Adafruit_CircuitPython_DHT" class="btn" target="_blank">GitHub</a>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>SimpleDHT</h4>
+                        <p>Alternative Arduino library</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Arduino</span>
+                            <span class="spec-chip">Minimalist</span>
+                            <span class="spec-chip">No dependencies</span>
+                        </div>
+                        <a href="https://github.com/winlinvip/SimpleDHT" class="btn" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Adafruit DHT Library Functions</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Library initialization</span>
+DHT dht(DHTPIN, DHTTYPE); <span class="code-comment">// Create DHT object</span>
+
+<span class="code-comment">// In setup():</span>
+dht.begin(); <span class="code-comment">// Initialize sensor</span>
+
+<span class="code-comment">// Reading values:</span>
+float h = dht.readHumidity();      <span class="code-comment">// Read humidity (%RH)</span>
+float t = dht.readTemperature();   <span class="code-comment">// Read temp in Celsius</span>
+float f = dht.readTemperature(true); <span class="code-comment">// Read temp in Fahrenheit</span>
+float hif = dht.computeHeatIndex(f, h); <span class="code-comment">// Compute heat index</span>
+
+<span class="code-comment">// Error checking:</span>
+if (isnan(h) || isnan(t)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+}</code></pre>
+            </div>
+            
+            <h3>Library Installation</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Arduino IDE:</span>
+1. Sketch > Include Library > Manage Libraries
+2. Search for "DHT sensor library"
+3. Install "DHT sensor library by Adafruit"
+
+<span class="code-comment">// PlatformIO:</span>
+1. Open platformio.ini
+2. Add dependency:
+lib_deps = adafruit/DHT sensor library@^1.4.4
+
+<span class="code-comment">// Manual installation:</span>
+1. Download ZIP from GitHub
+2. Sketch > Include Library > Add .ZIP Library
+3. Select downloaded file</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Examples Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Code Examples</h2>
+            
+            <h3>Basic Arduino Example</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Basic DHT11/DHT22 Example</span>
+<span class="code-keyword">#include</span> &lt;DHT.h&gt;
+
+<span class="code-keyword">#define</span> DHTPIN 2      <span class="code-comment">// Digital pin connected</span>
+<span class="code-keyword">#define</span> DHTTYPE DHT22 <span class="code-comment">// DHT 22 (AM2302)</span>
+
+DHT dht(DHTPIN, DHTTYPE);
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+    Serial.println("DHTxx test!");
+    dht.begin();
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-function">delay</span>(2000); <span class="code-comment">// Wait between measurements</span>
+    
+    float h = dht.readHumidity();
+    float t = dht.readTemperature();
+    
+    <span class="code-keyword">if</span> (isnan(h) || isnan(t)) {
+        Serial.println("Failed to read from DHT sensor!");
+        <span class="code-keyword">return</span>;
+    }
+    
+    Serial.print("Humidity: ");
+    Serial.print(h);
+    Serial.print("%\tTemperature: ");
+    Serial.print(t);
+    Serial.println("°C");
+}</code></pre>
+            </div>
+            
+            <h3>ESP8266/ESP32 Example with WiFi</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// ESP8266/ESP32 DHT Web Server</span>
+<span class="code-keyword">#include</span> &lt;WiFi.h&gt;
+<span class="code-keyword">#include</span> &lt;DHT.h&gt;
+
+<span class="code-keyword">#define</span> DHTPIN 4
+<span class="code-keyword">#define</span> DHTTYPE DHT22
+
+<span class="code-keyword">const char</span>* ssid = "YOUR_SSID";
+<span class="code-keyword">const char</span>* password = "YOUR_PASSWORD";
+
+DHT dht(DHTPIN, DHTTYPE);
+WiFiServer server(80);
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(115200);
+    dht.begin();
+    
+    WiFi.begin(ssid, password);
+    <span class="code-keyword">while</span> (WiFi.status() != WL_CONNECTED) {
+        <span class="code-function">delay</span>(500);
+        Serial.print(".");
+    }
+    
+    server.begin();
+    Serial.println("Server started");
+    Serial.println(WiFi.localIP());
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    float h = dht.readHumidity();
+    float t = dht.readTemperature();
+    
+    WiFiClient client = server.available();
+    <span class="code-keyword">if</span> (client) {
+        String html = "&lt;html&gt;&lt;body&gt;";
+        html += "&lt;h1&gt;ESP DHT Server&lt;/h1&gt;";
+        html += "&lt;p&gt;Temperature: " + String(t) + "°C&lt;/p&gt;";
+        html += "&lt;p&gt;Humidity: " + String(h) + "%&lt;/p&gt;";
+        html += "&lt;/body&gt;&lt;/html&gt;";
+        
+        client.println("HTTP/1.1 200 OK");
+        client.println("Content-Type: text/html");
+        client.println();
+        client.println(html);
+        client.stop();
+    }
+}</code></pre>
+            </div>
+            
+            <h3>Raspberry Pi Python Example</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment"># Raspberry Pi DHT22 Example</span>
+<span class="code-keyword">import</span> Adafruit_DHT
+<span class="code-keyword">import</span> time
+
+<span class="code-comment"># Set sensor type and pin</span>
+DHT_SENSOR = Adafruit_DHT.DHT22
+DHT_PIN = 4
+
+<span class="code-keyword">while</span> True:
+    humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
+    
+    <span class="code-keyword">if</span> humidity <span class="code-keyword">is not</span> None <span class="code-keyword">and</span> temperature <span class="code-keyword">is not</span> None:
+        print(f"Temp={temperature:.1f}°C Humidity={humidity:.1f}%")
+    <span class="code-keyword">else</span>:
+        print("Sensor failure. Check wiring.")
+    
+    time.sleep(3)</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integration Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Controller Integration</h2>
+            
+            <h3>Arduino Integration</h3>
+            <div class="pinout-section">
+                <ol>
+                    <li>Install DHT library via Library Manager</li>
+                    <li>Connect sensor to 5V, GND, and a digital pin</li>
+                    <li>Add 4.7KΩ-10KΩ pull-up resistor between DATA and VCC</li>
+                    <li>Use the basic example code provided earlier</li>
+                    <li>Add 2-second delays between readings</li>
+                </ol>
+            </div>
+            
+            <h3>ESP8266/ESP32 Integration</h3>
+            <div class="pinout-section">
+                <ol>
+                    <li>Same wiring as Arduino (3.3V works despite 5V recommendation)</li>
+                    <li>For battery operation, use deep sleep between readings</li>
+                    <li>Consider using WiFiManager for easy WiFi configuration</li>
+                    <li>For MQTT projects, use PubSubClient to send data to broker</li>
+                </ol>
+            </div>
+            
+            <h3>Raspberry Pi Integration</h3>
+            <div class="pinout-section">
+                <ol>
+                    <li>Install required packages: <code>sudo apt-get install python3-pip</code></li>
+                    <li>Install library: <code>sudo pip3 install Adafruit_DHT</code></li>
+                    <li>Connect sensor to 3.3V (Pin 1), GND (Pin 6), and GPIO4 (Pin 7)</li>
+                    <li>Use the Python example provided earlier</li>
+                    <li>For headless operation, log data to file or database</li>
+                </ol>
+            </div>
+            
+            <h3>Common Issues and Solutions</h3>
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>Issue</th>
+                        <th>Possible Cause</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Failed to read</td>
+                        <td>Loose connection, no pull-up resistor</td>
+                        <td>Check wiring, add 4.7KΩ resistor</td>
+                    </tr>
+                    <tr>
+                        <td>NaN values</td>
+                        <td>Timing issues, power fluctuations</td>
+                        <td>Add delay between reads, use stable power</td>
+                    </tr>
+                    <tr>
+                        <td>Incorrect values</td>
+                        <td>Sensor placed near heat source</td>
+                        <td>Relocate sensor, add ventilation</td>
+                    </tr>
+                    <tr>
+                        <td>Sensor not responding</td>
+                        <td>Wrong pin specified, damaged sensor</td>
+                        <td>Double-check pin, try another sensor</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors & Modules</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Tab Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active state on buttons
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if(content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+            
+            sections.forEach(section => {
+                const sectionPosition = section.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (sectionPosition < screenPosition) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'all 0.5s ease';
+            });
+            
+            // Trigger first check
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+
+    <!-- <script>
+        // Tab Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active state on buttons
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if(content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('change', function() {
+                document.body.classList.toggle('dark-mode');
+            });
+        }
+    </script> -->
+</body>
+</html>

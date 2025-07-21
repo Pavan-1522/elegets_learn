@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raspberry Pi Guide - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+        }
+
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(108, 99, 255, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Hero Section */
+        .arduino-hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer {
+            background-color: #16213E;
+            color: white;
+        }
+
+        .arduino-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero-img {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .arduino-hero-img img {
+            height: 300px;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .section.dark-mode {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Boards Grid */
+        .boards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .board-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .board-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .board-card-img {
+            height: 200px;
+            background: #f5f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .board-card-img img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .board-card-content {
+            padding: 1.5rem;
+        }
+
+        .board-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .board-card-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .spec-chip {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Pinout Section */
+        .pinout-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .pinout-diagram {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .pin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .pin-table th, .pin-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .pin-table th {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .pin-table tr:hover {
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        /* Enhanced Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #718096;
+            position: relative;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .tab-btn:hover {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+            padding: 1rem 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2D3748;
+            color: #F7FAFC;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .code-keyword {
+            color: #FF79C6;
+        }
+
+        .code-function {
+            color: #50FA7B;
+        }
+
+        .code-comment {
+            color: #6272A4;
+            font-style: italic;
+        }
+
+        .code-number {
+            color: #BD93F9;
+        }
+
+        /* Raspberry Pi-specific additions */
+        .pi-icon {
+            color: #C51A4A;
+            margin-right: 8px;
+        }
+        
+        .gpio-icon {
+            color: #4CAF50;
+            margin-right: 8px;
+        }
+        
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(108, 99, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pi-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        .pi-table th, .pi-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .pi-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .pi-table tr:nth-child(even) {
+            background-color: rgba(108, 99, 255, 0.05);
+        }
+        
+        .zero-series {
+            background-color: rgba(255, 152, 0, 0.1);
+        }
+        
+        .compute-module {
+            background-color: rgba(33, 150, 243, 0.1);
+        }
+
+        /* Responsive Enhancements */
+        @media (max-width: 992px) {
+            .arduino-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .pinout-section {
+                padding: 1.5rem;
+            }
+            
+            .comparison-table th, 
+            .comparison-table td,
+            .pi-table th,
+            .pi-table td {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .arduino-hero {
+                padding: 6rem 0 2rem;
+            }
+            
+            .arduino-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .arduino-hero p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .arduino-hero-img {
+                display: none;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .boards-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .board-card {
+                max-width: 100%;
+            }
+            
+            .pinout-diagram {
+                width: 100%;
+            }
+            
+            /* Improved tabs for mobile */
+            .tabs {
+                flex-direction: column;
+                border-bottom: none;
+            }
+            
+            .tab-btn {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+                border-radius: 6px;
+                text-align: left;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                width: 100%;
+            }
+            
+            .tab-btn.active {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: 6px 6px 0 0;
+            }
+            
+            .tab-btn.active::after {
+                display: none;
+            }
+            
+            .tab-content {
+                padding: 1rem;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-top: none;
+                border-radius: 0 0 6px 6px;
+                margin-top: -0.5rem;
+            }
+            
+            /* Table improvements for mobile */
+            .comparison-table,
+            .pin-table,
+            .pi-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .code-block {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .arduino-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 2rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .board-card-content {
+                padding: 1rem;
+            }
+            
+            .board-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .spec-chip, .feature-badge {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.6rem;
+            }
+            
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .pinout-section {
+                padding: 1rem;
+            }
+            
+            /* Adjust tab buttons for very small screens */
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/learnings/microControllers.html" class="active">Microcontrollers</a></li>
+                    <li><a href="/maintainance.html">Projects</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/maintainance.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="arduino-hero">
+        <div class="container">
+            <h1>Raspberry Pi</h1>
+            <p>The complete guide to Raspberry Pi single-board computers - From beginner projects to advanced applications</p>
+            <div class="arduino-hero-img">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Raspberry_Pi_4_Model_B_-_Side.jpg/1200px-Raspberry_Pi_4_Model_B_-_Side.jpg" alt="Raspberry Pi 4">
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">What is Raspberry Pi?</h2>
+            <p>Raspberry Pi is a series of small single-board computers developed in the UK to promote teaching of basic computer science in schools and developing countries.</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="features">Key Features</button>
+                <button class="tab-btn" data-tab="advantages">Advantages</button>
+                <button class="tab-btn" data-tab="usage">Common Uses</button>
+            </div>
+            
+            <div class="tab-content active" id="features">
+                <ul>
+                    <li><strong>Full Computer:</strong> Runs Linux-based operating systems</li>
+                    <li><strong>GPIO Pins:</strong> 40-pin header for electronics projects</li>
+                    <li><strong>Multimedia Capable:</strong> 4K video playback (Pi 4)</li>
+                    <li><strong>Connectivity:</strong> WiFi, Bluetooth, Ethernet, USB</li>
+                    <li><strong>Affordable:</strong> Starting at $5 (Pi Zero)</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="advantages">
+                <ul>
+                    <li><strong>Educational:</strong> Perfect for learning computing and electronics</li>
+                    <li><strong>Versatile:</strong> Can function as desktop PC, server, or embedded device</li>
+                    <li><strong>Large Community:</strong> Massive support and documentation</li>
+                    <li><strong>Regular Updates:</strong> Continuous hardware and software improvements</li>
+                    <li><strong>HAT Compatible:</strong> Hardware add-ons for expanded functionality</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="usage">
+                <ul>
+                    <li><strong>Home Automation:</strong> Smart home hubs</li>
+                    <li><strong>Media Centers:</strong> Kodi, Plex servers</li>
+                    <li><strong>Retro Gaming:</strong> Emulation stations</li>
+                    <li><strong>IoT Projects:</strong> Sensor networks</li>
+                    <li><strong>Network Services:</strong> VPN, NAS, web servers</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pi Models Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Raspberry Pi Models</h2>
+            <p>Raspberry Pi has evolved through several generations with increasing capabilities:</p>
+            
+            <div class="table-wrapper">
+                <table class="pi-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Release Year</th>
+                            <th>Processor</th>
+                            <th>RAM</th>
+                            <th>Key Features</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="zero-series">
+                            <td>Pi Zero W</td>
+                            <td>2017</td>
+                            <td>1GHz single-core</td>
+                            <td>512MB</td>
+                            <td>Miniature size, WiFi/BT</td>
+                            <td>$10</td>
+                        </tr>
+                        <tr>
+                            <td>Pi 3 Model B</td>
+                            <td>2016</td>
+                            <td>1.2GHz quad-core</td>
+                            <td>1GB</td>
+                            <td>First with WiFi/BT</td>
+                            <td>$35</td>
+                        </tr>
+                        <tr>
+                            <td>Pi 3 Model B+</td>
+                            <td>2018</td>
+                            <td>1.4GHz quad-core</td>
+                            <td>1GB</td>
+                            <td>Faster Ethernet, WiFi</td>
+                            <td>$35</td>
+                        </tr>
+                        <tr>
+                            <td>Pi 4 Model B</td>
+                            <td>2019</td>
+                            <td>1.5GHz quad-core</td>
+                            <td>2GB/4GB/8GB</td>
+                            <td>USB 3.0, dual 4K output</td>
+                            <td>$35-$75</td>
+                        </tr>
+                        <tr class="compute-module">
+                            <td>Compute Module 4</td>
+                            <td>2020</td>
+                            <td>1.5GHz quad-core</td>
+                            <td>1GB-8GB</td>
+                            <td>Industrial form factor</td>
+                            <td>$25-$90</td>
+                        </tr>
+                        <tr>
+                            <td>Pi 400</td>
+                            <td>2020</td>
+                            <td>1.8GHz quad-core</td>
+                            <td>4GB</td>
+                            <td>Keyboard integrated</td>
+                            <td>$70</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Boards Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Popular Raspberry Pi Boards</h2>
+            
+            <div class="boards-grid">
+                <!-- Pi 4 Model B -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.raspberrypi.com/documentation/computers/images/raspberry-pi-4-model-b.png" alt="Raspberry Pi 4">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Raspberry Pi 4</h3>
+                        <p>The most powerful general-purpose Pi with desktop performance</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Broadcom BCM2711</span>
+                            <span class="spec-chip">1.5GHz</span>
+                            <span class="spec-chip">2GB-8GB RAM</span>
+                            <span class="spec-chip">4K Output</span>
+                            <span class="feature-badge"><i class="fas fa-wifi"></i> WiFi</span>
+                            <span class="feature-badge"><i class="fas fa-bluetooth"></i> BT 5.0</span>
+                            <span class="feature-badge"><i class="fas fa-network-wired"></i> Gigabit</span>
+                        </div>
+                        <a href="#pi4" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Pi Zero 2 W -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.raspberrypi.com/documentation/computers/images/raspberry-pi-zero-2w.png" alt="Pi Zero 2 W">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Pi Zero 2 W</h3>
+                        <p>Ultra-compact board with quad-core performance</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Broadcom BCM2710A1</span>
+                            <span class="spec-chip">1GHz</span>
+                            <span class="spec-chip">512MB RAM</span>
+                            <span class="spec-chip">Mini HDMI</span>
+                            <span class="feature-badge"><i class="fas fa-compress-alt"></i> 65mm x 30mm</span>
+                            <span class="feature-badge"><i class="fas fa-wifi"></i> WiFi</span>
+                        </div>
+                        <a href="#pizero2" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Pi Pico -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.raspberrypi.com/documentation/microcontrollers/images/raspberry-pi-pico-pinout.svg" alt="Raspberry Pi Pico">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Raspberry Pi Pico</h3>
+                        <p>Microcontroller board with RP2040 chip</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">RP2040</span>
+                            <span class="spec-chip">133MHz</span>
+                            <span class="spec-chip">264KB RAM</span>
+                            <span class="spec-chip">26 GPIO</span>
+                            <span class="feature-badge"><i class="fas fa-microchip"></i> Dual Core</span>
+                            <span class="feature-badge"><i class="fas fa-dollar-sign"></i> $4</span>
+                        </div>
+                        <a href="#pico" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Compute Module 4 -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.raspberrypi.com/documentation/computers/images/raspberry-pi-compute-module-4.png" alt="Compute Module 4">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Compute Module 4</h3>
+                        <p>Industrial form factor for embedded applications</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Broadcom BCM2711</span>
+                            <span class="spec-chip">1.5GHz</span>
+                            <span class="spec-chip">1GB-8GB</span>
+                            <span class="spec-chip">PCIe</span>
+                            <span class="feature-badge"><i class="fas fa-industry"></i> Industrial</span>
+                            <span class="feature-badge"><i class="fas fa-memory"></i> eMMC</span>
+                        </div>
+                        <a href="#cm4" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pi 4 Deep Dive -->
+    <section class="section" id="pi4">
+        <div class="container">
+            <h2 class="section-title">Raspberry Pi 4 Architecture</h2>
+            <p>The Raspberry Pi 4 represents a significant performance leap over previous models.</p>
+            
+            <div class="pinout-section">
+                <h3>Block Diagram</h3>
+                <img src="https://www.raspberrypi.com/documentation/computers/images/raspberry-pi-4-block-diagram.png" alt="Pi 4 Block Diagram" class="pinout-diagram">
+                
+                <h3>Key Specifications</h3>
+                <div class="table-wrapper">
+                    <table class="pin-table">
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Specification</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SoC</td>
+                                <td>Broadcom BCM2711 (Cortex-A72)</td>
+                            </tr>
+                            <tr>
+                                <td>CPU</td>
+                                <td>4-core 1.5GHz (64-bit)</td>
+                            </tr>
+                            <tr>
+                                <td>GPU</td>
+                                <td>VideoCore VI (500MHz)</td>
+                            </tr>
+                            <tr>
+                                <td>Memory</td>
+                                <td>LPDDR4 (2GB/4GB/8GB)</td>
+                            </tr>
+                            <tr>
+                                <td>Connectivity</td>
+                                <td>2.4/5GHz WiFi, BT 5.0, Gigabit Ethernet</td>
+                            </tr>
+                            <tr>
+                                <td>Video Output</td>
+                                <td>2 × micro-HDMI (4K @ 60fps)</td>
+                            </tr>
+                            <tr>
+                                <td>USB</td>
+                                <td>2 × USB 3.0, 2 × USB 2.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <h3>GPIO Pinout</h3>
+            <img src="https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png" alt="Pi GPIO Pinout" class="pinout-diagram" style="max-width: 600px;">
+            
+            <h3>Getting Started with Raspberry Pi OS</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment"># Basic Python script to blink an LED</span>
+<span class="code-keyword">import</span> RPi.GPIO <span class="code-keyword">as</span> GPIO
+<span class="code-keyword">import</span> time
+
+LED_PIN = 18
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(LED_PIN, GPIO.OUT)
+
+<span class="code-keyword">try</span>:
+    <span class="code-keyword">while</span> True:
+        GPIO.output(LED_PIN, GPIO.HIGH)
+        time.sleep(1)
+        GPIO.output(LED_PIN, GPIO.LOW)
+        time.sleep(1)
+<span class="code-keyword">except</span> KeyboardInterrupt:
+    GPIO.cleanup()</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Operating Systems -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Raspberry Pi Operating Systems</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.raspberrypi.com/documentation/computers/images/raspberry-pi-os-logo.png" alt="Raspberry Pi OS">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Raspberry Pi OS</h3>
+                        <p>Official Debian-based OS optimized for Pi</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">32/64-bit</span>
+                            <span class="spec-chip">Desktop</span>
+                            <span class="spec-chip">Recommended</span>
+                        </div>
+                        <a href="https://www.raspberrypi.com/software/" class="btn" target="_blank">Download</a>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://ubuntu.com/wp-content/uploads/edd/UbuntuDesktop.png" alt="Ubuntu">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Ubuntu</h3>
+                        <p>Full desktop Linux experience</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">ARM64</span>
+                            <span class="spec-chip">Server/Desktop</span>
+                            <span class="spec-chip">LTS Available</span>
+                        </div>
+                        <a href="https://ubuntu.com/download/raspberry-pi" class="btn" target="_blank">Download</a>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://retropie.org.uk/wp-content/uploads/2016/06/cropped-RetroPieLogoText-192x192.png" alt="RetroPie">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>RetroPie</h3>
+                        <p>Turn your Pi into a retro gaming console</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Emulation</span>
+                            <span class="spec-chip">Gamepad Support</span>
+                            <span class="spec-chip">Thousands of Games</span>
+                        </div>
+                        <a href="https://retropie.org.uk/" class="btn" target="_blank">Download</a>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://libreelec.tv/wp-content/uploads/2020/09/le_logo_glow_512.png" alt="LibreELEC">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>LibreELEC</h3>
+                        <p>Lightweight Kodi media center</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">Minimal OS</span>
+                            <span class="spec-chip">4K HDR</span>
+                            <span class="spec-chip">Media Focused</span>
+                        </div>
+                        <a href="https://libreelec.tv/" class="btn" target="_blank">Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Projects -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Advanced Raspberry Pi Projects</h2>
+            
+            <h3>Home Automation Server</h3>
+            <p>Using Home Assistant to control smart devices:</p>
+            <div class="code-block">
+                <pre><code><span class="code-comment"># Install Home Assistant</span>
+sudo apt update
+sudo apt install -y python3 python3-dev python3-venv python3-pip libffi-dev libssl-dev
+
+<span class="code-comment"># Create virtual environment</span>
+python3 -m venv homeassistant
+cd homeassistant
+source bin/activate
+
+<span class="code-comment"># Install Home Assistant Core</span>
+python3 -m pip install wheel
+pip install homeassistant
+
+<span class="code-comment"># Start Home Assistant</span>
+hass</code></pre>
+            </div>
+            
+            <h3>Pi Cluster with Docker Swarm</h3>
+            <p>Creating a mini supercomputer with multiple Pis:</p>
+            <div class="code-block">
+                <pre><code><span class="code-comment"># On manager node</span>
+docker swarm init --advertise-addr &lt;MANAGER_IP&gt;
+
+<span class="code-comment"># On worker nodes</span>
+docker swarm join --token &lt;TOKEN&gt; &lt;MANAGER_IP&gt;:2377
+
+<span class="code-comment"># Deploy a service</span>
+docker service create --name nginx --replicas 3 -p 80:80 nginx</code></pre>
+            </div>
+            
+            <h3>AI Object Detection</h3>
+            <p>Using OpenCV and TensorFlow Lite:</p>
+            <div class="code-block">
+                <pre><code><span class="code-comment"># Install dependencies</span>
+sudo apt install libatlas-base-dev libopenjp2-7 libtiff5
+pip3 install opencv-python numpy tflite-runtime
+
+<span class="code-comment"># Sample object detection code</span>
+<span class="code-keyword">import</span> cv2
+<span class="code-keyword">import</span> tflite_runtime.interpreter <span class="code-keyword">as</span> tflite
+
+<span class="code-comment"># Load TFLite model</span>
+interpreter = tflite.Interpreter(model_path="model.tflite")
+interpreter.allocate_tensors()
+
+<span class="code-comment"># Process camera input</span>
+cap = cv2.VideoCapture(0)
+<span class="code-keyword">while</span> True:
+    ret, frame = cap.read()
+    <span class="code-comment"># Preprocess and run inference</span>
+    input_data = preprocess(frame)
+    interpreter.set_tensor(input_index, input_data)
+    interpreter.invoke()
+    output_data = interpreter.get_tensor(output_index)
+    <span class="code-comment"># Draw detections</span>
+    draw_boxes(frame, output_data)
+    cv2.imshow('Object Detection', frame)</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors & Modules</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Tab Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active state on buttons
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if(content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+            
+            sections.forEach(section => {
+                const sectionPosition = section.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (sectionPosition < screenPosition) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'all 0.5s ease';
+            });
+            
+            // Trigger first check
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

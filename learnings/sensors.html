@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensors Hub - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/banner.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+        }
+
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles (same as main site) */
+        header {
+            background: rgba(108, 99, 255, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Sensors Hub Specific Styles */
+        .sensors-hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+        }
+
+        .sensors-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .sensors-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .sensor-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 3rem 0;
+        }
+
+        .sensor-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .sensor-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .sensor-card-img {
+            height: 200px;
+            background: #f5f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .sensor-card-img img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+
+        .sensor-card:hover .sensor-card-img img {
+            transform: scale(1.05);
+        }
+
+        .sensor-card-content {
+            padding: 1.5rem;
+        }
+
+        .sensor-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .sensor-card p {
+            color: #718096;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .sensor-type {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .sensor-type.digital {
+            background: #C6F6D5;
+            color: #276749;
+        }
+
+        .sensor-type.analog {
+            background: #BEE3F8;
+            color: #2B6CB0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer Styles (same as main site) */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .sensors-hero {
+                padding: 6rem 0 2rem;
+            }
+            
+            .sensors-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .sensor-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dark Mode Toggle Styles */
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            margin-left: 1.5rem;
+        }
+
+        .theme-toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .theme-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .theme-slider {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        input:checked + .theme-slider:before {
+            transform: translateX(24px);
+            background-color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="microControllers.html">Microcontrollers</a></li>
+                    <li><a href="sensors.html" class="active">Sensors</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Construction Banner -->
+    <div class="construction-banner">
+        <marquee behavior="scroll" direction="left">
+            🚧 This website is still under construction. All features will be available soon. Thank you for your patience! - Team Elegets-Learn 🚧
+        </marquee>
+    </div>
+    <!-- Hero Section -->
+    <section class="sensors-hero">
+        <div class="container">
+            <h1>Sensors Hub</h1>
+            <p>Explore our comprehensive collection of sensors for your electronics projects</p>
+            <div class="sensor-filter">
+                <button class="filter-btn active" data-filter="all">All Sensors</button>
+                <button class="filter-btn" data-filter="digital">Digital Sensors</button>
+                <button class="filter-btn" data-filter="analog">Analog Sensors</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sensors Grid -->
+    <div class="container">
+        <div class="sensor-grid">
+            <!-- DHT11 -->
+            <div class="sensor-card" data-type="digital">
+                <div class="sensor-card-img">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.ERLzul_pbW5HFL589cxargAAAA?pid=Api&P=0&h=220" alt="DHT11 Sensor">
+                </div>
+                <span class="sensor-type digital">Digital</span>
+                <div class="sensor-card-content">
+                    <h3>DHT11</h3>
+                    <p>Temperature and humidity sensor with digital signal output</p>
+                    <a href="/sensors/dht.html" class="btn">Learn More</a>
+                </div>
+            </div>
+
+            <!-- MQ2 -->
+            <div class="sensor-card" data-type="analog">
+                <div class="sensor-card-img">
+                    <img src="https://kunkune.co.uk/wp-content/uploads/2022/11/Gas-Detections-Sensors-Arduino-sensor-clear.jpg" alt="MQ2 Sensor">
+                </div>
+                <span class="sensor-type analog">Analog</span>
+                <div class="sensor-card-content">
+                    <h3>MQ Sensor Series</h3>
+                    <p>Detects LPG, propane, methane, hydrogen, smoke and other gases</p>
+                    <a href="/sensors/mq.html" class="btn">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Flame Sensor -->
+            <div class="sensor-card" data-type="digital">
+                <div class="sensor-card-img">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.qiEHC18AvdCIE_CyrW8BjwHaFE?pid=Api&P=0&h=220" alt="Flame Sensor">
+                </div>
+                <span class="sensor-type digital">Digital</span>
+                <div class="sensor-card-content">
+                    <h3>Flame Sensor</h3>
+                    <p>Detects fire or other light sources in the 760-1100 nm range</p>
+                    <a href="/sensors/flame.html" class="btn">Learn More</a>
+                </div>
+            </div>
+
+            <!-- IR Sensor -->
+            <div class="sensor-card" data-type="digital">
+                <div class="sensor-card-img">
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.lXNoiXu7i0_Gcg30pIj-jgHaHa?pid=Api&P=0&h=220" alt="IR Sensor">
+                </div>
+                <span class="sensor-type digital">Digital</span>
+                <div class="sensor-card-content">
+                    <h3>IR Sensor</h3>
+                    <p>Infrared obstacle detection and proximity sensor module</p>
+                    <a href="/sensors/ir.html" class="btn">Learn More</a>
+                </div>
+            </div>
+
+            <!-- LDR -->
+            <div class="sensor-card" data-type="analog">
+                <div class="sensor-card-img">
+                    <img src="https://www.admin.robotedu.my/image/robotedu/image/cache/data/all_product_images/product-1642/V4QF7V6v1617088835-700x700.png" alt="LDR Sensor">
+                </div>
+                <span class="sensor-type analog">Analog</span>
+                <div class="sensor-card-content">
+                    <h3>LDR (Light Sensor)</h3>
+                    <p>Light Dependent Resistor that changes resistance with light intensity</p>
+                    <a href="/sensors/ldr.html" class="btn">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Soil Moisture -->
+            <div class="sensor-card" data-type="analog">
+                <div class="sensor-card-img">
+                    <img src="https://www.electronicwings.com/storage/PlatformSection/TopicContent/442/description/Soil%20Moisture%20Sensor%20Module.jpg" alt="Soil Moisture Sensor">
+                </div>
+                <span class="sensor-type analog">Analog</span>
+                <div class="sensor-card-content">
+                    <h3>Soil Moisture</h3>
+                    <p>Measures soil water content for smart irrigation systems</p>
+                    <a href="/sensors/soil-moisture.html" class="btn">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Color Sensor -->
+            <div class="sensor-card" data-type="digital">
+                <div class="sensor-card-img">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.PNHJC39h2kLtsjThyt4G3AHaFj?pid=Api&P=0&h=220" alt="Color Sensor">
+                </div>
+                <span class="sensor-type digital">Digital</span>
+                <div class="sensor-card-content">
+                    <h3>Color Sensor</h3>
+                    <p>Detects and distinguishes between different colors</p>
+                    <a href="/maintainance.html" class="btn">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Motion Sensor -->
+            <div class="sensor-card" data-type="digital">
+                <div class="sensor-card-img">
+                    <img src="https://www.electronicwings.com/storage/PlatformSection/TopicContent/121/icon/PIR%20Sensor(0).jpg" alt="Motion Sensor">
+                </div>
+                <span class="sensor-type digital">Digital</span>
+                <div class="sensor-card-content">
+                    <h3>Motion Sensor (PIR)</h3>
+                    <p>Passive Infrared sensor detects human/animal movement</p>
+                    <a href="/sensors/motion.html" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="/maintainance.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/theme-toggle.js"></script>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Sensor Filter Functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const sensorCards = document.querySelectorAll('.sensor-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active state on buttons
+                filterBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                
+                // Filter cards
+                sensorCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.type === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.sensor-card');
+            
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.sensor-card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+            });
+            
+            // Trigger first check
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

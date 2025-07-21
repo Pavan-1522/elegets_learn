@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegets Learn - Electronics Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            
+            /* Dark/Light mode variables */
+            --bg-color: #F5F7FF;
+            --text-color: #2D3748;
+            --card-bg: white;
+            --footer-bg: #2D3748;
+            --footer-text: white;
+            --header-bg: rgba(255, 255, 255, 0.15);
+            --hero-bg: var(--gradient);
+            --section-bg: white;
+            --section-alt-bg: #F5F7FF;
+        }
+
+        /* Dark mode variables */
+        .dark-mode {
+            --bg-color: #1A1A2E;
+            --text-color: #F7FAFC;
+            --card-bg: #16213E;
+            --footer-bg: #0F0F23;
+            --footer-text: #CBD5E0;
+            --header-bg: rgba(26, 26, 46, 0.9);
+            --hero-bg: linear-gradient(135deg, #4D44DB 0%, #2D3748 100%);
+            --section-bg: #16213E;
+            --section-alt-bg: #1A1A2E;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header - Glass Morphism */
+        header {
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            background: rgba(108, 99, 255, 0.9);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+        }
+        
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-cta {
+            background: var(--accent);
+            margin-left: 1.5rem;
+        }
+        
+        .nav-cta:hover {
+            background: #e04d6d;
+            transform: translateY(-2px);
+        }
+        
+        /* Dark/Light Mode Toggle - Fixed */
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            margin-left: 1.5rem;
+        }
+        
+        .theme-label {
+            color: white;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .theme-toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            margin-left: 0;
+        }
+        
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .theme-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .theme-slider {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        input:checked + .theme-slider:before {
+            transform: translateX(24px);
+            background-color: var(--accent);
+        }
+        
+        .theme-icons {
+            position: absolute;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 8px;
+            pointer-events: none;
+        }
+        
+        .theme-icons i {
+            color: white;
+            font-size: 0.8rem;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        /* Hero Section - Animated Gradient */
+        .hero {
+            background: var(--hero-bg);
+            color: white;
+            padding: 10rem 0 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 15s infinite linear;
+            z-index: 0;
+        }
+        
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-primary {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Floating Circuit Elements */
+        .circuit-element {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .circuit-1 {
+            top: 20%;
+            left: 10%;
+            font-size: 8rem;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .circuit-2 {
+            bottom: 15%;
+            right: 10%;
+            font-size: 10rem;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Features Section - Card Grid */
+        .features {
+            padding: 6rem 0;
+            background-color: var(--section-bg);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.8rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            color: #718096;
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: var(--gradient);
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover::before {
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .feature-card p {
+            color: #718096;
+            font-size: 1rem;
+        }
+        
+        /* Categories Section - 3D Cards */
+        .categories {
+            padding: 6rem 0;
+            background-color: var(--section-alt-bg);
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .category-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .category-img::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+        }
+        
+        .category-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .category-card:hover .category-img img {
+            transform: scale(1.1);
+        }
+        
+        .category-content {
+            padding: 1.8rem;
+            position: relative;
+        }
+        
+        .category-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+        }
+        
+        .category-content p {
+            color: #718096;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .category-tag {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: var(--gradient);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+        }
+        
+        .btn-sm {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            display: inline-flex;
+        }
+        
+        /* Roadmaps Section - Improved Interactive Timeline */
+        .roadmaps {
+            padding: 6rem 0;
+            background-color: var(--section-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .roadmap-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 4rem auto 0;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 4px;
+            background: var(--gradient);
+            transform: translateX(-50%);
+            z-index: 1;
+            transition: height 1s ease-out;
+            height: 0;
+        }
+        
+        .roadmap-items {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .roadmap-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition-delay: 0s;
+        }
+        
+        .roadmap-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .roadmap-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .roadmap-content {
+            width: calc(50% - 40px);
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .roadmap-item:hover .roadmap-content {
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .roadmap-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--card-bg);
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+            box-shadow: 0 0 0 4px var(--card-bg);
+        }
+        
+        .roadmap-item:nth-child(odd) .roadmap-content::before {
+            right: -52px;
+        }
+        
+        .roadmap-item:nth-child(even) .roadmap-content::before {
+            left: -52px;
+        }
+        
+        .roadmap-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .roadmap-content p {
+            color: #718096;
+            margin-bottom: 1.5rem;
+        }
+        
+        .roadmap-milestones {
+            list-style: none;
+        }
+        
+        .roadmap-milestones li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+            color: #4A5568;
+        }
+        
+        .roadmap-milestones li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        /* Coming Soon Community Section */
+        .community {
+            padding: 6rem 0;
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .community .section-title h2,
+        .community .section-title p {
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .community .section-title p {
+            opacity: 0.9;
+        }
+        
+        .community-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+        
+        .community-content p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Contact Section - Modern Form */
+        .contact {
+            padding: 6rem 0;
+            background-color: var(--section-alt-bg);
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .contact-info {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .contact-details {
+            list-style: none;
+            margin-top: 2rem;
+        }
+        
+        .contact-details li {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .contact-details i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 1rem;
+            margin-top: 0.3rem;
+        }
+        
+        .contact-details div h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-color);
+        }
+        
+        .contact-details div p {
+            color: #718096;
+        }
+        
+        .contact-form {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-size: 1rem;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Newsletter - Glass Morphism */
+        .newsletter {
+            padding: 6rem 0;
+            background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            text-align: center;
+        }
+        
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(77, 68, 219, 0.8);
+            backdrop-filter: blur(2px);
+        }
+        
+        .newsletter-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .newsletter h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .newsletter p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backflow-filter: blur(10px);
+            border-radius: 50px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 1.2rem 2rem;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .newsletter-form .btn {
+            padding: 1.2rem 2.5rem;
+            border-radius: 0;
+            background: var(--accent);
+            color: white;
+            border: none;
+        }
+        
+        .newsletter-form .btn:hover {
+            background: #e04d6d;
+        }
+        
+        /* Footer - Dark Theme */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 5rem 0 2rem;
+            position: relative;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.8rem;
+            position: relative;
+            display: inline-block;
+            color: white;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .footer-about p {
+            color: #CBD5E0;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-col ul li a {
+            color: #CBD5E0;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            display: inline-block;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+        
+        .footer-col ul li a::before {
+            content: '→';
+            margin-right: 8px;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        
+        .footer-col ul li a:hover::before {
+            opacity: 1;
+            margin-right: 12px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #A0AEC0;
+            font-size: 0.9rem;
+        }
+        
+        /* Floating Elements Animation */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            color: white;
+            font-size: 2rem;
+            animation: floatElement 15s infinite linear;
+        }
+        
+        @keyframes floatElement {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .roadmap-line {
+                left: 40px;
+            }
+            
+            .roadmap-item {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 3rem;
+            }
+            
+            .roadmap-item:nth-child(even) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .roadmap-content {
+                width: calc(100% - 80px);
+                margin-left: 80px;
+            }
+            
+            .roadmap-content::before {
+                left: -52px !important;
+                right: auto !important;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: rgba(45, 55, 72, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: center;
+                transition: all 0.3s ease;
+                z-index: 1000;
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 2rem;
+            }
+            
+            nav ul li {
+                margin: 1rem 0;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 0.8rem 1rem;
+                border-radius: 5px;
+            }
+            
+            .theme-toggle-container {
+                margin: 1rem 0 0 1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+                margin-bottom: 1rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                border-radius: 15px;
+            }
+            
+            .newsletter-form input,
+            .newsletter-form .btn {
+                width: 100%;
+                border-radius: 0;
+            }
+            
+            .newsletter-form input {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 8rem 0 4rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .feature-card,
+            .category-card {
+                padding: 1.8rem 1.5rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets Learn</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Learn</a></li>
+                    <li><a href="#categories">Projects</a></li>
+                    <li><a href="#roadmaps">Roadmaps</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" class="nav-cta">Get Pro</a></li>
+                    <li class="theme-toggle-container">
+                        <span class="theme-label">Theme</span>
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle">
+                                <div class="theme-icons">
+                                    <i class="fas fa-moon"></i>
+                                    <i class="fas fa-sun"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>Electronics Made <span class="highlight">Awesome</span></h1>
+            <p>The ultimate platform for students and hobbyists to master electronics with interactive tutorials and real-world projects.</p>
+            <div class="cta-buttons">
+                <a href="#categories" class="btn btn-primary"><i class="fas fa-play"></i> Start Learning</a>
+                <a href="contact.html" class="btn btn-secondary"><i class="fas fa-envelope"></i> Contact Us</a>
+            </div>
+        </div>
+        
+        <!-- Floating circuit elements -->
+        <i class="fas fa-microchip circuit-element circuit-1"></i>
+        <i class="fas fa-project-diagram circuit-element circuit-2"></i>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Learn With Us?</h2>
+                <p>We've designed the perfect learning experience for electronics enthusiasts of all levels</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Structured Learning</h3>
+                    <p>Step-by-step courses from basic components to advanced microcontroller programming with clear milestones.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Project-Based</h3>
+                    <p>Learn by building real projects with complete documentation, schematics, and code samples.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Access lessons and code editor from any device, perfect for students on the go.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Gamified Learning</h3>
+                    <p>Earn badges, complete challenges, and track your progress with our achievement system.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3>Expert Support</h3>
+                    <p>Get help from our team of engineers and educators when you're stuck.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <div class="section-title">
+                <h2>Explore Learning Paths</h2>
+                <p>Choose your focus area and start building real electronics skills</p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1622495546323-5dac33dedb01?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Microcontrollers">
+                    </div>
+                    <div class="category-content">
+                        <span class="category-tag">Beginner</span>
+                        <h3>Microcontrollers</h3>
+                        <p>Master Arduino, ESP32, STM32 and more with hands-on projects and coding exercises.</p>
+                        <a href="learnings/microControllers.html" class="btn btn-primary btn-sm"><i class="fas fa-arrow-right"></i> Start Path</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Sensors">
+                    </div>
+                    <div class="category-content">
+                        <span class="category-tag">Intermediate</span>
+                        <h3>Sensors & IoT</h3>
+                        <p>Learn to integrate temperature, motion, light sensors and connect them to the cloud.</p>
+                        <a href="learnings/sensors.html" class="btn btn-primary btn-sm"><i class="fas fa-arrow-right"></i> Start Path</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="PCB Design">
+                    </div>
+                    <div class="category-content">
+                        <span class="category-tag">Advanced</span>
+                        <h3>PCB Design</h3>
+                        <p>From schematic to finished board - learn professional EDA tools and manufacturing.</p>
+                        <a href="learnings/pcb.html" class="btn btn-primary btn-sm"><i class="fas fa-arrow-right"></i> Start Path</a>
+                    </div>
+                </div>
+            </div>
+            <div class="categories-grid" style="margin-top: 2rem;">
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Robotics">
+                    </div>
+                    <div class="category-content">
+                        <span class="category-tag">Projects</span>
+                        <h3>Robotics</h3>
+                        <p>Build autonomous robots with motor control, sensors, and AI decision making.</p>
+                        <a href="learnings/robotics.html" class="btn btn-primary btn-sm"><i class="fas fa-arrow-right"></i> Explore</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Theories">
+                    </div>
+                    <div class="category-content">
+                        <span class="category-tag">Fundamentals</span>
+                        <h3>Electronics Theory</h3>
+                        <p>Master Ohm's Law, circuit analysis, signal processing and more.</p>
+                        <a href="/learnings/edc.html" class="btn btn-primary btn-sm"><i class="fas fa-arrow-right"></i> Learn</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Career">
+                    </div>
+                    <div class="category-content">
+                        <span class="category-tag">Resources</span>
+                        <h3>Career Prep</h3>
+                        <p>Resume tips, interview prep, and internship opportunities in electronics.</p>
+                        <a href="maintainance.html" class="btn btn-primary btn-sm"><i class="fas fa-arrow-right"></i> Explore</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmaps Section -->
+    <section class="roadmaps" id="roadmaps">
+        <div class="container">
+            <div class="section-title">
+                <h2>Learning Roadmaps</h2>
+                <p>Follow our structured paths to go from beginner to electronics expert</p>
+            </div>
+            <div class="roadmap-container">
+                <div class="roadmap-line"></div>
+                <div class="roadmap-items">
+                    <div class="roadmap-item">
+                        <div class="roadmap-content">
+                            <h3>Beginner Level (0-3 months)</h3>
+                            <p>Build your foundation with these essential skills</p>
+                            <ul class="roadmap-milestones">
+                                <li>Basic electronic components and circuits</li>
+                                <li>Introduction to Arduino programming</li>
+                                <li>Simple sensor interfacing</li>
+                                <li>Basic prototyping techniques</li>
+                                <li>5 beginner projects completed</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-content">
+                            <h3>Intermediate Level (3-6 months)</h3>
+                            <p>Develop more advanced electronics skills</p>
+                            <ul class="roadmap-milestones">
+                                <li>Advanced microcontroller features</li>
+                                <li>Wireless communication (Bluetooth/WiFi)</li>
+                                <li>PCB design basics</li>
+                                <li>Data logging and visualization</li>
+                                <li>3 intermediate projects completed</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-content">
+                            <h3>Advanced Level (6-12 months)</h3>
+                            <p>Master professional-level electronics</p>
+                            <ul class="roadmap-milestones">
+                                <li>RTOS and multitasking</li>
+                                <li>IoT system design</li>
+                                <li>Signal processing</li>
+                                <li>Custom PCB fabrication</li>
+                                <li>2 advanced projects completed</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-content">
+                            <h3>Professional Level (12+ months)</h3>
+                            <p>Specialize and build your career</p>
+                            <ul class="roadmap-milestones">
+                                <li>Industrial automation</li>
+                                <li>Robotics and control systems</li>
+                                <li>AI at the edge</li>
+                                <li>Product development lifecycle</li>
+                                <li>Portfolio of professional projects</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Coming Soon Section -->
+    <section class="community">
+        <div class="container">
+            <div class="section-title">
+                <h2>Community Coming Soon!</h2>
+                <p>We're building an amazing community for electronics enthusiasts</p>
+            </div>
+            <div class="community-content">
+                <p>We're currently working on creating a vibrant community where you can connect with other learners, share projects, and get expert help. Sign up for our newsletter to be notified when we launch!</p>
+                <a href="#newsletter" class="btn btn-primary"><i class="fas fa-envelope"></i> Notify Me</a>
+            </div>
+        </div>
+        
+        <!-- Floating elements background -->
+        <div class="floating-elements">
+            <i class="fas fa-microchip floating-element" style="top: 10%; left: 15%; animation-delay: 0s; font-size: 1.5rem;"></i>
+            <i class="fas fa-bolt floating-element" style="top: 20%; left: 70%; animation-delay: 2s; font-size: 2rem;"></i>
+            <i class="fas fa-robot floating-element" style="top: 30%; left: 30%; animation-delay: 4s; font-size: 1.8rem;"></i>
+            <i class="fas fa-wifi floating-element" style="top: 50%; left: 80%; animation-delay: 1s; font-size: 1.6rem;"></i>
+            <i class="fas fa-satellite-dish floating-element" style="top: 70%; left: 20%; animation-delay: 3s; font-size: 2rem;"></i>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+                <p>Have questions or want to collaborate? We'd love to hear from you</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p>Fill out the form or reach out to us directly through these channels:</p>
+                    
+                    <ul class="contact-details">
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>contact.elegets@gmail.com</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+91 6302085024</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Office</h4>
+                                <p>flat no:102, Vishaka Valley heights1, veterinary colony opp mro office, visakhapatnam, andhra pradesh-530040</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message <i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter" id="newsletter">
+        <div class="container newsletter-content">
+            <h2>Stay Updated</h2>
+            <p>Subscribe to our newsletter for new tutorials, project ideas, and platform updates</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit" class="btn">Subscribe <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="/learnings/microControllers.html">Microcontrollers</a></li>
+                        <li><a href="/learnings/sensors.html">Sensors & Modules</a></li>
+                        <li><a href="/learnings/pcb.html">PCB Design</a></li>
+                        <li><a href="/learnings/robotics.html">Robotics</a></li>
+                        <li><a href="maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="maintainance.html">Project Ideas</a></li>
+                        <li><a href="maintainance.html">Code Libraries</a></li>
+                        <li><a href="maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="maintainance.html">Component Database</a></li>
+                        <li><a href="maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="maintainance.html">About Us</a></li>
+                        <li><a href="maintainance.html">Careers</a></li>
+                        <li><a href="maintainance.html">Blog</a></li>
+                        <li><a href="maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Prevent automatic scrolling on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Reset scroll position to top
+            window.scrollTo(0, 0);
+            
+            // Clear any hash from URL
+            if (window.location.hash) {
+                history.replaceState(null, null, ' ');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Smooth Scrolling for Anchor Links (only on click)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                // Ignore if it's a special link
+                if (this.hasAttribute('data-ignore-smooth')) return;
+                
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                }
+            });
+        });
+        
+        // Sticky Header on Scroll
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Generate random floating elements
+        function createFloatingElements() {
+            const container = document.querySelector('.floating-elements');
+            const icons = [
+                'fa-microchip', 'fa-bolt', 'fa-robot', 'fa-wifi', 
+                'fa-satellite-dish', 'fa-server', 'fa-code', 'fa-calculator'
+            ];
+            
+            for (let i = 0; i < 12; i++) {
+                const element = document.createElement('i');
+                element.className = `fas ${icons[Math.floor(Math.random() * icons.length)]} floating-element`;
+                
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100}%`;
+                element.style.fontSize = `${1 + Math.random() * 2}rem`;
+                element.style.animationDelay = `${Math.random() * 5}s`;
+                element.style.animationDuration = `${10 + Math.random() * 20}s`;
+                
+                container.appendChild(element);
+            }
+        }
+        
+        createFloatingElements();
+        
+        // Dark/Light Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Improved Roadmap Animations
+        function animateRoadmapOnScroll() {
+            const roadmapItems = document.querySelectorAll('.roadmap-item');
+            const roadmapLine = document.querySelector('.roadmap-line');
+            const roadmapContainer = document.querySelector('.roadmap-container');
+            
+            if (!roadmapContainer) return;
+            
+            const containerTop = roadmapContainer.getBoundingClientRect().top;
+            const containerHeight = roadmapContainer.offsetHeight;
+            const windowHeight = window.innerHeight;
+            
+            // Only animate if roadmap is in view
+            if (containerTop < windowHeight && containerTop + containerHeight > 0) {
+                // Calculate how far we've scrolled into the roadmap section (0 to 1)
+                const scrollProgress = Math.min(1, Math.max(0, (window.scrollY - roadmapSection.offsetTop + windowHeight * 0.5) / (roadmapSection.offsetHeight - windowHeight * 0.5)));
+
+                // Animate the line smoothly
+                roadmapLine.style.height = `${scrollProgress * 100}%`;
+                
+                // Animate individual items with staggered timing
+                roadmapItems.forEach((item, index) => {
+                    const itemTop = item.getBoundingClientRect().top;
+                    const itemTriggerPoint = windowHeight * 0.7;
+                    
+                    // Calculate individual item progress (0 to 1)
+                    const itemProgress = Math.min(1, Math.max(0, (itemTriggerPoint - itemTop) / (itemTriggerPoint * 0.5)));
+                    
+                    // Apply animation only when item is coming into view
+                    if (itemProgress > 0 && !item.classList.contains('visible')) {
+                        item.style.transitionDelay = `${index * 0.15}s`;
+                        item.classList.add('visible');
+                    }
+                });
+            }
+        }
+
+        // Initialize roadmap line height to 0
+        document.addEventListener('DOMContentLoaded', function() {
+            const roadmapLine = document.querySelector('.roadmap-line');
+            if (roadmapLine) {
+                roadmapLine.style.height = '0';
+            }
+        });
+
+        // Use IntersectionObserver for better performance
+        const roadmapObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateRoadmapOnScroll();
+                }
+            });
+        }, {threshold: 0.1});
+
+        const roadmapSection = document.querySelector('.roadmaps');
+        if (roadmapSection) {
+            roadmapObserver.observe(roadmapSection);
+        }
+
+        // Still run on scroll for the line animation
+        window.addEventListener('scroll', animateRoadmapOnScroll);
+    </script>
+</body>
+</html>

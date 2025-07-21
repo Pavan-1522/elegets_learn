@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LDR Sensors - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/temp.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+        }
+
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+        }
+
+        /* Sensor-specific additions */
+        .ldr-icon {
+            color: #FFC107;
+            margin-right: 8px;
+        }
+        
+        .light-icon {
+            color: #FFEB3B;
+            margin-right: 8px;
+        }
+        
+        .dark-icon {
+            color: #607D8B;
+            margin-right: 8px;
+        }
+        
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(108, 99, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sensor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        .sensor-table th, .sensor-table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+            min-width: 120px;
+        }
+        
+        .sensor-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .sensor-table tr:nth-child(even) {
+            background-color: rgba(108, 99, 255, 0.05);
+        }
+        
+        .wiring-diagram {
+            max-width: 100%;
+            margin: 1rem auto;
+            display: block;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .sensor-type-chip {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background-color: #FF9800;
+            color: white;
+        }
+
+        /* Tab Styling */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(108, 99, 255, 0.1);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(108, 99, 255, 0.2);
+        }
+        
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .arduino-hero-img img {
+                max-width: 80%;
+                height: auto;
+            }
+            
+            .boards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .board-card {
+                flex-direction: column;
+            }
+            
+            .board-card-img {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .sensor-table {
+                font-size: 0.85rem;
+            }
+            
+            .sensor-table th, 
+            .sensor-table td {
+                padding: 0.5rem;
+            }
+            
+            .code-block pre {
+                font-size: 0.8rem;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tabs {
+                justify-content: center;
+            }
+            
+            .tab-btn {
+                flex: 1 0 calc(50% - 0.5rem);
+                text-align: center;
+                padding: 0.5rem;
+            }
+            
+            .board-card-content h3 {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets Learn</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/learnings/microControllers.html" class="active">Microcontrollers</a></li>
+                    <li><a href="/learnings/sensors.html">Sensors</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/maintainance.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="arduino-hero">
+        <div class="container">
+            <h1>LDR (Light Dependent Resistor) Sensors</h1>
+            <p>Complete guide to light sensing with LDR photoresistors</p>
+            <div class="arduino-hero-img">
+                <img src="https://components101.com/sites/default/files/component_pin/LDR-Pinout.png" alt="LDR Sensor">
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">LDR Sensor Overview</h2>
+            <p>LDRs (Light Dependent Resistors) are passive electronic components whose resistance decreases with increasing light intensity.</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="features">Key Features</button>
+                <button class="tab-btn" data-tab="advantages">Advantages</button>
+                <button class="tab-btn" data-tab="usage">Common Uses</button>
+            </div>
+            
+            <div class="tab-content active" id="features">
+                <ul>
+                    <li><i class="fas fa-adjust ldr-icon"></i><strong>Variable Resistance:</strong> Resistance changes with light intensity (typically 1kΩ in light to 1MΩ in dark)</li>
+                    <li><i class="fas fa-lightbulb light-icon"></i><strong>Spectral Sensitivity:</strong> Most sensitive to visible light (400-700nm)</li>
+                    <li><i class="fas fa-exchange-alt ldr-icon"></i><strong>Non-Polarized:</strong> Can be connected in either direction</li>
+                    <li><i class="fas fa-clock ldr-icon"></i><strong>Slow Response:</strong> Typically 100ms response time</li>
+                    <li><i class="fas fa-tag ldr-icon"></i><strong>Low Cost:</strong> Extremely inexpensive light sensing solution</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="advantages">
+                <ul>
+                    <li><i class="fas fa-check-circle ldr-icon"></i><strong>Simple to Use:</strong> No complex circuitry required</li>
+                    <li><i class="fas fa-wave-square ldr-icon"></i><strong>Analog Output:</strong> Provides continuous light measurement</li>
+                    <li><i class="fas fa-expand ldr-icon"></i><strong>Wide Resistance Range:</strong> Good dynamic range</li>
+                    <li><i class="fas fa-shield-alt ldr-icon"></i><strong>Robust:</strong> No fragile components</li>
+                    <li><i class="fas fa-battery-empty ldr-icon"></i><strong>No Power Required:</strong> Passive component</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="usage">
+                <ul>
+                    <li><i class="fas fa-sun ldr-icon"></i><strong>Light Measurement:</strong> Ambient light sensing</li>
+                    <li><i class="fas fa-lightbulb ldr-icon"></i><strong>Automatic Lighting:</strong> Street lights, night lights</li>
+                    <li><i class="fas fa-lock ldr-icon"></i><strong>Security Systems:</strong> Light-based triggers</li>
+                    <li><i class="fas fa-camera ldr-icon"></i><strong>Camera Exposure Control:</strong> Simple light meters</li>
+                    <li><i class="fas fa-graduation-cap ldr-icon"></i><strong>Educational Projects:</strong> Basic light sensing experiments</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Details Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Technical Specifications</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.electronics-tutorials.ws/wp-content/uploads/2018/05/ioe-ioe5.gif" alt="LDR Resistance Curve">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Resistance Characteristics</h3>
+                        <ul>
+                            <li><strong>Dark Resistance:</strong> Typically 1MΩ-10MΩ (no light)</li>
+                            <li><strong>Light Resistance:</strong> 1kΩ-10kΩ (bright light)</li>
+                            <li><strong>Gamma Value:</strong> ~0.7 (non-linear response)</li>
+                            <li><strong>Response Time:</strong> ~100ms (rise and fall)</li>
+                            <li><strong>Spectral Peak:</strong> ~540nm (green light)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h3>Standard LDR Parameters</h3>
+                        <table class="sensor-table">
+                            <tr>
+                                <td>Maximum Voltage</td>
+                                <td>150V (typical)</td>
+                            </tr>
+                            <tr>
+                                <td>Power Dissipation</td>
+                                <td>100mW (max)</td>
+                            </tr>
+                            <tr>
+                                <td>Operating Temperature</td>
+                                <td>-30°C to +70°C</td>
+                            </tr>
+                            <tr>
+                                <td>Spectral Range</td>
+                                <td>400nm-700nm</td>
+                            </tr>
+                            <tr>
+                                <td>Resistance Tolerance</td>
+                                <td>±20%</td>
+                            </tr>
+                        </table>
+                        <span class="sensor-type-chip">GL5528</span>
+                        <span class="sensor-type-chip">Common Type</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Light Intensity vs Resistance</h3>
+            <img src="https://www.researchgate.net/publication/334426642/figure/fig3/AS:779860420476930@1562869511824/LDR-resistance-vs-light-intensity.png" alt="LDR Response Curve" class="wiring-diagram">
+        </div>
+    </section>
+
+    <!-- Circuit Design Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Circuit Design</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.electronics-tutorials.ws/wp-content/uploads/2018/05/ioe-ioe6.gif" alt="Voltage Divider Circuit">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>Basic Voltage Divider</h3>
+                        <p>The standard way to use an LDR is in a voltage divider configuration with a fixed resistor:</p>
+                        <ol>
+                            <li>Connect LDR from VCC to analog input</li>
+                            <li>Connect fixed resistor from analog input to GND</li>
+                            <li>Output voltage = VCC × (R_fixed / (R_fixed + R_LDR))</li>
+                        </ol>
+                        <p>Typical resistor values: 10kΩ works well for most applications</p>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h3>Component Selection</h3>
+                        <ul>
+                            <li><strong>LDR Selection:</strong> GL5528 (common), GL5537 (more sensitive), GL5516 (less sensitive)</li>
+                            <li><strong>Fixed Resistor:</strong> Choose based on desired range (usually 1kΩ-100kΩ)</li>
+                            <li><strong>Capacitor:</strong> Add 0.1μF capacitor across LDR for noise reduction</li>
+                            <li><strong>Voltage:</strong> Works with 3.3V or 5V systems</li>
+                        </ul>
+                        <h4>Resistor Selection Guide</h4>
+                        <ul>
+                            <li><strong>Bright environments:</strong> 1kΩ-4.7kΩ</li>
+                            <li><strong>General purpose:</strong> 10kΩ</li>
+                            <li><strong>Dark environments:</strong> 47kΩ-100kΩ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Typical Wiring Diagram</h3>
+            <img src="https://circuitdigest.com/sites/default/files/projectimage_mic/Interfacing-LDR-with-Arduino.png" alt="LDR Wiring Diagram" class="wiring-diagram">
+        </div>
+    </section>
+
+    <!-- Code Examples Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Code Examples</h2>
+            
+            <h3>Basic Arduino Example</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Basic LDR Sensor Example</span>
+<span class="code-keyword">#define</span> LDR_PIN A0
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">int</span> ldrValue = analogRead(LDR_PIN);
+    Serial.print(<span class="code-string">"LDR Value: "</span>);
+    Serial.println(ldrValue);
+    
+    <span class="code-comment">// Simple threshold detection</span>
+    <span class="code-keyword">if</span>(ldrValue < 500) {
+        Serial.println(<span class="code-string">"Dark environment"</span>);
+    } <span class="code-keyword">else</span> {
+        Serial.println(<span class="code-string">"Bright environment"</span>);
+    }
+    
+    delay(1000);
+}</code></pre>
+            </div>
+            
+            <h3>Advanced Example with Calibration</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// LDR with auto-calibration</span>
+<span class="code-keyword">#define</span> LDR_PIN A0
+<span class="code-keyword">#define</span> CALIBRATION_TIME 5000 <span class="code-comment">// 5 seconds</span>
+
+<span class="code-keyword">int</span> minLDR = 1023;
+<span class="code-keyword">int</span> maxLDR = 0;
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    Serial.begin(9600);
+    calibrateSensor();
+}
+
+<span class="code-keyword">void</span> <span class="code-function">calibrateSensor</span>() {
+    Serial.println(<span class="code-string">"Calibrating - expose sensor to min and max light"</span>);
+    <span class="code-keyword">unsigned long</span> startTime = millis();
+    
+    <span class="code-keyword">while</span>(millis() - startTime < CALIBRATION_TIME) {
+        <span class="code-keyword">int</span> val = analogRead(LDR_PIN);
+        <span class="code-keyword">if</span>(val < minLDR) minLDR = val;
+        <span class="code-keyword">if</span>(val > maxLDR) maxLDR = val;
+        delay(100);
+    }
+    
+    Serial.print(<span class="code-string">"Calibration complete. Min: "</span>);
+    Serial.print(minLDR);
+    Serial.print(<span class="code-string">" Max: "</span>);
+    Serial.println(maxLDR);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">int</span> ldrValue = analogRead(LDR_PIN);
+    <span class="code-keyword">int</span> normalized = <span class="code-function">map</span>(ldrValue, minLDR, maxLDR, 0, 100);
+    
+    Serial.print(<span class="code-string">"Light Level: "</span>);
+    Serial.print(normalized);
+    Serial.println(<span class="code-string">"%"</span>);
+    
+    delay(500);
+}</code></pre>
+            </div>
+            
+            <h3>Automatic Light Control Example</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Automatic light control with LDR and relay</span>
+<span class="code-keyword">#define</span> LDR_PIN A0
+<span class="code-keyword">#define</span> RELAY_PIN 3
+<span class="code-keyword">#define</span> THRESHOLD 300 <span class="code-comment">// Adjust based on your LDR</span>
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+    pinMode(RELAY_PIN, OUTPUT);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+    <span class="code-keyword">int</span> ldrValue = analogRead(LDR_PIN);
+    
+    <span class="code-keyword">if</span>(ldrValue < THRESHOLD) {
+        digitalWrite(RELAY_PIN, HIGH); <span class="code-comment">// Turn lights on</span>
+    } <span class="code-keyword">else</span> {
+        digitalWrite(RELAY_PIN, LOW); <span class="code-comment">// Turn lights off</span>
+    }
+    
+    delay(10000); <span class="code-comment">// Check every 10 seconds</span>
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Ideas Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Project Ideas</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Automatic Night Light</h4>
+                        <p>LED light that turns on automatically when dark.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">LDR</span>
+                            <span class="spec-chip">LED</span>
+                            <span class="spec-chip">Transistor</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Light Intensity Meter</h4>
+                        <p>Measure and display light levels on LCD or OLED.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">LDR</span>
+                            <span class="spec-chip">OLED</span>
+                            <span class="spec-chip">Arduino</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Smart Curtain Controller</h4>
+                        <p>Automatically open/close curtains based on sunlight.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">LDR</span>
+                            <span class="spec-chip">Servo</span>
+                            <span class="spec-chip">Motor</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Camera Shutter Trigger</h4>
+                        <p>Trigger camera when light changes (lightning, etc.).</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">LDR</span>
+                            <span class="spec-chip">Optocoupler</span>
+                            <span class="spec-chip">Camera</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Plant Light Monitor</h4>
+                        <p>Monitor and log light exposure for plants.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">LDR</span>
+                            <span class="spec-chip">SD Card</span>
+                            <span class="spec-chip">Data Log</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Security Light Alarm</h4>
+                        <p>Trigger alarm if light is detected when it should be dark.</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">LDR</span>
+                            <span class="spec-chip">Buzzer</span>
+                            <span class="spec-chip">ESP8266</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Advanced Project: Smart Daylight Harvesting System</h3>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Components needed:</span>
+- Multiple LDR sensors (different locations)
+- Arduino/ESP32
+- Relay module
+- LED lighting system
+- OLED display
+- Real-time clock
+
+<span class="code-comment">// Features:</span>
+1. Monitor ambient light at multiple points
+2. Automatically adjust artificial lighting
+3. Maintain consistent light levels
+4. Energy saving algorithm
+5. Data logging
+6. Time-based control profiles
+
+<span class="code-comment">// Implementation Tips:</span>
+- Use multiple LDRs for better coverage
+- Implement PID control for smooth adjustments
+- Add manual override capability
+- Create energy usage reports
+- Add wireless control option
+- Consider solar input for outdoor applications</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Practices Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Best Practices & Tips</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Installation</h4>
+                        <ul>
+                            <li>Point sensor at light source/area of interest</li>
+                            <li>Use diffuser to prevent directional sensitivity</li>
+                            <li>Protect from dust and moisture</li>
+                            <li>Avoid shadows that could affect readings</li>
+                            <li>Consider multiple sensors for large areas</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Calibration</h4>
+                        <ul>
+                            <li>Calibrate in actual operating environment</li>
+                            <li>Measure min/max expected light levels</li>
+                            <li>Use map() function to scale readings</li>
+                            <li>Document calibration settings</li>
+                            <li>Re-calibrate if environment changes</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-card-content">
+                        <h4>Signal Processing</h4>
+                        <ul>
+                            <li>Use moving average for stable readings</li>
+                            <li>Add hysteresis to prevent rapid toggling</li>
+                            <li>Implement debouncing for threshold detection</li>
+                            <li>Log raw data for performance analysis</li>
+                            <li>Consider temperature compensation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Common Mistakes to Avoid</h3>
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>Mistake</th>
+                        <th>Consequence</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Wrong resistor value</td>
+                        <td>Limited measurement range</td>
+                        <td>Choose resistor based on expected light levels</td>
+                    </tr>
+                    <tr>
+                        <td>No calibration</td>
+                        <td>Inconsistent performance</td>
+                        <td>Always calibrate in actual environment</td>
+                    </tr>
+                    <tr>
+                        <td>Direct sunlight exposure</td>
+                        <td>Saturation or damage</td>
+                        <td>Use diffuser or limit exposure</td>
+                    </tr>
+                    <tr>
+                        <td>Ignoring response time</td>
+                        <td>Missed rapid light changes</td>
+                        <td>Account for 100ms response time</td>
+                    </tr>
+                    <tr>
+                        <td>Single sensor for large area</td>
+                        <td>Inaccurate light measurement</td>
+                        <td>Use multiple sensors for better coverage</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors & Modules</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Tab Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active state on buttons
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if(content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+            
+            sections.forEach(section => {
+                const sectionPosition = section.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (sectionPosition < screenPosition) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'all 0.5s ease';
+            });
+            
+            // Trigger first check
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

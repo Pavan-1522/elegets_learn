@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP Series Guide - Elegets Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4D44DB;
+            --accent: #FF6584;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+            --card-bg: white;
+            --text-color: #2D3748;
+            --section-bg: #F5F7FF;
+        }
+        
+        .dark-mode {
+            --card-bg: #16213E;
+            --text-color: #F7FAFC;
+            --section-bg: #1A1A2E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(108, 99, 255, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Hero Section */
+        .arduino-hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .arduino-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .arduino-hero-img {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .arduino-hero-img img {
+            height: 300px;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .section.dark-mode {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Boards Grid */
+        .boards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .board-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .board-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .board-card-img {
+            height: 200px;
+            background: #f5f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .board-card-img img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .board-card-content {
+            padding: 1.5rem;
+        }
+
+        .board-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .board-card-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .spec-chip {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Pinout Section */
+        .pinout-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .pinout-diagram {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .pin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .pin-table th, .pin-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            min-width: 120px;
+        }
+
+        .pin-table th {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .pin-table tr:hover {
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+            display: block;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            min-width: 100px;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        /* Tabs - Enhanced Styling */
+        .tabs-container {
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .tabs {
+            display: flex;
+            background: var(--card-bg);
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #718096;
+            position: relative;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            flex-shrink: 0;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 0 0 12px 12px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content ul {
+            list-style-type: none;
+        }
+
+        .tab-content li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .tab-content li:before {
+            content: "•";
+            color: var(--primary);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2D3748;
+            color: #F7FAFC;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .code-keyword {
+            color: #FF79C6;
+        }
+
+        .code-function {
+            color: #50FA7B;
+        }
+
+        .code-comment {
+            color: #6272A4;
+            font-style: italic;
+        }
+
+        .code-number {
+            color: #BD93F9;
+        }
+
+        /* ESP-specific additions */
+        .wifi-icon {
+            color: #4CAF50;
+            margin-right: 8px;
+        }
+        
+        .ble-icon {
+            color: #2196F3;
+            margin-right: 8px;
+        }
+        
+        .dual-core-icon {
+            color: #FF9800;
+            margin-right: 8px;
+        }
+        
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(108, 99, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            background-color: #16213E;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .arduino-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .board-card-img {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .arduino-hero {
+                padding: 6rem 0 2rem;
+            }
+            
+            .arduino-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .arduino-hero p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .arduino-hero-img {
+                display: none;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .boards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .board-card-img {
+                height: 160px;
+            }
+            
+            .board-card-content {
+                padding: 1.2rem;
+            }
+            
+            .pinout-section {
+                padding: 1.5rem;
+            }
+            
+            .code-block {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .tab-btn {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .tab-content {
+                padding: 1.2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .arduino-hero {
+                padding: 5rem 0 1.5rem;
+            }
+            
+            .arduino-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 2rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .boards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .board-card-img {
+                height: 140px;
+            }
+            
+            .pinout-section {
+                padding: 1rem;
+            }
+            
+            .pin-table th, 
+            .pin-table td,
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .tab-btn {
+                padding: 0.7rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            
+            .feature-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .arduino-hero h1 {
+                font-size: 1.6rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .board-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .spec-chip {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.6rem;
+            }
+            
+            .pin-table th, 
+            .pin-table td,
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.5rem;
+                font-size: 0.8rem;
+            }
+            
+            .tab-btn {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Elegets Learn</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/learnings/microControllers.html" class="active">Microcontrollers</a></li>
+                    <li><a href="/learnings/sensors.html">Sensors</a></li>
+                    <li><a href="/maintainance.html">Roadmaps</a></li>
+                    <li><a href="/maintainance.html">Contact</a></li>
+                    <li class="theme-toggle-container">
+                        <div class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <label class="theme-slider" for="themeToggle"></label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="arduino-hero">
+        <div class="container">
+            <h1>ESP Series Microcontrollers</h1>
+            <p>Complete guide to ESP8266 and ESP32 - The powerhouse WiFi/BLE chips for IoT applications</p>
+            <div class="arduino-hero-img">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/ESP8266_ESP-12E_NodeMCU_12E_Development_Board.jpg" alt="ESP Boards">
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">What is ESP Series?</h2>
+            <p>ESP series microcontrollers by Espressif Systems are low-cost, low-power system-on-chips (SoCs) with integrated WiFi and Bluetooth capabilities. They revolutionized IoT development by bringing wireless connectivity to microcontroller projects.</p>
+            
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="features">Key Features</button>
+                    <button class="tab-btn" data-tab="advantages">Advantages</button>
+                    <button class="tab-btn" data-tab="usage">Common Uses</button>
+                </div>
+                
+                <div class="tab-content active" id="features">
+                    <ul>
+                        <li><strong>Integrated Wireless:</strong> Built-in WiFi (and BLE in ESP32) eliminates need for separate modules</li>
+                        <li><strong>High Performance:</strong> Clock speeds up to 240MHz (ESP32) with dual-core options</li>
+                        <li><strong>Rich Peripherals:</strong> ADCs, DACs, touch sensors, motor PWM, and more</li>
+                        <li><strong>Low Power Modes:</strong> Deep sleep currents as low as 10μA</li>
+                        <li><strong>Dual Core:</strong> ESP32 features two Xtensa LX6 cores for multitasking</li>
+                    </ul>
+                </div>
+                
+                <div class="tab-content" id="advantages">
+                    <ul>
+                        <li><strong>Cost Effective:</strong> Much cheaper than WiFi/BLE modules + separate MCU</li>
+                        <li><strong>Community Support:</strong> Massive ecosystem of libraries and frameworks</li>
+                        <li><strong>Development Flexibility:</strong> Programmable with Arduino IDE, ESP-IDF, MicroPython</li>
+                        <li><strong>Scalable:</strong> From simple sensors to complex IoT gateways</li>
+                        <li><strong>Production Ready:</strong> Used in commercial products worldwide</li>
+                    </ul>
+                </div>
+                
+                <div class="tab-content" id="usage">
+                    <ul>
+                        <li><strong>Home Automation:</strong> Smart lights, switches, and sensors</li>
+                        <li><strong>IoT Devices:</strong> Weather stations, smart appliances</li>
+                        <li><strong>Wireless Sensors:</strong> Battery-powered remote monitoring</li>
+                        <li><strong>Robotics:</strong> WiFi/Bluetooth controlled robots</li>
+                        <li><strong>Industrial IoT:</strong> Equipment monitoring and control</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESP Boards Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">ESP Board Types</h2>
+            <p>ESP chips come in various development boards and modules. Here are the most popular ESP boards:</p>
+            
+            <div class="boards-grid">
+                <!-- ESP8266 NodeMCU -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://p.turbosquid.com/ts-thumb/l4/WHxYiQ/tj/4/jpg/1677245204/1920x1080/fit_q87/8441546ed8c0def943dca729b4b23e7f69e7d096/4.jpg" alt="NodeMCU">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>NodeMCU (ESP8266)</h3>
+                        <p>The most popular ESP8266 development board with USB-to-serial</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">ESP8266</span>
+                            <span class="spec-chip">80MHz</span>
+                            <span class="spec-chip">4MB Flash</span>
+                            <span class="spec-chip">11 GPIO</span>
+                            <span class="spec-chip">1 Analog</span>
+                            <span class="feature-badge"><i class="fas fa-wifi wifi-icon"></i> WiFi</span>
+                        </div>
+                        <a href="#nodemcu" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- ESP32 DevKit -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://www.circuitstate.com/wp-content/uploads/2023/09/DOIT-ESP32-Devkit-V1-WiFi-Development-Board-Top-Straight-View-CIRCUITSTATE-Electronics-1.jpg" alt="ESP32 DevKit">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>ESP32 DevKit</h3>
+                        <p>Standard ESP32 development board with full GPIO breakout</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">ESP32</span>
+                            <span class="spec-chip">240MHz</span>
+                            <span class="spec-chip">4MB Flash</span>
+                            <span class="spec-chip">36 GPIO</span>
+                            <span class="spec-chip">18 Analog</span>
+                            <span class="feature-badge"><i class="fas fa-wifi wifi-icon"></i> WiFi</span>
+                            <span class="feature-badge"><i class="fas fa-bluetooth ble-icon"></i> BLE</span>
+                            <span class="feature-badge"><i class="fas fa-microchip dual-core-icon"></i> Dual Core</span>
+                        </div>
+                        <a href="#esp32devkit" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- ESP32-CAM -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://joy-it.net/files/files/Produkte/SBC-ESP32-Cam/SBC-ESP32-Cam_1.png" alt="ESP32-CAM">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>ESP32-CAM</h3>
+                        <p>ESP32 with OV2640 camera for video streaming</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">ESP32</span>
+                            <span class="spec-chip">160MHz</span>
+                            <span class="spec-chip">4MB Flash</span>
+                            <span class="spec-chip">9 GPIO</span>
+                            <span class="spec-chip">MicroSD Slot</span>
+                            <span class="feature-badge"><i class="fas fa-camera"></i> Camera</span>
+                        </div>
+                        <a href="#esp32cam" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- ESP8266-01 -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://5.imimg.com/data5/SELLER/Default/2024/5/415657230/LW/WM/BE/76939021/esp8266-esp-01-wifi-transceiver-wireless-module-1-1000x1000.jpg" alt="ESP-01">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>ESP-01</h3>
+                        <p>Compact ESP8266 module with limited GPIO</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">ESP8266</span>
+                            <span class="spec-chip">80MHz</span>
+                            <span class="spec-chip">1MB Flash</span>
+                            <span class="spec-chip">2 GPIO</span>
+                            <span class="feature-badge"><i class="fas fa-wifi wifi-icon"></i> WiFi</span>
+                        </div>
+                        <a href="#esp01" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- ESP32-S2 -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/5783/ESP32-S2-DEVKITM-1-N4R2.jpg" alt="ESP32-S2">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>ESP32-S2</h3>
+                        <p>Single-core variant with USB OTG support</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">ESP32-S2</span>
+                            <span class="spec-chip">240MHz</span>
+                            <span class="spec-chip">4MB Flash</span>
+                            <span class="spec-chip">43 GPIO</span>
+                            <span class="feature-badge"><i class="fas fa-wifi wifi-icon"></i> WiFi</span>
+                            <span class="feature-badge"><i class="fas fa-usb"></i> USB OTG</span>
+                        </div>
+                        <a href="#esp32s2" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- ESP32-C3 -->
+                <div class="board-card">
+                    <div class="board-card-img">
+                        <img src="https://m.media-amazon.com/images/I/61xIBhl8t-L._AC_SL1500_.jpg" alt="ESP32-C3">
+                    </div>
+                    <div class="board-card-content">
+                        <h3>ESP32-C3</h3>
+                        <p>RISC-V based chip with WiFi and BLE 5.0</p>
+                        <div class="board-card-specs">
+                            <span class="spec-chip">ESP32-C3</span>
+                            <span class="spec-chip">160MHz</span>
+                            <span class="spec-chip">4MB Flash</span>
+                            <span class="spec-chip">22 GPIO</span>
+                            <span class="feature-badge"><i class="fas fa-wifi wifi-icon"></i> WiFi</span>
+                            <span class="feature-badge"><i class="fas fa-bluetooth ble-icon"></i> BLE 5.0</span>
+                        </div>
+                        <a href="#esp32c3" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Board Comparison Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">ESP Series Comparison</h2>
+            <p>Compare the specifications of different ESP boards:</p>
+            
+            <div class="table-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Chip/Board</th>
+                            <th>Core</th>
+                            <th>Clock Speed</th>
+                            <th>Wireless</th>
+                            <th>GPIO</th>
+                            <th>Analog</th>
+                            <th>Special Features</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ESP8266</td>
+                            <td>Xtensa L106</td>
+                            <td>80-160MHz</td>
+                            <td>WiFi</td>
+                            <td>17</td>
+                            <td>1 ADC</td>
+                            <td>Low cost</td>
+                        </tr>
+                        <tr>
+                            <td>ESP32</td>
+                            <td>Xtensa LX6 (Dual)</td>
+                            <td>160-240MHz</td>
+                            <td>WiFi + BLE</td>
+                            <td>36</td>
+                            <td>18 ADC, 2 DAC</td>
+                            <td>Touch, Hall, PWM</td>
+                        </tr>
+                        <tr>
+                            <td>ESP32-S2</td>
+                            <td>Xtensa LX7</td>
+                            <td>240MHz</td>
+                            <td>WiFi</td>
+                            <td>43</td>
+                            <td>20 ADC, 2 DAC</td>
+                            <td>USB OTG</td>
+                        </tr>
+                        <tr>
+                            <td>ESP32-C3</td>
+                            <td>RISC-V</td>
+                            <td>160MHz</td>
+                            <td>WiFi + BLE 5.0</td>
+                            <td>22</td>
+                            <td>6 ADC</td>
+                            <td>Low power</td>
+                        </tr>
+                        <tr>
+                            <td>ESP32-S3</td>
+                            <td>Xtensa LX7 (Dual)</td>
+                            <td>240MHz</td>
+                            <td>WiFi + BLE 5.0</td>
+                            <td>45</td>
+                            <td>20 ADC, 2 DAC</td>
+                            <td>AI acceleration</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- NodeMCU Section -->
+    <section class="section" id="nodemcu">
+        <div class="container">
+            <h2 class="section-title">NodeMCU (ESP8266)</h2>
+            <p>The NodeMCU is the most popular ESP8266 development board, featuring USB-to-serial conversion and easy breadboard prototyping.</p>
+            
+            <div class="pinout-section">
+                <h3>NodeMCU Pinout Diagram</h3>
+                <img src="https://newbiely.com/images/tutorial/esp8266-nodemcu-pinout.jpg" alt="NodeMCU Pinout" class="pinout-diagram">
+                
+                <h3>Key Pins</h3>
+                <div class="table-container">
+                    <table class="pin-table">
+                        <thead>
+                            <tr>
+                                <th>Pin</th>
+                                <th>Function</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>D0-GPIO16</td>
+                                <td>Wake from sleep</td>
+                                <td>No interrupt/pullup</td>
+                            </tr>
+                            <tr>
+                                <td>D1-GPIO5</td>
+                                <td>I2C SCL</td>
+                                <td>Safe to use</td>
+                            </tr>
+                            <tr>
+                                <td>D2-GPIO4</td>
+                                <td>I2C SDA</td>
+                                <td>Safe to use</td>
+                            </tr>
+                            <tr>
+                                <td>D3-GPIO0</td>
+                                <td>Boot mode</td>
+                                <td>Pull-up required</td>
+                            </tr>
+                            <tr>
+                                <td>D4-GPIO2</td>
+                                <td>TX1, Boot</td>
+                                <td>Connected to onboard LED</td>
+                            </tr>
+                            <tr>
+                                <td>A0</td>
+                                <td>Analog Input</td>
+                                <td>0-3.3V, 10-bit</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <h3>Programming NodeMCU</h3>
+            <p>NodeMCU can be programmed with Arduino IDE after adding ESP8266 support:</p>
+            
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Simple WiFi Web Server Example</span>
+<span class="code-keyword">#include</span> &lt;ESP8266WiFi.h&gt;
+
+<span class="code-keyword">const char</span>* ssid = <span class="code-string">"YourSSID"</span>;
+<span class="code-keyword">const char</span>* password = <span class="code-string">"YourPassword"</span>;
+
+WiFiServer server(<span class="code-number">80</span>);
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+  Serial.<span class="code-function">begin</span>(<span class="code-number">115200</span>);
+  WiFi.<span class="code-function">begin</span>(ssid, password);
+  
+  <span class="code-keyword">while</span> (WiFi.<span class="code-function">status</span>() != WL_CONNECTED) {
+    <span class="code-function">delay</span>(<span class="code-number">500</span>);
+    Serial.<span class="code-function">print</span>(<span class="code-string">"."</span>);
+  }
+  
+  server.<span class="code-function">begin</span>();
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+  WiFiClient client = server.<span class="code-function">available</span>();
+  <span class="code-keyword">if</span> (client) {
+    client.<span class="code-function">println</span>(<span class="code-string">"HTTP/1.1 200 OK"</span>);
+    client.<span class="code-function">println</span>(<span class="code-string">"Hello from NodeMCU!"</span>);
+    client.<span class="code-function">stop</span>();
+  }
+}</code></pre>
+            </div>
+            
+            <h3>Power Consumption</h3>
+            <ul>
+                <li><strong>Active Mode:</strong> ~70mA (WiFi on)</li>
+                <li><strong>Light Sleep:</strong> ~0.9mA (CPU paused)</li>
+                <li><strong>Deep Sleep:</strong> ~20μA (RTC memory retained)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ESP32 Advanced Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Advanced ESP32 Features</h2>
+            
+            <h3>Dual Core Operation</h3>
+            <p>ESP32 has two cores that can run tasks simultaneously:</p>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Run task on Core 0</span>
+<span class="code-function">xTaskCreatePinnedToCore</span>(
+    Task1,    <span class="code-comment">// Task function</span>
+    "Task1",  <span class="code-comment">// Name</span>
+    10000,    <span class="code-comment">// Stack size</span>
+    NULL,     <span class="code-comment">// Parameters</span>
+    1,        <span class="code-comment">// Priority</span>
+    NULL,     <span class="code-comment">// Task handle</span>
+    0         <span class="code-comment">// Core 0</span>
+);
+
+<span class="code-keyword">void</span> <span class="code-function">Task1</span>(<span class="code-keyword">void</span> * pvParameters) {
+    <span class="code-keyword">while</span>(1) {
+        <span class="code-comment">// Your code here</span>
+        <span class="code-function">vTaskDelay</span>(<span class="code-number">1000</span>);
+    }
+}</code></pre>
+            </div>
+            
+            <h3>Bluetooth Low Energy (BLE)</h3>
+            <p>ESP32 includes both classic Bluetooth and BLE:</p>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Simple BLE Server Example</span>
+<span class="code-keyword">#include</span> &lt;BLEDevice.h&gt;
+
+BLEServer *pServer;
+BLEService *pService;
+BLECharacteristic *pCharacteristic;
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+  BLEDevice::<span class="code-function">init</span>(<span class="code-string">"ESP32_BLE"</span>);
+  pServer = BLEDevice::<span class="code-function">createServer</span>();
+  pService = pServer-><span class="code-function">createService</span>(<span class="code-string">"1234"</span>);
+  
+  pCharacteristic = pService-><span class="code-function">createCharacteristic</span>(
+    <span class="code-string">"ABCD"</span>,
+    BLECharacteristic::PROPERTY_READ |
+    BLECharacteristic::PROPERTY_WRITE
+  );
+  
+  pCharacteristic-><span class="code-function">setValue</span>(<span class="code-string">"Hello World"</span>);
+  pService-><span class="code-function">start</span>();
+  pServer-><span class="code-function">getAdvertising</span>()-><span class="code-function">start</span>();
+}</code></pre>
+            </div>
+            
+            <h3>Ultra Low Power Techniques</h3>
+            <p>ESP32 has several power saving modes:</p>
+            <ul>
+                <li><strong>Modem Sleep:</strong> WiFi/BLE off (~3mA)</li>
+                <li><strong>Light Sleep:</strong> CPU paused (~0.8mA)</li>
+                <li><strong>Deep Sleep:</strong> Only RTC running (~10μA)</li>
+                <li><strong>Hibernation:</strong> Lowest power (~5μA)</li>
+            </ul>
+            
+            <div class="code-block">
+                <pre><code><span class="code-comment">// Deep Sleep Example</span>
+<span class="code-keyword">#include</span> &lt;esp_sleep.h&gt;
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+  <span class="code-function">esp_sleep_enable_timer_wakeup</span>(<span class="code-number">1000000</span> * <span class="code-number">60</span>); <span class="code-comment">// 1 minute</span>
+  <span class="code-function">esp_deep_sleep_start</span>();
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {} <span class="code-comment">// Never reached</span></code></pre>
+            </div>
+            
+            <h3>ESP-NOW Protocol</h3>
+            <p>Direct device-to-device communication without WiFi router:</p>
+            <div class="code-block">
+                <pre><code><span class="code-comment">// ESP-NOW Example</span>
+<span class="code-keyword">#include</span> &lt;esp_now.h&gt;
+
+<span class="code-keyword">void</span> <span class="code-function">OnDataSent</span>(<span class="code-keyword">const</span> <span class="code-keyword">uint8_t</span> *mac_addr, esp_now_send_status_t status) {
+  Serial.<span class="code-function">println</span>(status == ESP_NOW_SEND_SUCCESS ? 
+    <span class="code-string">"Delivery Success"</span> : <span class="code-string">"Delivery Fail"</span>);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+  WiFi.<span class="code-function">mode</span>(WIFI_STA);
+  <span class="code-keyword">if</span> (<span class="code-function">esp_now_init</span>() != ESP_OK) {
+    Serial.<span class="code-function">println</span>(<span class="code-string">"ESP-NOW Init Failed"</span>);
+    <span class="code-keyword">return</span>;
+  }
+  
+  <span class="code-function">esp_now_register_send_cb</span>(OnDataSent);
+  
+  esp_now_peer_info_t peerInfo;
+  <span class="code-function">memcpy</span>(peerInfo.peer_addr, broadcastAddress, <span class="code-number">6</span>);
+  peerInfo.channel = <span class="code-number">0</span>;
+  peerInfo.encrypt = <span class="code-keyword">false</span>;
+  
+  <span class="code-function">esp_now_add_peer</span>(&peerInfo);
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col footer-about">
+                    <h3>Elegets Learn</h3>
+                    <p>The ultimate platform for students and hobbyists to master electronics through interactive learning and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="/maintainance.html"><i class="fab fa-facebook-f"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-twitter"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-instagram"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-youtube"></i></a>
+                        <a href="/maintainance.html"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="microControllers.html">Microcontrollers</a></li>
+                        <li><a href="sensors.html">Sensors & Modules</a></li>
+                        <li><a href="pcb.html">PCB Design</a></li>
+                        <li><a href="robotics.html">Robotics</a></li>
+                        <li><a href="/maintainance.html">IoT Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">Project Ideas</a></li>
+                        <li><a href="/maintainance.html">Code Libraries</a></li>
+                        <li><a href="/maintainance.html">Circuit Simulator</a></li>
+                        <li><a href="/maintainance.html">Component Database</a></li>
+                        <li><a href="/maintainance.html">Learning Roadmaps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/maintainance.html">About Us</a></li>
+                        <li><a href="/maintainance.html">Careers</a></li>
+                        <li><a href="/maintainance.html">Blog</a></li>
+                        <li><a href="/maintainance.html">For Educators</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegets Learn. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for electronics enthusiasts worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Tab Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active state on buttons
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if(content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+            
+            sections.forEach(section => {
+                const sectionPosition = section.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight * 0.8;
+                
+                if (sectionPosition < screenPosition) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Set initial state for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.board-card');
+            const sections = document.querySelectorAll('.section');
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'all 0.5s ease';
+            });
+            
+            // Trigger first check
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

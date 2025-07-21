@@ -1,0 +1,479 @@
+/* Sensors Page Specific Styles */
+
+/* Hero Section */
+.sensors-hero {
+    background: var(--gradient);
+    color: white;
+    padding: 8rem 0 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.sensors-hero .hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sensors-hero .hero-content p {
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    opacity: 0.9;
+}
+
+.circuit-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.circuit-element {
+    position: absolute;
+    opacity: 0.1;
+    font-size: 8rem;
+    color: white;
+    z-index: 0;
+    animation: float 6s ease-in-out infinite;
+}
+
+.circuit-element:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.circuit-element:nth-child(2) {
+    top: 60%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.circuit-element:nth-child(3) {
+    bottom: 10%;
+    left: 30%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    background-color: var(--section-bg);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.breadcrumb ul {
+    display: flex;
+    list-style: none;
+}
+
+.breadcrumb li {
+    margin-right: 1rem;
+    font-size: 0.9rem;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    content: '/';
+    margin-left: 1rem;
+    color: #718096;
+}
+
+.breadcrumb a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Course Levels */
+.course-levels {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.level-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+}
+
+.level-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.level-header {
+    background: var(--gradient);
+    color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.level-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.level-header i {
+    margin-right: 0.5rem;
+}
+
+.level-tag {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.3rem 1rem;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.level-content {
+    padding: 2rem;
+}
+
+.level-content h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+}
+
+.course-list {
+    list-style: none;
+    margin-bottom: 2rem;
+}
+
+.course-list li {
+    display: flex;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.course-list li:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.course-list i {
+    color: var(--accent);
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    margin-top: 0.2rem;
+}
+
+.course-list h5 {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    color: var(--text-color);
+}
+
+.course-list p {
+    color: #718096;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Projects Section */
+.featured-projects {
+    background-color: var(--section-alt-bg);
+    padding: 6rem 0;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.project-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.project-img {
+    height: 200px;
+    overflow: hidden;
+}
+
+.project-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.project-card:hover .project-img img {
+    transform: scale(1.05);
+}
+
+.project-content {
+    padding: 1.5rem;
+}
+
+.project-level {
+    display: inline-block;
+    background: var(--gradient);
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.project-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.project-content p {
+    color: #718096;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.project-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+.project-meta i {
+    margin-right: 0.3rem;
+    color: var(--primary);
+}
+
+/* Sensor Types */
+.sensor-types {
+    padding: 6rem 0;
+    background-color: var(--section-bg);
+}
+
+.sensor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.sensor-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.3s;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.sensor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.sensor-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.sensor-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.sensor-card ul {
+    list-style: none;
+    text-align: left;
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+.sensor-card ul li {
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 1.2rem;
+}
+
+.sensor-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+/* Testimonials */
+.testimonials {
+    padding: 6rem 0;
+    background-color: var(--section-alt-bg);
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.testimonial-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.testimonial-content {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.quote-icon {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    font-size: 3rem;
+    color: rgba(108, 99, 255, 0.1);
+    z-index: 0;
+}
+
+.testimonial-content p {
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+    color: var(--text-color);
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+}
+
+.testimonial-author img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+}
+
+.testimonial-author h4 {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    color: var(--text-color);
+}
+
+.testimonial-author span {
+    font-size: 0.8rem;
+    color: #718096;
+}
+
+/* CTA Section */
+.sensors-cta {
+    background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center;
+    background-size: cover;
+    padding: 6rem 0;
+    position: relative;
+    text-align: center;
+}
+
+.sensors-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(77, 68, 219, 0.8);
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.cta-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.btn-lg {
+    padding: 1.2rem 3rem;
+    font-size: 1.1rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .sensors-hero .hero-content h1 {
+        font-size: 2.8rem;
+    }
+    
+    .sensors-hero .hero-content p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sensors-hero {
+        padding: 7rem 0 4rem;
+    }
+    
+    .course-levels {
+        grid-template-columns: 1fr;
+    }
+    
+    .testimonial-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .sensors-hero .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+    
+    .cta-content p {
+        font-size: 1rem;
+    }
+}

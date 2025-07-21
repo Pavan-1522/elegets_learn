@@ -1,0 +1,35 @@
+:root {
+    --primary: #6C63FF;
+    --secondary: #4D44DB;
+    --accent: #FF6584;
+    --dark: #2D3748;
+    --light: #F7FAFC;
+    --gradient: linear-gradient(135deg, #6C63FF 0%, #4D44DB 100%);
+    --glass: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    
+    /* Light mode variables */
+    --bg-color: #F5F7FF;
+    --text-color: #2D3748;
+    --card-bg: white;
+    --footer-bg: #2D3748;
+    --footer-text: white;
+    --header-bg: rgba(255, 255, 255, 0.15);
+    --hero-bg: var(--gradient);
+    --section-bg: white;
+    --section-alt-bg: #F5F7FF;
+}
+
+/* Dark mode variables */
+.dark-mode {
+    --bg-color: #1A1A2E;
+    --text-color: #F7FAFC;
+    --card-bg: #16213E;
+    --footer-bg: #0F0F23;
+    --footer-text: #CBD5E0;
+    --header-bg: rgba(26, 26, 46, 0.9);
+    --hero-bg: linear-gradient(135deg, #4D44DB 0%, #2D3748 100%);
+    --section-bg: #16213E;
+    --section-alt-bg: #1A1A2E;
+}
